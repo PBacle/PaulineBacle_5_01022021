@@ -34,12 +34,25 @@
             <article>
                 <h3>Ours en peluche fait main</h3>
                 <ul id="teddies"> </ul>
+            </article>
 
-                <script type="text/javascript">
-                
+            <article>
+                <h3>Caméras vintage</h3>
+                <ul id="cameras"> </ul>
+            </article>
+
+            <article>
+                <h3>Meubles en chêne</h3>
+                <ul id="furniture"> </ul>
+            </article>
+
+            <script type="text/javascript">
+
+                function creatingLists(listID){
+
                     var request = new XMLHttpRequest();
-                    var ul = document.getElementById("teddies");
-                    var urlAPI = "http://localhost:3000/api/" + "teddies"
+                    var ul = document.getElementById(listID);
+                    var urlAPI = "http://localhost:3000/api/" + listID;
 
                     request.onreadystatechange = function() {
                         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -57,80 +70,11 @@
                     };
                     request.open("GET", urlAPI);
                     request.send();
-                </script>
-
-            </article>
-
-            <article>
-                <h3>Caméras vintage</h3>
-                <ul>
-                    <li>
-                        <figure>
-                            <img src="./images/vcam_1.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/vcam_2.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/vcam_3.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/vcam_4.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/vcam_5.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                </ul>
-            </article>
-            <article>
-                <h3>Meubles en chêne</h3>
-                <ul>
-                    <li>
-                        <figure>
-                            <img src="./images/oak_1.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/oak_2.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/oak_3.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/oak_4.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/oak_5.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                </ul>
-            </article>
+                }
+                creatingLists("teddies");
+                creatingLists("furniture");
+                creatingLists("cameras");
+            </script>
         </section>
     </main>
 
