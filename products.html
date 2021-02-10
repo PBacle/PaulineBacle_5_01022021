@@ -31,12 +31,15 @@
             const url = window.location.search; 
             const urlParams = new URLSearchParams(url);
         
-            if(urlParams.has('id') && urlParams.getAll('id').length == 1){
-                console.log(urlParams.get('id'));
-            }else if(urlParams.has('id') && urlParams.getAll('id').length > 1){
-                console.log("two many id");
+            if(urlParams.has('id') && urlParams.has('type')){
+                if(urlParams.getAll('id').length == 1 && urlParams.getAll('type').length == 1){
+                    console.log(urlParams.get('id'));
+                    console.log(urlParams.get('type'));
+                }else{
+                    console.log("two many id or types");
+                }
             }else{
-                console.log("No id");
+                console.log("No id or type");
             }
         
         </script>

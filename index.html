@@ -77,8 +77,9 @@
                 document.querySelectorAll(".listItems-content").forEach(item =>{
                     item.addEventListener("click", function(e) {
                         if(e.target && e.target.nodeName === "BUTTON") {
-                /*            console.log("List item ", e.target.parentNode.id, " was clicked!");*/
-                            location.assign("products.html?id="+e.target.parentNode.id);
+                            console.log(item);
+/*                            console.log("List item ", e.target.parentNode.id, " from ", item.id," was clicked!");*/
+                            location.assign("products.html?id="+e.target.parentNode.id+"&type="+item.id);
                         }
                     });
                 });
