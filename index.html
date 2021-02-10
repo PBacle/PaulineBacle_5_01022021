@@ -6,6 +6,7 @@
     <title>OriHome by Orinoco</title>
     <description></description>
     <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -32,38 +33,32 @@
 
             <article>
                 <h3>Ours en peluche fait main</h3>
-                <ul>
-                    <li>
-                        <figure>
-                            <img src="./images/teddy_1.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/teddy_2.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/teddy_3.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/teddy_4.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                    <li>
-                        <figure>
-                            <img src="./images/teddy_5.jpg" alt="">
-                            <figcaption><a href="products.html">En savoir plus</a></figcaption>
-                        </figure>
-                    </li>
-                </ul>
+                <ul id="teddies"> </ul>
+
+                <script type="text/javascript">
+                
+                    var request = new XMLHttpRequest();
+                    var ul = document.getElementById("teddies");
+                    var urlAPI = "http://localhost:3000/api/" + "teddies"
+
+                    request.onreadystatechange = function() {
+                        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                            var response = JSON.parse(this.responseText);
+                            for( let i=0;i < response.length;i++){
+                                var li = document.createElement('li');
+                                li.innerHTML = '<figure id="'+response[i]._id+
+                                '"><img src="'+response[i].imageUrl+'"alt=""><figcaption><p class="item-name">'+
+                                    response[i].name+'</p><p class="item-price">'+
+                                        response[i].price+' €</p></figcaption></figure>';
+                                ul.appendChild(li); 
+    /*                       $("#Teddies").append('<li><figure><img src="'+response[i].imageUrl+'"alt=""><figcaption>'+response[i].name+'</figcaption></figure></li>');*/
+                            }
+                        }
+                    };
+                    request.open("GET", urlAPI);
+                    request.send();
+                </script>
+
             </article>
 
             <article>
