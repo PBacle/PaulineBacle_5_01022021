@@ -25,6 +25,21 @@
     </header>
 
     <main>
+
+
+        <script type="text/javascript">
+            const url = window.location.search; 
+            const urlParams = new URLSearchParams(url);
+        
+            if(urlParams.has('id') && urlParams.getAll('id').length == 1){
+                console.log(urlParams.get('id'));
+            }else if(urlParams.has('id') && urlParams.getAll('id').length > 1){
+                console.log("two many id");
+            }else{
+                console.log("No id");
+            }
+        
+        </script>
     </main>
 
     <footer>
@@ -47,5 +62,6 @@
     </footer>
     
 </body>
+
 
 </html>
