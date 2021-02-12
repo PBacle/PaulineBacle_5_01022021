@@ -26,12 +26,13 @@
             <p>Votre panier : <span id="cart-counter"></span></p>
         </a>
         <script type="text/javascript">
-            if( document.cookie.match(/(cart=)([0-9]+)/) ){
-                document.getElementById("cart-counter").innerText = +document.cookie.match(/(cart=)([0-9]+)/)[2] ;
+            if( document.cookie.match(/cart=/) ){
+                document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
             }else{
                 document.getElementById("cart-counter").innerText = 0 ;
             }
         </script>
+
     </header>
 
     <main>
@@ -44,7 +45,7 @@
             </ol>
         </nav>
 
-        <article id="item">
+        <article id="item" hidden>
             <h1>Votre sélection : <span class="item-name"></span></h1>
 
             <figure >
@@ -100,6 +101,7 @@
                     request.onreadystatechange = function() {
                         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                             var response = JSON.parse(this.responseText);
+                            document.getElementById("item").hidden = false ;
                             console.log(response);
                         }else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) 
                         {
@@ -123,20 +125,30 @@
                 form.reportValidity();   
                 if(form.checkValidity() ){                    
                     document.querySelector(".addDialog").style.display = 'block';
-                    var count = 0;
-                    if ( document.cookie.match(/cart=[0-9]+/) ){
-                        const match = document.cookie.match(/(cart=)([0-9]+)/)
-                        count = +match[2] + 1 ; 
-                        document.cookie = 'cart='+ count + ';secure' ;
-                        document.cookie = 'product-'+ count +'='+ document.getElementById("item-id").value + ';secure';
-                    }else{
-                        count = 1 ;
-                        document.cookie = 'cart=1;secure' ;
-                        document.cookie = 'product-1='+ document.getElementById("item-id").value + ';secure';
-                    }
-                    document.getElementById("cart-counter").innerText = count ;
                     document.querySelector("p.addDialog span.item-name").innerText = document.getElementById("item-name").value ;
                     document.querySelector("p.addDialog span.item-option").innerText = document.getElementById("item-option").value;
+
+                    var count = 0;
+                    if ( document.cookie.match(/cart=/) ){
+                        var cart = document.cookie.match(/(cart=)(.+)/)[2];
+                        var cartObj = JSON.parse(cart);
+                        var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
+
+                        if( index != -1){
+                            cartObj.elements[index]['count'] = ++cartObj.elements[index]['count'] ;
+                        }else{
+                            cartObj.elements.push({id: document.getElementById("item-id").value, count:'1'});
+                        } 
+                        cartObj.total = ++cartObj.total ;
+                        count = cartObj.total
+                        document.cookie = "cart=" + JSON.stringify(cartObj)  +";secure" ;  
+                    }else{
+                        count = 1 ;
+                        document.cookie = "cart=" + JSON.stringify({total : '1',  
+                        elements: [{ id : document.getElementById("item-id").value, count: '1',}]} )+";secure";
+                    }
+                    console.log(count);
+                    document.getElementById("cart-counter").innerText = count ;
                 }
              })
         </script>

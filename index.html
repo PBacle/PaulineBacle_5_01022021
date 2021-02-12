@@ -25,8 +25,8 @@
             <p>Votre panier : <span id="cart-counter"></span></p>
         </a>
         <script type="text/javascript">
-            if( document.cookie.match(/(cart=)([0-9]+)/) ){
-                document.getElementById("cart-counter").innerText = +document.cookie.match(/(cart=)([0-9]+)/)[2] ;
+            if( document.cookie.match(/cart=/) ){
+                document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
             }else{
                 document.getElementById("cart-counter").innerText = 0 ;
             }

@@ -21,10 +21,72 @@
                 <li><a href="#">Envie d'autre chose ?</a></li>
             </ul>
         </nav>
-        <a href="cart.html"><span class="fa fa-shopping-basket"></span><p>Votre panier</p></a>
+        <a href="cart.html"> 
+            <span class="fa fa-shopping-basket"></span>
+            <p>Votre panier : <span id="cart-counter"></span></p>
+        </a>
     </header>
 
     <main>
+        <h1>Votre panier</h1>
+
+        <ul id="cartList" hidden>
+        </ul>
+
+        <p id="emptyMsg" hidden>Votre panier est vide.</p>
+
+        <script type="text/javascript">
+
+            document.cookie = "cart=" + JSON.stringify({total : 5,  
+                elements: [{
+                    id :     '1eae3A2', 
+                    count: '3',
+                    option: 'noir'
+                    },
+                    {
+                    id :     '42662z', 
+                    count: '2',
+                    option: 'blanc'
+
+                    },
+                    {
+                    id :     '42662z', 
+                    count: '2',
+                    option: 'bleu'
+                    }
+                ]} )+";secure";
+            console.log(document.cookie);
+            cook = document.cookie.match(/(cart=)(.+)/)[2];
+            cookObj = JSON.parse(cook);
+            console.log(cookObj.elements);
+            cookObj.elements.push({id: '32rs4', count:'3', option:'red'});
+            console.log(cookObj);
+            console.log(cookObj.elements.findIndex( x => x.id === '32rrrs4'));
+
+            console.log(cookObj.elements[1]['id']);
+            
+
+
+            if( document.cookie.match(/(cart=)([0-9]+)/) ){
+                console.log("OK");
+                document.getElementById("cart-counter").innerText = +document.cookie.match(/(cart=)([0-9]+)/)[2] ;
+                document.getElementById("cartList").hidden = false  ;
+                document.getElementById("emptyMsg").hidden = true ;
+                
+                const items = document.cookie.match(/product-[0-9]+=[a-z0-9]+/g) ;
+                let count = 0;
+                while ( count < items.length ){
+                    console.log(i + "=>" + items[i].match(/(product-[0-9]+=)([a-z0-9]+)/)[2]);
+                }
+
+            }else{
+                document.getElementById("cart-counter").innerText = 0 ;
+                document.getElementById("cartList").hidden = true ;
+                document.getElementById("emptyMsg").hidden = false ;
+            }
+
+
+        </script>
     </main>
 
     <footer>
