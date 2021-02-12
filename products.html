@@ -25,20 +25,76 @@
     </header>
 
     <main>
+        <nav id="nav-product">
+            <ol>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html">OriHome</a></li>
+                <li id="categorie"></li>
+                <li id="product"></li>
+            </ol>
+        </nav>
 
+        <article id="item">
+            <h1>Votre sélection : <span id="item-name"></span></h1>
+
+            <figure >
+                <img src="" alt="" id="item-image">
+                <figcaption id="item-infos">
+                    <p id="item-description"></p>
+                    <p id="item-price"></p>
+                </figcaption>
+            </figure>
+
+            <form action="">
+                <label for="item-option">Couleur au choix :</label>
+
+                <select name="options" id="item-option">
+                    <option value="">--Choisissez une option--</option>
+                </select>
+                <input type="button" value="Ajouter au panier">
+            </form>
+
+        </article>
 
         <script type="text/javascript">
             const url = window.location.search; 
             const urlParams = new URLSearchParams(url);
         
-            if(urlParams.has('id') && urlParams.has('type')){
-                if(urlParams.getAll('id').length == 1 && urlParams.getAll('type').length == 1){
-                    console.log(urlParams.get('id'));
-                    console.log(urlParams.get('type'));
-                }else{
-                    console.log("two many id or types");
-                }
+            if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id').length == 1 && urlParams.getAll('type').length == 1){
+                    var idItem  = urlParams.get('id');
+                    var typeItem = urlParams.get('type');
+                    switch (typeItem){
+                        case 'teddies' : 
+                            document.getElementById("categorie").innerHTML = '<a href="index.html?type=' + typeItem + '">Ours en peluche faits main</a>';
+                            break;
+                        case 'cameras' : 
+                            document.getElementById("categorie").innerHTML = '<a href="index.html?type='+ typeItem + '">Caméras vintage</a>';
+                            break;
+                        case 'furniture' : 
+                            document.getElementById("categorie").innerHTML = '<a href="index.html?type='+ typeItem + '">Meubles en chêne</a>';
+                            break; 
+                    }
+
+/*                    document.getElementById("product").innerText = */ 
+                    var urlAPI = "http://localhost:3000/api/" + typeItem ;
+                    var request = new XMLHttpRequest();
+
+                    request.onreadystatechange = function() {
+                        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                            var response = JSON.parse(this.responseText);
+                            console.log(response);
+                        }else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) 
+                        {
+                            document.getElementById("product").hidden = true ;
+                            document.getElementById("categorie").hidden = true ;
+                            console.log("Type not found");
+                        }
+                    };
+                    request.open("GET", urlAPI);
+                    request.send(idItem);
             }else{
+                document.getElementById("product").hidden = true ;
+                document.getElementById("categorie").hidden = true ;
                 console.log("No id or type");
             }
         
