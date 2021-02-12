@@ -21,7 +21,17 @@
                 <li><a href="#">Envie d'autre chose ?</a></li>
             </ul>
         </nav>
-        <a href="cart.html"><span class="fa fa-shopping-basket"></span><p>Votre panier</p></a>
+        <a href="cart.html"> 
+            <span class="fa fa-shopping-basket"></span>
+            <p>Votre panier : <span id="cart-counter"></span></p>
+        </a>
+        <script type="text/javascript">
+            if( document.cookie.match(/(cart=)([0-9]+)/) ){
+                document.getElementById("cart-counter").innerText = +document.cookie.match(/(cart=)([0-9]+)/)[2] ;
+            }else{
+                document.getElementById("cart-counter").innerText = 0 ;
+            }
+        </script>
     </header>
 
     <main>
@@ -113,23 +123,22 @@
                 form.reportValidity();   
                 if(form.checkValidity() ){                    
                     document.querySelector(".addDialog").style.display = 'block';
-                    console.log(document.cookie);
+                    var count = 0;
                     if ( document.cookie.match(/cart=[0-9]+/) ){
                         const match = document.cookie.match(/(cart=)([0-9]+)/)
-                        let count = +match[2] + 1 ; 
-                        document.cookie = 'cart='+ count ;
-                        document.cookie = 'product-'+ count +'='+ document.getElementById("item-id").value ;
+                        count = +match[2] + 1 ; 
+                        document.cookie = 'cart='+ count + ';secure' ;
+                        document.cookie = 'product-'+ count +'='+ document.getElementById("item-id").value + ';secure';
                     }else{
-                        document.cookie = 'cart=1' ;
-                        document.cookie = 'product-1='+ document.getElementById("item-id").value ;
+                        count = 1 ;
+                        document.cookie = 'cart=1;secure' ;
+                        document.cookie = 'product-1='+ document.getElementById("item-id").value + ';secure';
                     }
+                    document.getElementById("cart-counter").innerText = count ;
                     document.querySelector("p.addDialog span.item-name").innerText = document.getElementById("item-name").value ;
                     document.querySelector("p.addDialog span.item-option").innerText = document.getElementById("item-option").value;
-                    }
-                    console.log(document.cookie);
-
+                }
              })
-
         </script>
 
     </main>
