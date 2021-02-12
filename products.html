@@ -35,7 +35,7 @@
         </nav>
 
         <article id="item">
-            <h1>Votre sélection : <span id="item-name"></span></h1>
+            <h1>Votre sélection : <span class="item-name"></span></h1>
 
             <figure >
                 <img src="" alt="" id="item-image">
@@ -45,16 +45,24 @@
                 </figcaption>
             </figure>
 
-            <form action="">
+            <form action=""  >
                 <label for="item-option">Couleur au choix :</label>
-
-                <select name="options" id="item-option">
+                <input type="hidden" id="item-id" value="22">
+                <input type="hidden" id="item-name" value="Blabla">
+                <select name="options" id="item-option" required>
                     <option value="">--Choisissez une option--</option>
+                    <option value="blue">Bleu</option>
                 </select>
-                <input type="button" value="Ajouter au panier">
+                <input type="submit" class="btn-addToCart" value="Ajouter au panier">
             </form>
-
         </article>
+
+        <p class="addDialog" style="display: none" >
+            Vous avez ajouté le produit suivant à votre panier : 
+            <span class="item-name"></span> (option : <span class="item-option"></span>)
+            <a href="index.html">Retour</a>
+            <a href="cart.html">Voir le panier</a>
+        </p>
 
         <script type="text/javascript">
             const url = window.location.search; 
@@ -87,7 +95,7 @@
                         {
                             document.getElementById("product").hidden = true ;
                             document.getElementById("categorie").hidden = true ;
-                            console.log("Type not found");
+/*                            console.log("Type not found");*/
                         }
                     };
                     request.open("GET", urlAPI);
@@ -95,10 +103,35 @@
             }else{
                 document.getElementById("product").hidden = true ;
                 document.getElementById("categorie").hidden = true ;
-                console.log("No id or type");
+/*                console.log("No id or type");*/
             }
-        
+
+
+            document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
+                e.preventDefault();
+                var form = document.querySelector("form") ;
+                form.reportValidity();   
+                if(form.checkValidity() ){                    
+                    document.querySelector(".addDialog").style.display = 'block';
+                    console.log(document.cookie);
+                    if ( document.cookie.match(/cart=[0-9]+/) ){
+                        const match = document.cookie.match(/(cart=)([0-9]+)/)
+                        let count = +match[2] + 1 ; 
+                        document.cookie = 'cart='+ count ;
+                        document.cookie = 'product-'+ count +'='+ document.getElementById("item-id").value ;
+                    }else{
+                        document.cookie = 'cart=1' ;
+                        document.cookie = 'product-1='+ document.getElementById("item-id").value ;
+                    }
+                    document.querySelector("p.addDialog span.item-name").innerText = document.getElementById("item-name").value ;
+                    document.querySelector("p.addDialog span.item-option").innerText = document.getElementById("item-option").value;
+                    }
+                    console.log(document.cookie);
+
+             })
+
         </script>
+
     </main>
 
     <footer>
