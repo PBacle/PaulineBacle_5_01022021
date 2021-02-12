@@ -14,11 +14,11 @@
         <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
         <nav>
             <ul>
-                <li><a href="#">OriBook</a></li>
-                <li><a href="#">OriTextil</a></li>
-                <li><a href="#">OriHome</a></li>
-                <li><a href="#">OriFood</a></li>
-                <li><a href="#">Envie d'autre chose ?</a></li>
+                <li><a href="index.html">OriBook</a></li>
+                <li><a href="index.html">OriTextil</a></li>
+                <li><a href="index.html">OriHome</a></li>
+                <li><a href="index.html">OriFood</a></li>
+                <li><a href="index.html">Envie d'autre chose ?</a></li>
             </ul>
         </nav>
         <a href="cart.html"> 
@@ -30,61 +30,36 @@
     <main>
         <h1>Votre panier</h1>
 
-        <ul id="cartList" hidden>
-        </ul>
+        <table id="cart-table" hidden>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+            </tr>
+        </table>
 
         <p id="emptyMsg" hidden>Votre panier est vide.</p>
 
         <script type="text/javascript">
 
-            document.cookie = "cart=" + JSON.stringify({total : 5,  
-                elements: [{
-                    id :     '1eae3A2', 
-                    count: '3',
-                    option: 'noir'
-                    },
-                    {
-                    id :     '42662z', 
-                    count: '2',
-                    option: 'blanc'
-
-                    },
-                    {
-                    id :     '42662z', 
-                    count: '2',
-                    option: 'bleu'
-                    }
-                ]} )+";secure";
-            console.log(document.cookie);
-            cook = document.cookie.match(/(cart=)(.+)/)[2];
-            cookObj = JSON.parse(cook);
-            console.log(cookObj.elements);
-            cookObj.elements.push({id: '32rs4', count:'3', option:'red'});
-            console.log(cookObj);
-            console.log(cookObj.elements.findIndex( x => x.id === '32rrrs4'));
-
-            console.log(cookObj.elements[1]['id']);
-            
-
-
-            if( document.cookie.match(/(cart=)([0-9]+)/) ){
-                console.log("OK");
-                document.getElementById("cart-counter").innerText = +document.cookie.match(/(cart=)([0-9]+)/)[2] ;
-                document.getElementById("cartList").hidden = false  ;
+            if( document.cookie.match(/cart=/) ){
+                document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
+                document.getElementById("cart-table").hidden = false  ;
                 document.getElementById("emptyMsg").hidden = true ;
-                
-                const items = document.cookie.match(/product-[0-9]+=[a-z0-9]+/g) ;
-                let count = 0;
-                while ( count < items.length ){
-                    console.log(i + "=>" + items[i].match(/(product-[0-9]+=)([a-z0-9]+)/)[2]);
-                }
 
+                var cart = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements ;
+                var table = document.getElementById("cart-table");
+ 
+                for (let i = 0 ; i < cart.length ; i++){
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td></td><td>'+cart[i].count+'</td><td></td>';
+                    table.appendChild(tr); 
+                }
             }else{
                 document.getElementById("cart-counter").innerText = 0 ;
-                document.getElementById("cartList").hidden = true ;
+                document.getElementById("cart-table").hidden = true ;
                 document.getElementById("emptyMsg").hidden = false ;
             }
-
 
         </script>
     </main>
