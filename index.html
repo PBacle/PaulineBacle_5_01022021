@@ -71,9 +71,8 @@
                                 li.id = response[i]._id;
                                 li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><p class="item-name">'+
                                     response[i].name+'</p><p class="item-price">'+
-                                        response[i].price+' €</p></figcaption></figure><button class="item-btn">Ajouter</button>';
+                                        response[i].price/100+' €</p></figcaption></figure><button class="item-btn">Ajouter</button>';
                                 ul.appendChild(li); 
-    /*                       $("#Teddies").append('<li><figure><img src="'+response[i].imageUrl+'"alt=""><figcaption>'+response[i].name+'</figcaption></figure></li>');*/
                             }
                         }
                     };
@@ -93,8 +92,6 @@
                         }
                     });
                 });
-
-                console.log(document.cookie);
 
             </script>
         </section>

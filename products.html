@@ -41,7 +41,7 @@
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html">OriHome</a></li>
                 <li id="categorie"></li>
-                <li id="product"></li>
+                <li class="item-name"></li>
             </ol>
         </nav>
 
@@ -58,11 +58,9 @@
 
             <form action=""  >
                 <label for="item-option">Couleur au choix :</label>
-                <input type="hidden" id="item-id" value="22">
-                <input type="hidden" id="item-name" value="Blabla">
+                <input type="hidden" id="item-id" value="">
                 <select name="options" id="item-option" required>
                     <option value="">--Choisissez une option--</option>
-                    <option value="blue">Bleu</option>
                 </select>
                 <input type="submit" class="btn-addToCart" value="Ajouter au panier">
             </form>
@@ -73,6 +71,7 @@
             <span class="item-name"></span> (option : <span class="item-option"></span>)
             <a href="index.html">Retour</a>
             <a href="cart.html">Voir le panier</a>
+            <button class="btn-close"><span class="fas fa-times"></span></button>
         </p>
 
         <script type="text/javascript">
@@ -95,14 +94,30 @@
                     }
 
 /*                    document.getElementById("product").innerText = */ 
-                    var urlAPI = "http://localhost:3000/api/" + typeItem ;
+                    var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
                     var request = new XMLHttpRequest();
 
                     request.onreadystatechange = function() {
                         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                             var response = JSON.parse(this.responseText);
-                            document.getElementById("item").hidden = false ;
                             console.log(response);
+                            document.getElementById("item").hidden = false ;
+                            document.getElementById("item-image").src = response.imageUrl ; 
+                            document.querySelectorAll(".item-name").forEach(item => {
+                                item.innerText = response.name ;
+                            }) ;
+                            document.getElementById("item-description").innerText= response.description;
+                            document.getElementById("item-price").innerText= response.price/100  + ' €';
+
+                            document.getElementById("item-id").value= response.id;
+                            var selectList = document.getElementById("item-option");
+                            for(let i = 0 ; i < response.colors.length ; i++){
+                                var option = document.createElement('option');
+                                option.value = response.colors[i];
+                                option.innerText = response.colors[i];
+                                selectList.append(option);
+                            }
+
                         }else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) 
                         {
                             document.getElementById("product").hidden = true ;
@@ -125,7 +140,6 @@
                 form.reportValidity();   
                 if(form.checkValidity() ){                    
                     document.querySelector(".addDialog").style.display = 'block';
-                    document.querySelector("p.addDialog span.item-name").innerText = document.getElementById("item-name").value ;
                     document.querySelector("p.addDialog span.item-option").innerText = document.getElementById("item-option").value;
 
                     var count = 0;
