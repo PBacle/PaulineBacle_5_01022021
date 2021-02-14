@@ -29,9 +29,10 @@
 
     <main>
         
-        <section>
-            <h1>Votre panier</h1>
+        <h1>Votre panier</h1>
 
+        <section>
+            <h2>Contenu : </h2>
             <table id="cart-table" hidden>
                 <tr>
                     <th>Produit</th>
@@ -59,15 +60,35 @@
                     <td id="table-total">107 €</td>
                 </tr>
             </table>
+            <p id="emptyMsg" hidden>Votre panier est vide.</p>
         </section>
-
-        <p id="emptyMsg" hidden>Votre panier est vide.</p>
+ 
+        <section id="formValidation" hidden >
+            <h2>Valider la commande en complétant le formulaire :</h2>
+            <form action=""  >
+                <label for="firstnameUser">Votre prénom :</label>
+                <input type="text" id="firstnameUser" placeholder="John">
+                <label for="firstnameUser">Votre nom :</label>
+                <input type="text" id="nameUser" placeholder="Smith">
+                <label for="emailUser">Votre email : </label>
+                <input type="email" id="emailUser" placeholder="john.smith@gmail.com">
+                <fieldset>
+                    <legend>Votre adresse :</legend>
+                    <label for="addressUser">Rue : </label>
+                    <input type="text" id="addressUser" placeholder="Rue des ">
+                    <label for="cityUser">Ville: </label>
+                    <input type="text" id="cityUser">
+                </fieldset>
+                <button type="submit">Confirmer</button>
+            </form>
+        </section>
 
         <script type="text/javascript">
             if( document.cookie.match(/cart=/) ){
                 document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
                 var orderTable = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements.map(item => item.id) ;
                 document.getElementById("cart-table").hidden = false  ;
+                document.getElementById("formValidation").hidden = false;
                 document.getElementById("emptyMsg").hidden = true ;
 
 /*
@@ -83,6 +104,7 @@
             }else{
                 document.getElementById("cart-counter").innerText = 0 ;
                 document.getElementById("cart-table").hidden = true ;
+                document.getElementById("formValidation").hidden = true ;
                 document.getElementById("emptyMsg").hidden = false ;
             }
         </script>
