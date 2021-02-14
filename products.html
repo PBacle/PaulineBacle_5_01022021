@@ -109,7 +109,7 @@
                             document.getElementById("item-description").innerText= response.description;
                             document.getElementById("item-price").innerText= response.price/100  + ' €';
 
-                            document.getElementById("item-id").value= response.id;
+                            document.getElementById("item-id").value= response._id;
                             var selectList = document.getElementById("item-option");
                             for(let i = 0 ; i < response.colors.length ; i++){
                                 var option = document.createElement('option');
@@ -143,9 +143,11 @@
                     document.querySelector("p.addDialog span.item-option").innerText = document.getElementById("item-option").value;
 
                     var count = 0;
+                    console.log( document.cookie);
                     if ( document.cookie.match(/cart=/) ){
                         var cart = document.cookie.match(/(cart=)(.+)/)[2];
                         var cartObj = JSON.parse(cart);
+                        console.log(cartObj);
                         var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
 
                         if( index != -1){

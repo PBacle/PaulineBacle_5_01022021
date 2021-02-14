@@ -28,42 +28,66 @@
     </header>
 
     <main>
-        <h1>Votre panier</h1>
+        
+        <section>
+            <h1>Votre panier</h1>
 
-        <table id="cart-table" hidden>
-            <tr>
-                <th>Produit</th>
-                <th>Prix unitaire</th>
-                <th>Quantité</th>
-                <th>Prix</th>
-            </tr>
-        </table>
+            <table id="cart-table" hidden>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                </tr>
+
+                <tr>
+                    <td>Norbert</td>
+                    <td>29 €</td>
+                    <td>1</td>
+                    <td>29 €</td>
+                </tr>
+
+                <tr>
+                    <td>Arnold</td>
+                    <td>39 €</td>
+                    <td>2</td>
+                    <td>78 €</td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">TOTAL</td>
+                    <td id="table-total">107 €</td>
+                </tr>
+            </table>
+        </section>
 
         <p id="emptyMsg" hidden>Votre panier est vide.</p>
 
         <script type="text/javascript">
-
             if( document.cookie.match(/cart=/) ){
                 document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
+                var orderTable = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements.map(item => item.id) ;
                 document.getElementById("cart-table").hidden = false  ;
                 document.getElementById("emptyMsg").hidden = true ;
 
+/*
                 var cart = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements ;
                 var table = document.getElementById("cart-table");
  
                 for (let i = 0 ; i < cart.length ; i++){
                     var tr = document.createElement('tr');
-                    tr.innerHTML = '<td></td><td>'+cart[i].count+'</td><td></td>';
+                    tr.innerHTML = '<td>'+cart[i].id+'</td><td>'+cart[i].count+'</td><td></td>';
                     table.appendChild(tr); 
                 }
+*/
             }else{
                 document.getElementById("cart-counter").innerText = 0 ;
                 document.getElementById("cart-table").hidden = true ;
                 document.getElementById("emptyMsg").hidden = false ;
             }
-
-        </main>
         </script>
+    
+    </main>
 
     <footer>
         <h3>Orinoco</h3>
