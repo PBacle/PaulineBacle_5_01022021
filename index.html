@@ -4,26 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OriHome by Orinoco</title>
-    <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
+
 </head>
 
 <body>
 
     <header>
-        <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
-        <nav>
-            <ul>
-                <li><a href="index.html">OriBook</a></li>
-                <li><a href="index.html">OriTextil</a></li>
-                <li><a href="index.html">OriHome</a></li>
-                <li><a href="index.html">OriFood</a></li>
-                <li><a href="index.html">Envie d'autre chose ?</a></li>
+        <div>
+            <a href="index.html" class="col-6"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
+            <a href="cart.html" class="col-6 container"><span class="fa fa-shopping-basket col-12"></span><p class="col-12">Votre panier : <span id="cart-counter"></span></p></a>
+        </div>
+        <nav class="container">
+            <ul class="row">
+                <li class="col-10"><ul class="row">
+                    <li class="col-1"><a href="index.html">OriHome</a></li>
+                    <li class="col-1"><a href="index.html">OriBook</a></li>
+                    <li class="col-1"><a href="index.html">OriTextil</a></li>
+                    <li class="col-1"><a href="index.html">OriFood</a></li>    
+                </ul>
+                </li>
+                <li class="col-2"><a href="index.html">Envie d'autre chose ?</a></li>
             </ul>
         </nav>
-        <a href="cart.html"> 
-            <span class="fa fa-shopping-basket"></span>
-            <p>Votre panier : <span id="cart-counter"></span></p>
-        </a>
         <script type="text/javascript">
             if( document.cookie.match(/cart=/) ){
                 document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
@@ -33,7 +38,7 @@
         </script>
     </header>
 
-    <main>
+    <main class="container">
         <h1>Trouvez la déco qui vous correspond grâce à OriHome ! </h1>
 
         <section>
@@ -97,20 +102,37 @@
         </section>
     </main>
 
-    <footer>
-        <h3>Orinoco</h3>
-        <section>
+    <footer class="row">
+        <h3 class="col-12">Orinoco</h3>
+        <section class="col-4 text-left">
             <h4>Mieux nous connaître</h4>
             <ul>
                 <li><a href="#">A propos d'Orinoco</a></li>
                 <li><a href="#">Conditions générales de vente</a></li>
+                <li class="row"><ul class="row col-3"><li class="col-4"><a href="#" class="social">Fb</a></li>
+                <li class="col-4"><a href="#" class="social">Tw</a></li>
+                <li class="col-4"><a href="#" class="social">Insta</a></li>
+                     </ul><span class="col-9">Rejoignez notre communauté !</span></li>
             </ul>
         </section>
-        <section>
+        <section class="col-4 text-center ">
             <h4>Besoin d'aide ?</h4>
+            <ul class="row">
+                <li class="col-6"><a href="#" class="row"><span class="fas fa-question-circle col-12"></span><span class="col-12">Foire aux questions</span></a></li>
+                <li class="col-6"><a href="#" class="row"><span class="fas fa-envelope-open-text col-12"></span><span class="col-12">Contact</span></a></li>
+            </ul>
+        </section>
+
+        <section class="col-4 text-right">
+            <h4>Vos informations</h4>
             <ul>
-                <li><a href="#">Foire aux questions</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#">Votre compte</a></li>
+                <li><a href="#">Vos commandes</a></li>
+                <li><select name="devise" id="devise-option" required>
+                        <option value="euro">Euros (€)</option>
+                        <option value="usd">USD ($)</option>
+                        <option value="gbp">GBP (£)</option>
+                </select></li>
             </ul>
         </section>
 

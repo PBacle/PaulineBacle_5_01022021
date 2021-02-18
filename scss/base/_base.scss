@@ -1,0 +1,28 @@
+html,body{
+    max-width: 100%;
+    min-height: 100%;
+	user-select: none;
+    color:black;
+}
+
+body{
+    background: $colour-bkg-main;
+    font-size: $fontsize-std;
+    position:relative
+}
+
+*{
+	margin:0;padding: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+ul{
+    list-style: none;
+}
+
+img{
+    max-height: 100px;
+}

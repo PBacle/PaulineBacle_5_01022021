@@ -1,0 +1,22 @@
+header{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height:$section-monoline-height;
+    max-width: 100%;
+    box-shadow: 0 #{$padding-min} #{$padding-min} rgba($colour-bkg-secondary, 0.3);
+    background-color: white;
+    & img{
+        max-width: $header-logo-width;
+        max-height: 100%;
+        margin: auto;
+    }
+
+    & a{
+        position:absolute;
+        left:0;
+        padding-left: $padding-std;
+        font-size: $fontsize-icon-large;
+        line-height: $section-monoline-height;
+    }
+}

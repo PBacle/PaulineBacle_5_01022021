@@ -1,0 +1,57 @@
+.button{
+    cursor:pointer;
+    display: inline-block;
+    color:white;font-weight: bold;
+    text-align: center;
+    border-radius: $border-radius-large;
+    padding:$padding-std;
+    width:220px;
+    @include gradient_PrimtoSecond(false);
+    box-shadow: calc(#{$padding-min} - 2px) #{$padding-min} #{$padding-min} darken($colour-bkg-primary, 15);
+    font-size: $fontsize-small;
+    position: relative;
+    margin-top: $section-monoline-height;
+    margin-bottom: calc(#{$section-monoline-height} + #{$line-height});
+    &__bg{ /*on hover this div on top of .button will appear (changin opacity) and make it lighter in color*/
+        background: white;
+        border-radius: $border-radius-large;
+        position: absolute;
+        top: 0;right: 0; bottom: 0;left: 0;
+        z-index: 1;
+        opacity: 0; 
+        transition: opacity $animation-dur--medium ;
+    }
+    &:hover{
+        box-shadow: calc(#{$padding-min} + 1px) calc(#{$padding-min} + 2px) calc(#{$padding-min} + 2px) darken($colour-bkg-primary, 15);        
+        & .button__bg {opacity: 0.25;}  
+    }
+}
+input.button{border:none;}
+
+.fa-heart{
+    cursor:pointer;
+    display: inline-block;
+    font-size: $fontsize-icon-large;
+    position:absolute;
+    bottom:0;right: 0;
+    &::before{
+        position: relative;
+        z-index: 1;
+        transition: opacity $animation-dur--long;
+    }
+    &__bg::before{ /*this icon on top of the other will appear on hover and creates the changing colored background effect*/
+        @include gradient_PrimtoSecond;
+        -webkit-background-clip: text; /*the background is "cut" in the shape of the text*/
+        -webkit-text-fill-color: transparent; /*the text itself is invisible to allow for the background gradient to be seen*/
+        opacity: 0;
+        position: relative;
+        transition: opacity $animation-dur--long;
+        z-index: 0;
+    }
+    &:hover::before {
+        opacity: 0;
+    }                    
+    &:hover + .fa-heart__bg::before {
+        opacity: 1;
+    }                    
+}

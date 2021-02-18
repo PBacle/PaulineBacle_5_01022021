@@ -1,0 +1,71 @@
+/* LIST ITEMS*/
+#content ol, #content ul{
+    list-style: none; /*remove all markers, even for ol. See below where they are added for ol with :before*/
+    & li{
+        box-shadow: calc(#{$padding-min} - 2px) #{$padding-min} #{$padding-min}  darken(white, 10);
+        border-radius: $border-radius-large;
+        position: relative;
+        z-index: 1;
+        background-color: white;
+    }
+    & li + li {     
+        margin-top: $line-height;
+    }
+}
+
+ol{
+    counter-reset: item 0;
+    padding:0 0 0 #{$ol-counter-size / 2}px;
+    & .item{
+        background:transparent;
+        counter-increment: item;
+        line-height:#{$ol-counter-size*3}px;
+        font-weight: bold;
+        z-index: 1; 
+        &:before { /*CREATING THE ROUND COUNTER FOR OL*/
+            content: counter(item);
+            border-radius: 100%;
+            background-color: $colour-primary;
+            width: #{$ol-counter-size}px;line-height: #{$ol-counter-size}px;
+            text-align: center;
+            margin-left: -#{$ol-counter-size / 2}px; /*puts the counter on the edge of the li*/
+            color:white;
+            font-weight: bold;
+            display: inline-block;
+        }
+        & .fas{ /*will change color on hover via another icon on top of it (see .fas--hover below) */
+            color:lighten(#000000,50);
+            line-height:#{$ol-counter-size*3}px;
+            padding:0 $padding-std 0 $padding-std;
+            position: relative;
+            z-index: 0;
+            &--hover{ /*the icon will change coler on hover*/
+                position: absolute;
+                left: #{$ol-counter-size / 2}px; /*to account for the ol marker*/
+                z-index: 10; 
+                color:$colour-primary;
+                opacity: 0; /*not visible when no hover */
+            }
+        }
+
+        &__bg{ /*the background color will change on hover, using a div on top of this selector*/
+            background:$colour-bkg-primary;
+            border-radius: $border-radius-large;
+            position: absolute;
+            top: 0;right: 0; bottom: 0;left: 0;
+            z-index: -1;
+            transition: opacity $animation-dur--medium ;
+            &--hover{ /*this will appear on hover*/
+                opacity: 0;
+                background: $colour-primary;
+                transition: opacity $animation-dur--medium ;
+            }
+        }
+        &:hover {
+            & .item__bg{opacity: 0;} /*makes the usual background color disappear*/
+            & .item__bg--hover{opacity: 0.1;} /*makes the new background color appear on hover*/
+            & .fas {opacity: 0;} /*makes the usual icon disappear */
+            & .fas--hover{opacity: 1;} /*makes the icon with new color appear on hover*/
+        }
+    }
+}

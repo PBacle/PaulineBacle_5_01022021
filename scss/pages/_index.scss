@@ -1,0 +1,42 @@
+#localisation{
+    height:$section-monoline-height;
+    display: flex;
+    align-items: center;justify-content: center;
+    background: $colour-bkg-primary--darker;
+    
+    & input[type="text"]{
+        font-weight: bold;
+        font-size: $fontsize-small;
+        border:none;
+        margin:0 $fontsize-small ;
+        width: 150px; /*needs to be improved: should adjust depending on the entry*/
+        background: transparent;
+    }
+    & input[type="submit"]{
+        display:none;
+    }
+}
+
+#presentation{
+    display: flex;flex-direction: column;
+    align-items: center;justify-content: center;
+    box-sizing: border-box;
+    & h1{
+        text-align: center;
+    }
+    & p{
+        text-align: center;
+        color: lighten(black, 30);
+    }
+    @include gt-mobile{
+        width: calc(100% - #{$section-width-min});
+    }
+}
+
+#fonctionnement{
+    @include gt-mobile{
+        box-sizing: border-box;
+        width: $section-width-min;
+        position: absolute;right:0px;top:calc(#{$section-monoline-height} + #{$section-monoline-height});
+    }
+}
