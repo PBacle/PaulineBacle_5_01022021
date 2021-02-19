@@ -1,53 +1,63 @@
 footer{
-    height:$footer-height;
-    @include gt-mobile{
-        height:100px;
-    }
-    background-color: $colour-bkg-secondary;
-    padding: 0 $padding-std 0 $padding-std  ;
+    width: calc(100% - 40px);
+    flex-shrink: 0;
     display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-footer *{
-    color:white;
-}
-
-footer h1{
-    @include fontDef($font-logo);
-    padding:0 $padding-min 0 $padding-min;
-    line-height: $section-monoline-height;
-    font-size: $fontsize-logo;
-}
-
-footer ul{
-    flex-grow: 1;
-    padding:0 $padding-min 0 $padding-min;
-    @include gt-mobile{
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding:20px ;
+    & h3{
+        font-family: $font-logo,$font-main,Times,serif;
+    }
+    & h3, h4{
+        width:100%; margin:20px 0 20px 0;
+    }    
+    & section{
+        flex-grow: 1;
         display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        & >ul>li + li{
+            margin-top: 10px;
+            }
+        &.center{
+            text-align: center;
+            & ul{
+                display: flex;
+                flex-direction: row;;
+                justify-content: center;
+                align-items: center;
+                & > *{
+                    width:50%;
+                    & a{
+                        display: flex;
+                        flex-direction: column;
+                        & span.fas{
+                            font-size: $fontsize-icon-md;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        &.left{text-align: left;}
+        &.right{text-align: right;}
+        & li.socials{
+            display: flex;
+            flex-direction: row;
+            & ul{
+                display: flex;
+                flex-direction: row;
+                & li{
+                    flex-grow: 1;
+                    font-size: $fontsize-icon-sm;
+                    & + li{margin-left:10px;}
+                }
+                & + span{
+                    display: flex;align-items: center;
+                    margin-left:10px;
+                }
+            }
+        }  
     }
 }
 
-footer li{
-    font-size: $fontsize-tiny;
-    vertical-align: middle;
-}
-
-
-footer span.fas{
-    display: inline-block;
-    width: $fontsize-tiny;
-    margin-right: $fontsize-tiny;
-    font-size: $fontsize-tiny;
-}
-
-footer ul > li + li{
-    padding-top: $fontsize-tiny;
-    @include gt-mobile{
-        padding-top: 0px;
-    }
-}

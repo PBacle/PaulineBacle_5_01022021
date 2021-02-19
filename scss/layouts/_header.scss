@@ -1,22 +1,93 @@
 header{
+    
+    padding:20px 20px 0 20px ;
     display: flex;
-    justify-content: center;
-    position: relative;
-    height:$section-monoline-height;
+    flex-wrap: wrap;
     max-width: 100%;
-    box-shadow: 0 #{$padding-min} #{$padding-min} rgba($colour-bkg-secondary, 0.3);
-    background-color: white;
+    justify-content: space-between;
+    position: relative;
+
+
     & img{
-        max-width: $header-logo-width;
-        max-height: 100%;
-        margin: auto;
+        max-height: 100px;
     }
 
+    & > *{
+       min-width: 50%;
+    }
+}
+
+
+#cart{
+    color:$colour-primary;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     & a{
-        position:absolute;
-        left:0;
-        padding-left: $padding-std;
-        font-size: $fontsize-icon-large;
-        line-height: $section-monoline-height;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: bold;
+        & span.fa{
+            border:1px red solid;
+            font-size: $fontsize-icon-lg;
+            padding:30px;
+            position: relative;
+            & span#cart-counter{
+                display: block;
+                width:30px;height:30px;
+                line-height: 30px;
+                font-size: 16px;
+                position: absolute;
+                left:0;bottom:0;
+                background-color: white;
+                border-radius: 50%;
+                text-align: center;
+                border: solid 2pt $colour-primary;
+            }
+        }
+    }
+
+}
+
+nav {
+margin:auto;
+width: calc(100% - 300px);
+
+    &> ul{
+        width:100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        & li>ul{
+            display: flex;
+            flex-direction: row;
+        }
+    }
+    & .nav-tab{
+        font-weight: bold;
+        background-color:$colour-primary--lighter;
+        border-radius:15px 15px 0 0;
+        line-height: 20px;
+        padding:10px;
+        position: relative;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+        & + .nav-tab{
+            margin-left: 10px;
+        }
+        &.active{
+            z-index: 100000;
+            background-color: white;
+            &::after{
+                content:'';
+                background-color: white;
+                position: absolute;
+                bottom:-15px;left:0;right: -15px;
+                height: 15px;
+            }
+            &.last-tab::after{
+                right: 0;
+            }
+    }
     }
 }

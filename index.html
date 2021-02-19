@@ -13,22 +13,23 @@
 <body>
 
     <header>
-        <div class="row">
-            <a href="index.html" class="col-6 "><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
-            <div class="col-6 d-flex flex-row-reverse">
-                <a href="cart.html" class="row text-center"><span class="fa fa-shopping-basket col-12"></span><p class="col-12">Votre panier : <span id="cart-counter"></span></p></a>
-            </div>
+        <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
+        <div id="cart">
+            <a href="cart.html"> 
+                <span class="fa fa-shopping-basket col-12"><span id="cart-counter"></span></span>
+                <p class="col-12">Votre panier</p>
+            </a>
         </div>
-        <nav class="container">
-            <ul class="row">
-                <li class="col-10"><ul class="row">
-                    <li class=""><a href="index.html">OriHome</a></li>
-                    <li class=""><a href="index.html">OriBook</a></li>
-                    <li class=""><a href="index.html">OriTextil</a></li>
-                    <li class=""><a href="index.html">OriFood</a></li>    
+        <nav >
+            <ul>
+                <li><ul>
+                    <li class="nav-tab active"><a href="index.html">OriHome</a></li>
+                    <li class="nav-tab "><a href="index.html">OriBook</a></li>
+                    <li class="nav-tab "><a href="index.html">OriTextil</a></li>
+                    <li class="nav-tab"><a href="index.html">OriFood</a></li>    
                 </ul>
                 </li>
-                <li class="col-2"><a href="index.html">Envie d'autre chose ?</a></li>
+                <li class="nav-tab last-tab"><a href="index.html">Envie d'autre chose ?</a></li>
             </ul>
         </nav>
         <script type="text/javascript">
@@ -43,24 +44,11 @@
     <main class="container">
         <h1>Trouvez la déco qui vous correspond grâce à OriHome ! </h1>
 
-        <section>
-            <h2>Produits disponibles :</h2>
+        <section >
+            <h2 class="listItems-name">Ours en peluche faits main</h2>
+            <p>Produits disponibles : <span id="items-nb">5</span></p>
 
-            <ul>
-                <li class="listItems">
-                    <h3 class="listItems-name">Ours en peluche faits main</h3>
-                    <ul class="listItems-content" id="teddies"> </ul>
-                </li>
-    
-                <li class="listItems">
-                    <h3 class="listItems-name">Caméras vintage</h3>
-                    <ul class="listItems-content" id="cameras"> </ul>
-                </li>
-    
-                <li class="listItems">
-                    <h3 class="listItems-name">Meubles en chêne</h3>
-                    <ul class="listItems-content" id="furniture"> </ul>
-                </li>
+            <ul class="listItems-content row" id="teddies">
             </ul>
 
             <script type="text/javascript">
@@ -74,11 +62,11 @@
                             var response = JSON.parse(this.responseText);
                             for( let i=0;i < response.length;i++){
                                 var li = document.createElement('li');
-                                li.classList.add("item");
+                                li.classList.add("item","col-4");
                                 li.id = response[i]._id;
-                                li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><p class="item-name">'+
-                                    response[i].name+'</p><p class="item-price">'+
-                                        response[i].price/100+' €</p></figcaption></figure><button class="item-btn">Ajouter</button>';
+                                li.innerHTML = '<figure><img class="col-12" src="'+response[i].imageUrl+'"alt=""><figcaption  class="col-12"><p class="item-name" class="col-12 text-left">'+
+                                    response[i].name+'</p><button class="item-btn">Ajouter</button><p class="item-price">'+
+                                        response[i].price/100+' €</p></figcaption></figure>';
                                 ul.appendChild(li); 
                             }
                         }
@@ -87,13 +75,12 @@
                     request.send();
                 }
                 creatingLists("teddies");
-                creatingLists("furniture");
-                creatingLists("cameras");
+/*                creatingLists("furniture");
+                creatingLists("cameras");*/
 
                 document.querySelectorAll(".listItems-content").forEach(item =>{
                     item.addEventListener("click", function(e) {
-                        if(e.target && e.target.nodeName === "BUTTON") {
-                            console.log(item);
+                         if(e.target && e.target.nodeName === "BUTTON") {
 /*                            console.log("List item ", e.target.parentNode.id, " from ", item.id," was clicked!");*/
                             location.assign("products.html?id="+e.target.parentNode.id+"&type="+item.id);
                         }
@@ -104,28 +91,30 @@
         </section>
     </main>
 
-    <footer class="row">
-        <h3 class="col-12">Orinoco</h3>
-        <section class="col-4 text-left">
+    <footer >
+        <h3>Orinoco</h3>
+        <section class="left">
             <h4>Mieux nous connaître</h4>
             <ul>
                 <li><a href="#">A propos d'Orinoco</a></li>
                 <li><a href="#">Conditions générales de vente</a></li>
-                <li class="row"><ul class="row col-3"><li class="col-4"><a href="#" class="social">Fb</a></li>
-                <li class="col-4"><a href="#" class="social">Tw</a></li>
-                <li class="col-4"><a href="#" class="social">Insta</a></li>
-                     </ul><span class="col-9">Rejoignez notre communauté !</span></li>
-            </ul>
-        </section>
-        <section class="col-4 text-center ">
-            <h4>Besoin d'aide ?</h4>
-            <ul class="row">
-                <li class="col-6"><a href="#" class="row"><span class="fas fa-question-circle col-12"></span><span class="col-12">Foire aux questions</span></a></li>
-                <li class="col-6"><a href="#" class="row"><span class="fas fa-envelope-open-text col-12"></span><span class="col-12">Contact</span></a></li>
+                <li class="socials"><ul >
+                        <li><a href="#" class="social-link"><span class="fab fa-facebook-square"></span></a></li>
+                        <li><a href="#" class="social-link"><span class="fab fa-twitter-square"></span></a></li>
+                        <li><a href="#" class="social-link"><span class="fab fa-instagram-square"></span></a></li>
+                     </ul><span class="social-link">Rejoignez notre communauté !</span></li>
             </ul>
         </section>
 
-        <section class="col-4 text-right">
+        <section class="center">
+            <h4>Besoin d'aide ?</h4>
+            <ul>
+                <li><a href="#" class="row"><span class="fas fa-question-circle"></span><span>Foire aux questions</span></a></li>
+                <li><a href="#" class="row"><span class="fas fa-envelope-open-text"></span><span>Contact</span></a></li>
+            </ul>
+        </section>
+
+        <section class="right">
             <h4>Vos informations</h4>
             <ul>
                 <li><a href="#">Votre compte</a></li>
