@@ -22,8 +22,7 @@ footer{
             margin-top: 10px;
             }
         &.center{
-            text-align: center;
-            & ul{
+                & ul{
                 display: flex;
                 flex-direction: row;;
                 justify-content: center;
@@ -41,8 +40,6 @@ footer{
                 }
             }
         }
-        &.left{text-align: left;}
-        &.right{text-align: right;}
         & li.socials{
             display: flex;
             flex-direction: row;

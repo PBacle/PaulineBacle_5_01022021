@@ -52,7 +52,7 @@ html, body {
 
 body {
   background: #F4E8F0;
-  font-size: 1em;
+  font-size: 1.05em;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -61,7 +61,19 @@ body {
 * {
   margin: 0;
   padding: 0;
-  font-size: 1em;
+  font-size: 1.05em;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
 }
 
 a, a:hover, a:visited, a:active {
@@ -187,6 +199,7 @@ header > * {
 nav {
   margin: auto;
   width: calc(100% - 300px);
+  margin-top: 20px;
 }
 nav > ul {
   width: 100%;
@@ -203,7 +216,7 @@ nav .nav-tab {
   background-color: #BD97FF;
   border-radius: 15px 15px 0 0;
   line-height: 20px;
-  padding: 10px;
+  padding: 15px;
   position: relative;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 }
@@ -253,9 +266,6 @@ footer section {
 footer section > ul > li + li {
   margin-top: 10px;
 }
-footer section.center {
-  text-align: center;
-}
 footer section.center ul {
   display: flex;
   flex-direction: row;
@@ -271,12 +281,6 @@ footer section.center ul > * a {
 }
 footer section.center ul > * a span.fas {
   font-size: 2.5em;
-}
-footer section.left {
-  text-align: left;
-}
-footer section.right {
-  text-align: right;
 }
 footer section li.socials {
   display: flex;

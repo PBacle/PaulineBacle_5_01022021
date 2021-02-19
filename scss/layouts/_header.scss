@@ -51,8 +51,9 @@ header{
 }
 
 nav {
-margin:auto;
-width: calc(100% - 300px);
+    margin:auto;
+    width: calc(100% - 300px);
+    margin-top: 20px;
 
     &> ul{
         width:100%;
@@ -69,7 +70,7 @@ width: calc(100% - 300px);
         background-color:$colour-primary--lighter;
         border-radius:15px 15px 0 0;
         line-height: 20px;
-        padding:10px;
+        padding:15px;
         position: relative;
         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
         & + .nav-tab{
