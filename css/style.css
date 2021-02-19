@@ -160,9 +160,8 @@ header > * {
   font-weight: bold;
 }
 #cart a span.fa {
-  border: 1px red solid;
   font-size: 3em;
-  padding: 30px;
+  padding: 15px;
   position: relative;
 }
 #cart a span.fa span#cart-counter {

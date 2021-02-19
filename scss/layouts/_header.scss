@@ -29,9 +29,8 @@ header{
         align-items: center;
         font-weight: bold;
         & span.fa{
-            border:1px red solid;
             font-size: $fontsize-icon-lg;
-            padding:30px;
+            padding:15px;
             position: relative;
             & span#cart-counter{
                 display: block;
