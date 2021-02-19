@@ -5,12 +5,14 @@ footer{
     flex-direction: row;
     flex-wrap: wrap;
     padding:20px ;
-    & h3{
-        font-family: $font-logo,$font-main,Times,serif;
-    }
-    & h3, h4{
+    & h2,h3{
         width:100%; margin:20px 0 20px 0;
     }    
+    & h2{
+        font-size: $fontsize-xlg;
+        font-family: $font-logo,$font-main,Times,serif;
+        margin-bottom: 0;
+    }
     & section{
         flex-grow: 1;
         display: flex;
