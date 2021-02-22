@@ -13,9 +13,6 @@ header{
         max-height: 100px;
     }
 
-    & > *{
-       min-width: 50%;
-    }
 }
 
 
@@ -24,30 +21,27 @@ header{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    & a{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-weight: bold;
-        & span.fa{
-            font-size: $fontsize-icon-lg;
-            padding:15px;
-            position: relative;
-            & span#cart-counter{
-                display: block;
-                width:30px;height:30px;
-                line-height: 30px;
-                font-size: 16px;
-                position: absolute;
-                left:0;bottom:0;
-                background-color: white;
-                border-radius: 50%;
-                text-align: center;
-                border: solid 2pt $colour-primary;
-            }
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    & span.fa{
+        font-size: $fontsize-icon-lg;
+        padding:15px;
+        position: relative;
+        & span#cart-counter{
+            display: block;
+            width:30px;height:30px;
+            line-height: 30px;
+            font-size: 16px;
+            position: absolute;
+            left:0;bottom:0;
+            background-color: white;
+            border-radius: 50%;
+            text-align: center;
+            border: solid 2pt $colour-primary;
+        }      
     }
-
 }
 
 nav {
@@ -73,6 +67,7 @@ nav {
         padding:15px;
         position: relative;
         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+        white-space: nowrap;
         & + .nav-tab{
             margin-left: 10px;
         }

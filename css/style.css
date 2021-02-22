@@ -52,7 +52,7 @@ html, body {
 
 body {
   background: #F4E8F0;
-  font-size: 1.05em;
+  font-size: 1.025em;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -61,7 +61,7 @@ body {
 * {
   margin: 0;
   padding: 0;
-  font-size: 1.05em;
+  font-size: 1.025em;
 }
 
 .center {
@@ -74,6 +74,10 @@ body {
 
 .right {
   text-align: right;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 a, a:hover, a:visited, a:active {
@@ -90,7 +94,6 @@ h1 {
 
 h2, h3, h4 {
   font-weight: bold;
-  padding-top: 20px;
   padding-bottom: 20px;
 }
 
@@ -118,36 +121,6 @@ select {
   font-family: Raleway, Times, serif;
 }
 
-header img {
-  max-height: 100px;
-}
-
-.item figure,
-.item figure > * {
-  height: 100%;
-}
-
-.item {
-  margin-bottom: 60px;
-}
-
-.item figcaption {
-  position: absolute;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.item figcaption * {
-  display: none;
-}
-
-.item figcaption:hover * {
-  display: block;
-}
-
 header {
   padding: 20px 20px 0 20px;
   display: flex;
@@ -160,28 +133,23 @@ header {
 header img {
   max-height: 100px;
 }
-header > * {
-  min-width: 50%;
-}
 
 #cart {
   color: #9258F6;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-}
-#cart a {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-weight: bold;
 }
-#cart a span.fa {
+#cart span.fa {
   font-size: 3em;
   padding: 15px;
   position: relative;
 }
-#cart a span.fa span#cart-counter {
+#cart span.fa span#cart-counter {
   display: block;
   width: 30px;
   height: 30px;
@@ -219,6 +187,7 @@ nav .nav-tab {
   padding: 15px;
   position: relative;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
 }
 nav .nav-tab + .nav-tab {
   margin-left: 10px;
@@ -246,6 +215,7 @@ footer {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
   padding: 20px;
 }
 footer h2, footer h3 {
@@ -255,10 +225,11 @@ footer h2, footer h3 {
 footer h2 {
   font-size: 1.875em;
   font-family: belligerent_madnessregular, Raleway, Times, serif;
+  font-weight: normal;
   margin-bottom: 0;
 }
 footer section {
-  flex-grow: 1;
+  min-width: 30%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -326,9 +297,87 @@ main::before {
   right: 0;
 }
 
+/* LIST ITEMS*/
+.listItems-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.listItems-content li.item {
+  flex-grow: 1;
+  max-width: 30%;
+  margin-bottom: 60px;
+  border-radius: 30px;
+  border: 4pt solid #9258F6;
+}
+.listItems-content li.item img {
+  max-width: 100%;
+  height: 100%;
+  border-radius: 25px;
+}
+.listItems-content li.item figcaption {
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.listItems-content li.item figcaption p, .listItems-content li.item figcaption h3 {
+  width: 100%;
+}
+.listItems-content li.item figcaption * {
+  opacity: 0;
+}
+.listItems-content li.item figure {
+  height: 100%;
+  position: relative;
+}
+.listItems-content li.item figure::before {
+  content: "";
+  background-color: #BD97FF;
+  border-radius: 25px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+}
+.listItems-content li.item figure:hover figcaption * {
+  opacity: 1;
+}
+.listItems-content li.item figure:hover::before {
+  opacity: 0.75;
+}
+
+.item-btn {
+  background-color: transparent;
+  border: none;
+}
+.item-btn::before {
+  content: "+";
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 5px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: white;
+  color: #9258F6;
+  cursor: pointer;
+}
+.item-btn:hover::before {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
 /* @import "./components/loader";
-@import "./components/buttons";
-@import "./components/lists/general";
 @import "./components/lists/restaurants";
 @import "./components/lists/menu";
 @import "./pages/index";

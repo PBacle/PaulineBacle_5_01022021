@@ -14,12 +14,10 @@
 
     <header>
         <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
-        <div id="cart">
-            <a href="cart.html"> 
+            <a id="cart" href="cart.html"> 
                 <span class="fa fa-shopping-basket col-12"><span id="cart-counter"></span></span>
                 <p class="col-12">Votre panier</p>
             </a>
-        </div>
         <nav >
             <ul>
                 <li><ul>
@@ -51,6 +49,57 @@
             </header>
 
             <ul class="listItems-content row" id="teddies">
+                <li class="item">
+                    <figure>
+                        <img src="images/teddy_1.jpg" alt="">
+                        <figcaption>
+                            <h3 class="item-name left">Ted</h3>
+                            <button class="item-btn"></button>
+                            <p class="item-price right bold">130 €</p>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="item">
+                    <figure>
+                        <img src="images/teddy_2.jpg" alt="">
+                        <figcaption>
+                            <h3 class="item-name left">Ted</h3>
+                            <button class="item-btn"></button>
+                            <p class="item-price right bold">130 €</p>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="item">
+                    <figure>
+                        <img src="images/teddy_3.jpg" alt="">
+                        <figcaption>
+                            <h3 class="item-name left">Ted</h3>
+                            <button class="item-btn"></button>
+                            <p class="item-price right bold">130 €</p>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="item">
+                    <figure>
+                        <img src="images/teddy_4.jpg" alt="">
+                        <figcaption>
+                            <h3 class="item-name left">Ted</h3>
+                            <button class="item-btn"></button>
+                            <p class="item-price right bold">130 €</p>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="item">
+                    <figure>
+                        <img src="images/teddy_5.jpg" alt="">
+                        <figcaption>
+                            <h3 class="item-name left">Ted</h3>
+                            <button class="item-btn"></button>
+                            <p class="item-price right bold">130 €</p>
+                        </figcaption>
+                    </figure>
+                </li>
+
             </ul>
 
             <script type="text/javascript">
@@ -66,8 +115,8 @@
                                 var li = document.createElement('li');
                                 li.classList.add("item","col-4");
                                 li.id = response[i]._id;
-                                li.innerHTML = '<figure><img class="col-12" src="'+response[i].imageUrl+'"alt=""><figcaption  class="col-12"><p class="item-name" class="col-12 text-left">'+
-                                    response[i].name+'</p><button class="item-btn">Ajouter</button><p class="item-price">'+
+                                li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><p class="item-name">'+
+                                    response[i].name+'</p><button class="item-btn"></button><p class="item-price right bold">'+
                                         response[i].price/100+' €</p></figcaption></figure>';
                                 ul.appendChild(li); 
                             }

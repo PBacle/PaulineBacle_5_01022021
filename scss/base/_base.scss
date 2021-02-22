@@ -23,7 +23,7 @@ body{
 .center{text-align: center;}
 .left{text-align: left;}
 .right{text-align: right;}
-
+.bold{font-weight: bold;}
 
 a, a:hover, a:visited, a:active {
     color: inherit;
@@ -39,7 +39,6 @@ h1{
 
 h2,h3,h4{
     font-weight:bold;
-    padding-top:20px;
     padding-bottom:20px;
 }
 
@@ -67,30 +66,4 @@ select{
     font-family: $font-main, Times, serif;
 }
 
-header  img{
-    max-height: 100px;
-}
 
-.item figure,
-.item figure>*{
-    height: 100%;
-}
-
-.item{
-    margin-bottom: 60px;
-}
-
-.item figcaption{
-    position: absolute;top:0;
-    display:flex;flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.item figcaption *{
-    display:none;
-}
-
-.item  figcaption:hover *{
-    display:block;
-}
