@@ -1,6 +1,7 @@
 .item-btn{
     background-color: transparent;
     border:none;
+    position: relative;top:0;right: 0;
     &::before{
         content: '+';
         width: 40px;
@@ -14,6 +15,99 @@
         cursor: pointer;
     }
     &:hover::before{
+        color: $colour-secondary;
         box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
+    }
+}
+
+.btn{
+    background-color:$colour-primary--lighter;
+    font-weight: bold;
+    color:black;
+    padding:10px 20px; 
+    border:none;
+    border-radius: 20px;
+    cursor:pointer;
+    &:hover{
+        background-color: $colour-secondary;
+        box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
+    }
+
+    &.btn-addToCart{
+        max-width: auto;
+    }
+}
+
+button{
+    position: absolute;
+    top:30px;right:30px;
+}
+
+.btn-close{
+    box-sizing: border-box;
+    background-color: transparent;
+    border:none;
+    display: block;
+    cursor: pointer;
+    &::before{
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content:"\f00d";
+        display: block;
+        width: 40px;height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        background-color: $colour-primary;
+        color:white
+    }
+    &:hover{
+        &::before{
+            background-color: $colour-secondary;
+            box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
+        }
+    }
+}
+
+.nav-btn{
+    display: flex;
+    justify-content: space-around;
+    & *{
+        line-height: 40px;
+        position: relative;
+    }
+    & .right::after{
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content:attr(data);
+        display: block;
+        width: 40px;height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        background-color: $colour-primary;
+        color:white;
+        position: absolute;
+        right: calc(-40px - 10px);top:0;
+        text-align: center;
+    }
+    & .left::before{
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content:attr(data);
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content:attr(data);
+        display: block;
+        width: 40px;height: 40px;
+        line-height: 40px;
+        border-radius: 50%;
+        background-color: $colour-primary;
+        color:white;
+        position: absolute;
+        left: calc(-40px - 10px);top:0;
+        text-align: center;
+    }
+    & .left:hover::before, .right:hover::after{
+        background-color: $colour-secondary;
+        box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;        
     }
 }

@@ -27,12 +27,12 @@ header{
     font-weight: bold;
     & span.fa{
         font-size: $fontsize-icon-lg;
-        padding:15px;
+        padding:20px;
         position: relative;
         & span#cart-counter{
             display: block;
-            width:30px;height:30px;
-            line-height: 30px;
+            width:35px;height:35px;
+            line-height: 35px;
             font-size: 16px;
             position: absolute;
             left:0;bottom:0;
@@ -41,6 +41,12 @@ header{
             text-align: center;
             border: solid 2pt $colour-primary;
         }      
+    }
+    &:hover{
+        text-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
+        & span#cart-counter{
+            box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
+        }
     }
 }
 
@@ -71,6 +77,9 @@ nav{
         & + .nav-tab{
             margin-left: 10px;
         }
+        &:not(.active) a:hover{
+            color:white;
+        }    
         &.active{
             z-index: 100000;
             background-color: white;
