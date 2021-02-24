@@ -47,8 +47,6 @@ html, body {
   max-width: 100%;
   height: 100%;
   user-select: none;
-  color: black;
-  font-family: Raleway, Times, serif;
 }
 
 body {
@@ -60,6 +58,8 @@ body {
 }
 
 * {
+  color: black;
+  font-family: Raleway, Times, serif;
   margin: 0;
   padding: 0;
   font-size: 1.025em;
@@ -127,6 +127,10 @@ select {
   font-family: Raleway, Times, serif;
 }
 
+.font-lg {
+  font-size: 1.375em;
+}
+
 header {
   padding: 20px 20px 0 20px;
   display: flex;
@@ -154,6 +158,7 @@ header img {
   font-size: 3em;
   padding: 20px;
   position: relative;
+  color: #9258F6;
 }
 #cart span.fa span#cart-counter {
   display: block;
@@ -161,6 +166,7 @@ header img {
   height: 35px;
   line-height: 35px;
   font-size: 16px;
+  font-weight: bold;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -312,14 +318,15 @@ main {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 0px 0px 30px 30px;
   position: relative;
-}
-
-.errorDialog {
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.errorDialog {
+  display: flex;
+  flex-direction: column;
 }
 .errorDialog p {
   font-size: 1.375em;
@@ -452,15 +459,13 @@ article#item h1 {
 .item-btn {
   background-color: transparent;
   border: none;
-  position: relative;
-  top: 0;
-  right: 0;
 }
 .item-btn::before {
   content: "+";
   width: 40px;
   height: 40px;
-  font-size: 30px;
+  line-height: 40px;
+  font-size: 40px;
   font-weight: bold;
   padding: 5px;
   display: inline-block;
@@ -491,13 +496,10 @@ article#item h1 {
   max-width: auto;
 }
 
-button {
+.btn-close {
   position: absolute;
   top: 30px;
   right: 30px;
-}
-
-.btn-close {
   box-sizing: border-box;
   background-color: transparent;
   border: none;

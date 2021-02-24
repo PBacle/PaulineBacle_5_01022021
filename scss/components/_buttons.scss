@@ -1,12 +1,12 @@
 .item-btn{
     background-color: transparent;
     border:none;
-    position: relative;top:0;right: 0;
     &::before{
         content: '+';
         width: 40px;
         height: 40px;
-        font-size: 30px;font-weight: bold;
+        line-height: 40px;
+        font-size: 40px;font-weight: bold;
         padding:5px;
         display: inline-block;
         border-radius: 50%;
@@ -38,12 +38,9 @@
     }
 }
 
-button{
+.btn-close{
     position: absolute;
     top:30px;right:30px;
-}
-
-.btn-close{
     box-sizing: border-box;
     background-color: transparent;
     border:none;

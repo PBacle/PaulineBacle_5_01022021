@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Votre panier sur OriHome by Orinoco</title>
     <description></description>
+    <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
 </head>
@@ -35,9 +36,10 @@
 
     <main>
         
-        <h1>Votre panier</h1>
+        <h1>Votre panier<span class="emptyMsg" hidden> est vide !</span></h1>
 
         <section>
+            <p class="emptyMsg center font-lg" hidden>Et si vous alliez vous promener par <a href="index.html">ici</a> pour trouver votre bonheur ?</p>
             <h2>Contenu : </h2>
             <table id="cart-table" hidden>
                 <tr>
@@ -66,7 +68,6 @@
                     <td id="table-total">107 €</td>
                 </tr>
             </table>
-            <p id="emptyMsg" hidden>Votre panier est vide.</p>
         </section>
  
         <section id="formValidation" hidden >
@@ -85,7 +86,7 @@
                     <label for="cityUser">Ville: </label>
                     <input type="text" id="cityUser">
                 </fieldset>
-                <button type="submit">Confirmer</button>
+                <button type="submit" class="btn">Confirmer</button>
             </form>
         </section>
 
@@ -95,7 +96,6 @@
                 var orderTable = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements.map(item => item.id) ;
                 document.getElementById("cart-table").hidden = false  ;
                 document.getElementById("formValidation").hidden = false;
-                document.getElementById("emptyMsg").hidden = true ;
 
 /*
                 var cart = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements ;
@@ -111,7 +111,10 @@
                 document.getElementById("cart-counter").innerText = 0 ;
                 document.getElementById("cart-table").hidden = true ;
                 document.getElementById("formValidation").hidden = true ;
-                document.getElementById("emptyMsg").hidden = false ;
+                document.querySelector("h2").hidden = true ;
+                document.querySelectorAll(".emptyMsg").forEach(item => {
+                   item.hidden = false; 
+                }) 
             }
         </script>
     
