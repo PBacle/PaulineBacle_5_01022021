@@ -50,6 +50,7 @@ section{
             justify-content: center;
             & fieldset{
                 border:none;
+                margin-bottom:20px ;
                 & legend{ 
                     font-weight: bold;
                     margin-bottom: 20px;
@@ -154,4 +155,15 @@ table{
         border : solid 1pt $colour-primary--bkg;
 
     }
+}
+
+#infosCommande{
+    padding:40px;
+    border: 2pt $colour-primary solid;
+    & figcaption{
+        margin-bottom: 40px;
+    }
+    & th{
+        text-align: right;
+    } 
 }

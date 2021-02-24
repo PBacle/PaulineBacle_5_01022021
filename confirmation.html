@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmation de commande sur OriHome by Orinoco</title>
-    <description></description>
+    <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
 </head>
@@ -32,20 +32,22 @@
     <main>
         <h1>Commande confirmée !</h1>
 
-        <p> Votre commande a bien été prise en compte et sera traitée par notre équipe dans les meilleurs délais. <br> 
-            Vous trouverez ci-dessous les informations relatives à votre commande : </p>
-            <table id="infosCommande">
-                <tr>
-                    <th>Montant total :</th>
-                    <td id="totalCommande">120 €</td>    
-                </tr>
-                <tr>
-                    <th>Référence de la commande :</th>
-                    <td id="referenceCommande">12103</td>    
-                </tr>
-            </table>
+        <p class="font-lg"> Votre commande a bien été prise en compte et sera traitée par notre équipe dans les meilleurs délais. </p>
+        <p class="font-lg">Merci pour votre confiance et à bientôt sur <span class="logo font-lg">Orinoco</span> ! </p>
+            <figure id="infosCommande">
+                <figcaption class="bold font-lg center">Récapitulatif de la commande</figcaption>
+                <table>
+                    <tr>
+                        <th>Montant total :</th>
+                        <td id="totalCommande">120 €</td>    
+                    </tr>
+                    <tr>
+                        <th>Référence de la commande :</th>
+                        <td id="referenceCommande">12103</td>    
+                    </tr>
+                </table>
+            </figure>
 
-        <p>Merci pour votre confiance et à bientôt sur Orinoco ! </p>
     </main>
 
     <footer >

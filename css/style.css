@@ -81,13 +81,17 @@ body {
   font-weight: bold;
 }
 
+.logo {
+  font-family: belligerent_madnessregular, Times, serif;
+}
+
 a, a:visited, a:active {
   color: inherit;
   text-decoration: none;
   font-weight: bold;
 }
 
-a:hover {
+a:hover, a:hover span {
   color: #EA8834;
 }
 
@@ -129,6 +133,10 @@ select {
 
 .font-lg {
   font-size: 1.375em;
+}
+
+p + p {
+  margin: 30px 0;
 }
 
 header {
@@ -180,6 +188,7 @@ header img {
 }
 #cart:hover span#cart-counter {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  color: black;
 }
 
 nav {
@@ -362,6 +371,7 @@ section {
 }
 .container section form fieldset {
   border: none;
+  margin-bottom: 20px;
 }
 .container section form fieldset legend {
   font-weight: bold;
@@ -463,6 +473,17 @@ table td, table th {
 }
 table tr:not(:last-child):not(:first-child) {
   border: solid 1pt #F1EAFD;
+}
+
+#infosCommande {
+  padding: 40px;
+  border: 2pt #9258F6 solid;
+}
+#infosCommande figcaption {
+  margin-bottom: 40px;
+}
+#infosCommande th {
+  text-align: right;
 }
 
 /* LIST ITEMS*/
@@ -641,7 +662,6 @@ table tr:not(:last-child):not(:first-child) {
 
 button {
   margin: auto;
-  margin-top: 20px;
 }
 
 /* @import "./components/loader";
