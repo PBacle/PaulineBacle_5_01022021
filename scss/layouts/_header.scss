@@ -44,7 +44,7 @@ header{
     }
 }
 
-nav {
+nav{
     margin:auto;
     width: calc(100% - 300px);
     margin-top: 20px;
@@ -84,6 +84,18 @@ nav {
             &.last-tab::after{
                 right: 0;
             }
+      }
     }
+    &#nav-product{
+        width: 100%;
+        & ol{
+            display: flex;
+            list-style: none;;
+            & li:not(.last-tab)::after{
+                content: '>';
+                padding-left: 10px ;
+                padding-right: 10px;
+            }
+        }
     }
 }

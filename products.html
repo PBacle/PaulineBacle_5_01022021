@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personnalisez votre achat sur OriHome by Orinoco</title>
     <description></description>
+    <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
 </head>
@@ -38,50 +39,58 @@
         </script>
     </header>
 
+
     <main>
         <nav id="nav-product">
             <ol>
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html">OriHome</a></li>
-                <li id="categorie"></li>
-                <li class="item-name"></li>
+                <li id="categorie">Ours en peluche faits main</li>
+                <li class="item-name last-tab">Arnold</li>
             </ol>
         </nav>
 
-        <article id="item" hidden>
-            <h1>Votre sélection : <span class="item-name"></span></h1>
+        <article id="item">
+            <h1>Votre sélection : <span class="item-name">Arnold</span></h1>
 
-            <figure >
-                <img src="" alt="" id="item-image">
+            <figure>
+                <img src="http://localhost:3000/images/teddy_2.jpg" alt="" id="item-image">
                 <figcaption id="item-infos">
-                    <p id="item-description"></p>
-                    <p id="item-price"></p>
+                    <p id="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p id="item-price">39 €</p>
                 </figcaption>
             </figure>
 
-            <form action=""  >
+            <form action="">
                 <label for="item-option">Couleur au choix :</label>
-                <input type="hidden" id="item-id" value="">
-                <select name="options" id="item-option" required>
+                <input type="hidden" id="item-id" value="5beaa8bf1c9d440000a57d94">
+                <select name="options" id="item-option" required="">
                     <option value="">--Choisissez une option--</option>
-                </select>
+                <option value="Pale brown">Pale brown</option><option value="Dark brown">Dark brown</option><option value="White">White</option></select>
                 <input type="submit" class="btn-addToCart" value="Ajouter au panier">
             </form>
         </article>
 
-        <p class="addDialog" style="display: none" >
+        <p class="addDialog" style="display: none">
             Vous avez ajouté le produit suivant à votre panier : 
-            <span class="item-name"></span> (option : <span class="item-option"></span>)
+            <span class="item-name">Arnold</span> (option : <span class="item-option"></span>)
             <a href="index.html">Retour</a>
             <a href="cart.html">Voir le panier</a>
             <button class="btn-close"><span class="fas fa-times"></span></button>
         </p>
 
+
+        <div class="errorDialog" style="display: none">
+            <h1>Oups ! Une erreur s'est produite.</h1>
+            <p class="center">Pas d'inquiétude, un clic <a class="bold" href="index.html" alt="lien retour accueil">ici</a> et c'est reparti ! </p>
+        </div>
+
+
         <script type="text/javascript">
             const url = window.location.search; 
             const urlParams = new URLSearchParams(url);
         
-            if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id').length == 1 && urlParams.getAll('type').length == 1){
+            if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].length != 0 && urlParams.getAll('type')[0].length != 0){
                     var idItem  = urlParams.get('id');
                     var typeItem = urlParams.get('type');
                     switch (typeItem){
@@ -97,7 +106,7 @@
                     }
 
 /*                    document.getElementById("product").innerText = */ 
-                    var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
+/*                    var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
                     var request = new XMLHttpRequest();
 
                     request.onreadystatechange = function() {
@@ -123,16 +132,20 @@
 
                         }else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) 
                         {
-                            document.getElementById("product").hidden = true ;
+                            document.querySelector("#nav-product .item-name").hidden = true ;
                             document.getElementById("categorie").hidden = true ;
+                            document.querySelector("article#item").hidden = true;
 /*                            console.log("Type not found");*/
-                        }
+/*                        }
                     };
                     request.open("GET", urlAPI);
                     request.send(idItem);
+*/                    
             }else{
-                document.getElementById("product").hidden = true ;
-                document.getElementById("categorie").hidden = true ;
+                document.querySelector("#nav-product").hidden = true ;
+                document.querySelector(".errorDialog").style.display = 'flex';
+                document.querySelector("article#item").hidden = true;
+/*                document.getElementById("categorie").hidden = true ;
 /*                console.log("No id or type");*/
             }
 

@@ -208,6 +208,18 @@ nav .nav-tab.active::after {
 nav .nav-tab.active.last-tab::after {
   right: 0;
 }
+nav#nav-product {
+  width: 100%;
+}
+nav#nav-product ol {
+  display: flex;
+  list-style: none;
+}
+nav#nav-product ol li:not(.last-tab)::after {
+  content: ">";
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 footer {
   width: calc(100% - 40px);
@@ -278,6 +290,7 @@ main {
   flex: 1 0 auto;
   margin: auto;
   width: calc(100% - 300px - 40px);
+  min-height: 75vh;
   padding: 50px;
   box-sizing: border-box;
   background-color: white;
@@ -295,6 +308,17 @@ main::before {
   left: 0;
   bottom: 0;
   right: 0;
+}
+
+.errorDialog {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.errorDialog p {
+  font-size: 1.375em;
 }
 
 /* LIST ITEMS*/
