@@ -48,62 +48,66 @@
                 <p class="right">Produits disponibles : <span id="items-nb">5</span></p>
             </header>
 
-            <ul class="listItems-content row" id="teddies">
-                <li class="item">
-                    <figure>
-                        <img src="images/teddy_1.jpg" alt="">
-                        <figcaption>
-                            <h3 class="item-name left">Ted</h3>
-                            <button class="item-btn"></button>
-                            <p class="item-price right bold">130 €</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li class="item">
-                    <figure>
-                        <img src="images/teddy_2.jpg" alt="">
-                        <figcaption>
-                            <h3 class="item-name left">Ted</h3>
-                            <button class="item-btn"></button>
-                            <p class="item-price right bold">130 €</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li class="item">
-                    <figure>
-                        <img src="images/teddy_3.jpg" alt="">
-                        <figcaption>
-                            <h3 class="item-name left">Ted</h3>
-                            <button class="item-btn"></button>
-                            <p class="item-price right bold">130 €</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li class="item">
-                    <figure>
-                        <img src="images/teddy_4.jpg" alt="">
-                        <figcaption>
-                            <h3 class="item-name left">Ted</h3>
-                            <button class="item-btn"></button>
-                            <p class="item-price right bold">130 €</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li class="item">
-                    <figure>
-                        <img src="images/teddy_5.jpg" alt="">
-                        <figcaption>
-                            <h3 class="item-name left">Ted</h3>
-                            <button class="item-btn"></button>
-                            <p class="item-price right bold">130 €</p>
-                        </figcaption>
-                    </figure>
-                </li>
+            <ul class="listItems-content" id="teddies">
+  
+                    <li class="item" id="5be9c8541c9d440000665243">
+                        <figure>
+                            <img src="http://localhost:3000/images/teddy_1.jpg" alt="">
+                            <figcaption>
+                                <h3 class="item-name">Norbert</h3>
+                                <button class="item-btn"></button>
+                                <p class="item-price right bold">29 €</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    
+                    <li class="item" id="5beaa8bf1c9d440000a57d94">
+                        <figure>
+                            <img src="http://localhost:3000/images/teddy_2.jpg" alt="">
+                            <figcaption>
+                                <h3 class="item-name">Arnold</h3>
+                                <button class="item-btn"></button>
+                                <p class="item-price right bold">39 €</p>
+                            </figcaption>
+                        </figure>
+                    </li>
 
+                    <li class="item" id="5beaaa8f1c9d440000a57d95">
+                        <figure>
+                            <img src="http://localhost:3000/images/teddy_3.jpg" alt="">
+                            <figcaption>
+                                <h3 class="item-name">Lenny and Carl</h3>
+                                <button class="item-btn"></button>
+                                <p class="item-price right bold">59 €</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+
+                    <li class="item" id="5beaabe91c9d440000a57d96">
+                        <figure>
+                            <img src="http://localhost:3000/images/teddy_4.jpg" alt="">
+                            <figcaption>
+                                <h3 class="item-name">Gustav</h3>
+                                <button class="item-btn"></button>
+                                <p class="item-price right bold">45 €</p>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    
+                    <li class="item" id="5beaacd41c9d440000a57d97">
+                        <figure>
+                            <img src="http://localhost:3000/images/teddy_5.jpg" alt="">
+                            <figcaption>
+                                <h3 class="item-name">Garfunkel</h3>
+                                <button class="item-btn"></button>
+                                <p class="item-price right bold">55 €</p>
+                            </figcaption>
+                        </figure>
+                    </li>
             </ul>
 
             <script type="text/javascript">
-                function creatingLists(listID){
+/*                function creatingLists(listID){
                     var request = new XMLHttpRequest();
                     var ul = document.getElementById(listID);
                     var urlAPI = "http://localhost:3000/api/" + listID;
@@ -113,10 +117,10 @@
                             var response = JSON.parse(this.responseText);
                             for( let i=0;i < response.length;i++){
                                 var li = document.createElement('li');
-                                li.classList.add("item","col-4");
+                                li.classList.add("item");
                                 li.id = response[i]._id;
-                                li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><p class="item-name">'+
-                                    response[i].name+'</p><button class="item-btn"></button><p class="item-price right bold">'+
+                                li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><h3 class="item-name">'+
+                                    response[i].name+'</h3><button class="item-btn"></button><p class="item-price right bold">'+
                                         response[i].price/100+' €</p></figcaption></figure>';
                                 ul.appendChild(li); 
                             }
@@ -132,8 +136,7 @@
                 document.querySelectorAll(".listItems-content").forEach(item =>{
                     item.addEventListener("click", function(e) {
                          if(e.target && e.target.nodeName === "BUTTON") {
-/*                            console.log("List item ", e.target.parentNode.id, " from ", item.id," was clicked!");*/
-                            location.assign("products.html?id="+e.target.parentNode.id+"&type="+item.id);
+                            location.assign("products.html?id="+e.target.parentNode.parentNode.parentNode.id+"&type="+item.id);
                         }
                     });
                 });
