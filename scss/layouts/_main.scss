@@ -23,6 +23,59 @@ main{
     }
 }
 
+section{
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    & section{
+        box-sizing: border-box;
+        width:calc(50% - 20px);
+        border:2pt $colour-primary solid;
+        border-radius: 30px;
+        padding:20px;
+        & h2{
+            text-align: center;
+        }
+        & form{
+            padding :20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            & fieldset{
+                border:none;
+                & legend{ 
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                } 
+                & div{
+                    padding-left: 40px;
+                }
+            }
+            & label{
+                font-weight: bold;
+            }
+            & div + *{
+                margin-top: 20px;
+            }
+            & div{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                & input{
+                    flex-grow: 1;
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+}
 
 
 article#item{
@@ -83,5 +136,22 @@ article#item{
     padding:30px;
     & > span {
         margin:auto;
+    }
+}
+
+table{
+    border-collapse: collapse;
+    margin:auto;
+
+    & tr:first-child, tr:last-child > th, tr:last-child > td:last-child {
+        background-color: $colour-primary--bkg;
+        
+    }
+    & td, th {
+        padding:20px;
+    }
+    & tr:not(:last-child):not(:first-child){
+        border : solid 1pt $colour-primary--bkg;
+
     }
 }

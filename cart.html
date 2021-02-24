@@ -11,8 +11,6 @@
 </head>
 
 <body>
-
-
     <header>
         <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
             <a id="cart" href="cart.html"> 
@@ -38,64 +36,80 @@
         
         <h1>Votre panier<span class="emptyMsg" hidden> est vide !</span></h1>
 
-        <section>
-            <p class="emptyMsg center font-lg" hidden>Et si vous alliez vous promener par <a href="index.html">ici</a> pour trouver votre bonheur ?</p>
-            <h2>Contenu : </h2>
-            <table id="cart-table" hidden>
-                <tr>
-                    <th>Produit</th>
-                    <th>Prix unitaire</th>
-                    <th>Quantité</th>
-                    <th>Prix</th>
-                </tr>
+        <p class="emptyMsg center font-lg" hidden>Et si vous alliez vous promener par <a href="index.html">ici</a> pour trouver votre bonheur ?</p>
 
-                <tr>
-                    <td>Norbert</td>
-                    <td>29 €</td>
-                    <td>1</td>
-                    <td>29 €</td>
-                </tr>
+        <div class="container">
+            <section hidden>
+                <h2>Vérifiez le contenu de votre panier</h2>
+                <table id="cart-table">
+                    <tr>
+                        <th>Produit</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                        <th>Prix</th>
+                    </tr>
 
-                <tr>
-                    <td>Arnold</td>
-                    <td>39 €</td>
-                    <td>2</td>
-                    <td>78 €</td>
-                </tr>
+                    <tr>
+                        <td>Norbert</td>
+                        <td>29 €</td>
+                        <td>1</td>
+                        <td>29 €</td>
+                    </tr>
 
-                <tr>
-                    <td colspan="3">TOTAL</td>
-                    <td id="table-total">107 €</td>
-                </tr>
-            </table>
-        </section>
- 
-        <section id="formValidation" hidden >
-            <h2>Valider la commande en complétant le formulaire :</h2>
-            <form action=""  >
-                <label for="firstnameUser">Votre prénom :</label>
-                <input type="text" id="firstnameUser" placeholder="John">
-                <label for="firstnameUser">Votre nom :</label>
-                <input type="text" id="nameUser" placeholder="Smith">
-                <label for="emailUser">Votre email : </label>
-                <input type="email" id="emailUser" placeholder="john.smith@gmail.com">
-                <fieldset>
-                    <legend>Votre adresse :</legend>
-                    <label for="addressUser">Rue : </label>
-                    <input type="text" id="addressUser" placeholder="Rue des ">
-                    <label for="cityUser">Ville: </label>
-                    <input type="text" id="cityUser">
-                </fieldset>
-                <button type="submit" class="btn">Confirmer</button>
-            </form>
-        </section>
+                    <tr>
+                        <td>Arnold</td>
+                        <td>39 €</td>
+                        <td>2</td>
+                        <td>78 €</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"></td>
+                        <th class="bold right">TOTAL</th>
+                        <td id="table-total">107 €</td>
+                    </tr>
+                </table>
+            </section>
+    
+            <section id="formValidation" hidden >
+                <h2>Complétez le formulaire</h2>
+                <form action=""  >
+                    <div>
+                        <label for="firstnameUser">Votre prénom :</label>
+                        <input type="text" id="firstnameUser" required placeholder="John">    
+                    </div>
+                    <div>
+                        <label for="firstnameUser">Votre nom :</label>
+                        <input type="text" id="nameUser" required placeholder="Smith">    
+                    </div>
+                    <div>
+                        <label for="emailUser">Votre email : </label>
+                        <input type="email" id="emailUser" required placeholder="john.smith@gmail.com">    
+                    </div>
+                    <fieldset>
+                        <legend>Votre adresse :</legend>
+                        <div>
+                            <label for="addressUser">Rue : </label>
+                            <input type="text" id="addressUser" required placeholder="Avenue des Champs Elysées ">    
+                        </div>
+                        <div>
+                            <label for="cityUser">Ville: </label>
+                            <input type="text" id="cityUser" required placeholder="Paris">     
+                        </div>
+                    </fieldset>
+                    <button type="submit" class="btn">Valider la commande</button>
+                </form>
+            </section>
+        </div>
 
         <script type="text/javascript">
             if( document.cookie.match(/cart=/) ){
                 document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
                 var orderTable = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements.map(item => item.id) ;
-                document.getElementById("cart-table").hidden = false  ;
-                document.getElementById("formValidation").hidden = false;
+
+                document.querySelectorAll("section").forEach(item => {
+                   item.style.display = "flex"; 
+                }) 
 
 /*
                 var cart = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements ;
@@ -109,9 +123,9 @@
 */
             }else{
                 document.getElementById("cart-counter").innerText = 0 ;
-                document.getElementById("cart-table").hidden = true ;
-                document.getElementById("formValidation").hidden = true ;
-                document.querySelector("h2").hidden = true ;
+                document.querySelectorAll("section").forEach(item => {
+                    item.style.display = "none"; 
+                }) 
                 document.querySelectorAll(".emptyMsg").forEach(item => {
                    item.hidden = false; 
                 }) 

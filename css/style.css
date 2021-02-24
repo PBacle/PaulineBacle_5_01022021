@@ -332,6 +332,60 @@ main {
   font-size: 1.375em;
 }
 
+section {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.container section {
+  box-sizing: border-box;
+  width: calc(50% - 20px);
+  border: 2pt #9258F6 solid;
+  border-radius: 30px;
+  padding: 20px;
+}
+.container section h2 {
+  text-align: center;
+}
+.container section form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.container section form fieldset {
+  border: none;
+}
+.container section form fieldset legend {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.container section form fieldset div {
+  padding-left: 40px;
+}
+.container section form label {
+  font-weight: bold;
+}
+.container section form div + * {
+  margin-top: 20px;
+}
+.container section form div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.container section form div input {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
 article#item {
   margin: auto;
   margin: 30px;
@@ -395,6 +449,20 @@ article#item h1 {
 }
 .addDialog > span {
   margin: auto;
+}
+
+table {
+  border-collapse: collapse;
+  margin: auto;
+}
+table tr:first-child, table tr:last-child > th, table tr:last-child > td:last-child {
+  background-color: #F1EAFD;
+}
+table td, table th {
+  padding: 20px;
+}
+table tr:not(:last-child):not(:first-child) {
+  border: solid 1pt #F1EAFD;
 }
 
 /* LIST ITEMS*/
@@ -569,6 +637,11 @@ article#item h1 {
 .nav-btn .left:hover::before, .nav-btn .right:hover::after {
   background-color: #EA8834;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+button {
+  margin: auto;
+  margin-top: 20px;
 }
 
 /* @import "./components/loader";
