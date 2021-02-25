@@ -13,10 +13,10 @@
     <header>
         <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
             <a id="cart" href="cart.html"> 
-                <span class="fa fa-shopping-basket col-12"><span id="cart-counter"></span></span>
-                <p class="col-12">Votre panier</p>
+                <span class="fa fa-shopping-basket"><span id="cart-counter"></span></span>
+                <p>Votre panier</p>
             </a>
-        <nav >
+        <nav>
             <ul>
                 <li><ul>
                     <li class="nav-tab active"><a href="index.html">OriHome</a></li>
@@ -87,144 +87,96 @@
             </section>
         </div>
 
-        <script type="text/javascript">
-
-            const str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
-            var nbItems = Object.values(JSON.parse("{"+str+"}")).reduce((t, {total}) => t + parseInt(total), 0) ;
-
-
-            if( nbItems != 0 ){
-                document.getElementById("cart-counter").innerText = nbItems;
-
-                var orderTable = [];
-                let key = 0  ;
-                let total = 0;
-                Object.entries(JSON.parse("{"+str+"}")).map( ([key, value]) => value.elements ).forEach(item => {
-                    var typeItem = Object.keys(JSON.parse("{"+str+"}"))[key].match(/cart-([a-z]+)/)[1] ;
-
-                    for(let i = 0 ; i < item.length ; i++){
-                        orderTable.push(item[i].id);
-
-                        var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + item[i].id  ;
-                        var request = new XMLHttpRequest();
-                        request.onreadystatechange = function() {
-                            if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                                var response = JSON.parse(this.responseText);
-                                var tr = document.createElement('tr');
-                                tr.innerHTML = '<td>'+response.name+'</td><td>'+response.price/100+' €</td><td>'
-                                +item[i].count+'</td><td>'+item[i].count*response.price/100+' €</td>';
-                                document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); 
-                                total += item[i].count*response.price/100 ;
-                                document.querySelector("#table-total td:last-child").innerHTML = total + " €";
-                            }
-                        };
-                        request.open("GET", urlAPI);
-                        request.send();                    
-                    }
-                    key = key+1;
-                }) ;
-                
-                document.querySelectorAll("section").forEach(item => {
-                   item.style.display = "flex"; 
-                }) 
-
-
- 
-            }else{
-                document.getElementById("cart-counter").innerText = 0 ;
-                document.querySelectorAll("section").forEach(item => {
-                    item.style.display = "none"; 
-                }) 
-                document.querySelectorAll(".emptyMsg").forEach(item => {
-                   item.hidden = false; 
-                }) 
-            }
-
-
-            document.querySelector('button[type="submit"]').addEventListener("click", function(e){
-                e.preventDefault();
-                document.querySelector("form").reportValidity();
-                if( document.querySelector("form").reportValidity() ){
-                    var isValid = true ;
-
-                    document.querySelectorAll('input[type="text"]:not(#addressUser)').forEach(item => {
-                        if(!item.value.match(/^\s*[a-z]+\s*$/i)){
-                            item.parentElement.firstElementChild.classList.add("formatError");
-                            isValid = false ; 
-                        }else {
-                            if(item.parentElement.firstElementChild.classList.contains("formatError")){
-                                item.parentElement.firstElementChild.classList.remove("formatError");    
-                            }
-                        }            
-                    });
-
-
-                    if(!document.getElementById('addressUser').value.match(/^\s*[a-z0-9\s]+\s*$/i)){
-                        document.getElementById('addressUser').parentElement.firstElementChild.classList.add("formatError");
-                        isValid = false ; 
-                    }else{ 
-                        if(document.getElementById('addressUser').parentElement.firstElementChild.classList.contains("formatError")){
-                            document.getElementById('addressUser').parentElement.firstElementChild.classList.remove("formatError");    
-                        }   
-                    }     
-
-                    if(!document.getElementById('emailUser').value.match(/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i)){
-                        isValid = false ; 
-                        document.getElementById('emailUser').parentElement.firstElementChild.classList.add("formatError");
-                    }else{
-                        if(document.getElementById('emailUser').parentElement.firstElementChild.classList.contains("formatError")){
-                            document.getElementById('emailUser').parentElement.firstElementChild.classList.remove("formatError");    
-                        } 
-                    }
-
-                    if(isValid ){
-                        
-                        var order = {
-                            contact : {
-                                firstName: document.getElementById('firstnameUser').value,
-                                lastName: document.getElementById('nameUser').value,
-                                address:document.getElementById('addressUser').value,
-                                city: document.getElementById('cityUser').value,
-                                email: document.getElementById('emailUser').value        
-                            },
-                            products : orderTable
-                        }
-                        
-                        var urlAPI = "http://localhost:3000/api/teddies/order" ;
-                        var request = new XMLHttpRequest(); 
-                        request.open("POST", urlAPI);
-                        request.setRequestHeader("Content-Type","application/json");
-                        request.send(JSON.stringify(order),'./confirmation.html');
-                        
-
-                        request.onreadystatechange = function() {
-                            if (this.readyState == XMLHttpRequest.DONE && this.status == 201) {
-                                var form = document.createElement('form') ;
-                                form.action = "confirmation.html" ; 
-                                form.method = "get" ; 
-                                form.style.display = "none";
-                                form.innerHTML =  '<input type="text" name="ref" value="' + JSON.parse(this.responseText).orderId + '" /><input type="text" name="tot" value="' 
-                                + document.querySelector("#table-total td:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] + '" />' ;
-                                document.body.append(form);
-
-                                document.cookie = "cart-teddies=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ";
-                                form.submit();
-                            }
-                        };
-
-                    };
-
-                }   
-
-
-            })
-
-
-
-
-        </script>
-    
     </main>
+
+    <script type="text/javascript">
+        if( document.cookie.match(/cart-teddies=(.+);*/) ){
+            var nbItems = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total; 
+        }
+
+        if( nbItems != 0 ){
+            var orderTable = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).elements.map(key => key.id);
+            var total = 0 ;
+            JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).elements.forEach(item => {
+                var urlAPI = "http://localhost:3000/api/teddies/" + item.id  ;
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = function() {
+                    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                        var response = JSON.parse(this.responseText);
+                        var tr = document.createElement('tr');
+                        tr.innerHTML = '<td>'+response.name+'</td><td>'+response.price/100+' €</td><td>'
+                            +item.count+'</td><td>'+item.count*response.price/100+' €</td>';
+                        document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); 
+                        total += item.count*response.price/100 ;
+                        document.querySelector("#table-total td:last-child").innerHTML = total + " €";
+                    }
+                };
+                request.open("GET", urlAPI);
+                request.send();                    
+            }) ;
+            document.getElementById("cart-counter").innerText = nbItems;
+            document.querySelectorAll("section").forEach(item => {item.style.display = "flex"; }) 
+        }else{
+            document.getElementById("cart-counter").innerText = 0 ;
+            document.querySelectorAll("section").forEach(item => {item.style.display = "none"; }) 
+            document.querySelectorAll(".emptyMsg").forEach(item => {item.hidden = false; }) 
+        }
+
+
+        function isValid(item,regex,check){
+            if(!item.value.match(regex)){
+                item.parentElement.firstElementChild.classList.add("formatError");
+                check = false ; 
+            }else if(item.parentElement.firstElementChild.classList.contains("formatError")){
+                item.parentElement.firstElementChild.classList.remove("formatError");    
+            }
+        }
+
+        document.querySelector('button[type="submit"]').addEventListener("click", function(e){
+            e.preventDefault();
+            if( document.querySelector("form").reportValidity() ){
+                var isValidCheck = true ;
+                document.querySelectorAll('input[type="text"]:not(#addressUser)').forEach(item => {
+                    isValid(item,/^\s*[a-z]+\s*$/i,isValidCheck);
+                });
+                isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i,isValidCheck);
+                isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i,isValidCheck);
+
+                if(isValidCheck){
+                    var order = {
+                        contact : {
+                            firstName: document.getElementById('firstnameUser').value,
+                            lastName: document.getElementById('nameUser').value,
+                            address:document.getElementById('addressUser').value,
+                            city: document.getElementById('cityUser').value,
+                            email: document.getElementById('emailUser').value        
+                        },
+                        products : orderTable
+                    }
+                    
+                    var urlAPI = "http://localhost:3000/api/teddies/order" ;
+                    var request = new XMLHttpRequest(); 
+                    request.open("POST", urlAPI);
+                    request.setRequestHeader("Content-Type","application/json");
+                    request.send(JSON.stringify(order),'./confirmation.html');
+                    
+                    request.onreadystatechange = function() {
+                        if (this.readyState == XMLHttpRequest.DONE && this.status == 201) {
+                            var form = document.createElement('form') ;
+                            form.action = "confirmation.html" ; 
+                            form.method = "get" ; 
+                            form.style.display = "none";
+                            form.innerHTML =  '<input type="text" name="ref" value="' + JSON.parse(this.responseText).orderId + '" /><input type="text" name="tot" value="' 
+                            + document.querySelector("#table-total td:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] + '" />' ;
+                            document.body.append(form);
+                            document.cookie = "cart-teddies=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ";
+                            form.submit();
+                        }
+                    };
+                };
+            }   
+        })
+    </script>
 
     <footer >
         <h2>Orinoco</h2>

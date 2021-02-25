@@ -30,9 +30,11 @@
             </ul>
         </nav>
         <script type="text/javascript">
-            const str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
-            var arrJSON = JSON.parse("{"+str+"}") ;
-            document.getElementById("cart-counter").innerText = Object.values(arrJSON).reduce((t, {total}) => t + parseInt(total), 0);
+        if( document.cookie.match(/cart-teddies=(.+);*/) ){
+            document.getElementById("cart-counter").innerText = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total;
+        }else{
+            document.getElementById("cart-counter").innerText = "0";
+        }
         </script>
     </header>
 
@@ -47,62 +49,45 @@
             <ul class="listItems-content" id="teddies"></ul>
         </section>
 
-        <section>
-            <header>
-                <h2 class="listItems-name">Caméras vintage</h2>
-                <p class="right">Produits disponibles : <span class="items-nb"></span></p>
-            </header>
-            <ul class="listItems-content" id="cameras"></ul>
-        </section>
-
-        <section>
-            <header>
-                <h2 class="listItems-name">Meubles en bois de chêne</h2>
-                <p class="right">Produits disponibles : <span class="items-nb"></span></p>
-            </header>
-            <ul class="listItems-content" id="furniture"></ul>
-        </section>
-
-
-            <script type="text/javascript" defer>
-                function creatingLists(listID){
-                    var request = new XMLHttpRequest();
-                    var ul = document.getElementById(listID);
-                    var urlAPI = "http://localhost:3000/api/" + listID;
-
-                    request.onreadystatechange = function() {
-                        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                            var response = JSON.parse(this.responseText);
-                            console.log(response);
-                            ul.previousElementSibling.lastElementChild.lastElementChild.innerText = response.length ;
-                            for( let i=0;i < response.length;i++){
-                                var li = document.createElement('li');
-                                li.classList.add("item");
-                                li.id = response[i]._id;
-                                li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><h3 class="item-name">'+
-                                    response[i].name+'</h3><button class="item-btn"></button><p class="item-price right bold">'+
-                                        response[i].price/100+' €</p></figcaption></figure>';
-                                ul.appendChild(li); 
-                            }
-                        }else{
-                            ul.previousElementSibling.lastElementChild.lastElementChild.innerText = "0";
-                        }
-                    };
-                    request.open("GET", urlAPI);
-                    request.send();
-                }
-                creatingLists("teddies");  creatingLists("furniture");creatingLists("cameras");
-
-                document.querySelectorAll(".listItems-content").forEach(item =>{
-                    item.addEventListener("click", function(e) {
-                         if(e.target && e.target.nodeName === "BUTTON") {
-                            location.assign("products.html?id="+e.target.parentNode.parentNode.parentNode.id+"&type="+item.id);
-                        }
-                    });
-                });
-
-            </script>
     </main>
+    <script type="text/javascript" defer>
+        function creatingLists(listID){
+            var request = new XMLHttpRequest();
+            var ul = document.getElementById(listID);
+            var urlAPI = "http://localhost:3000/api/" + listID;
+
+            request.onreadystatechange = function() {
+                if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                    var response = JSON.parse(this.responseText);
+                    ul.previousElementSibling.lastElementChild.lastElementChild.innerText = response.length ;
+                    for( let i=0;i < response.length;i++){
+                        var li = document.createElement('li');
+                        li.classList.add("item");
+                        li.id = response[i]._id;
+                        li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><h3 class="item-name">'+
+                                response[i].name+'</h3><button class="item-btn"></button><p class="item-price right bold">'+
+                                    response[i].price/100+' €</p></figcaption></figure>';
+                        ul.appendChild(li); 
+                    }
+                }else{
+                    ul.previousElementSibling.lastElementChild.lastElementChild.innerText = "0";
+                }
+            };
+            request.open("GET", urlAPI);
+            request.send();
+        }
+        creatingLists("teddies"); 
+
+        document.querySelectorAll(".listItems-content").forEach(item =>{
+            item.addEventListener("click", function(e) {
+                if(e.target && e.target.nodeName === "BUTTON") {
+                    location.assign("products.html?id="+e.target.parentNode.parentNode.parentNode.id+"&type="+item.id);
+                }
+            });
+        });
+
+    </script>
+
 
     <footer >
         <h2>Orinoco</h2>

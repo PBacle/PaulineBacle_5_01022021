@@ -30,11 +30,14 @@
             </ul>
         </nav>
         <script type="text/javascript">
-            var str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
-            var arrJSON = JSON.parse("{"+str+"}") ;
-            document.getElementById("cart-counter").innerText = Object.values(arrJSON).reduce((t, {total}) => t + parseInt(total), 0);
+            if( document.cookie.match(/cart-teddies=(.+);*/) ){
+                document.getElementById("cart-counter").innerText = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total;
+            }else{
+                document.getElementById("cart-counter").innerText = "0";
+            }
         </script>
     </header>
+
 
 
     <main>
@@ -42,7 +45,7 @@
             <ol>
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html">OriHome</a></li>
-                <li id="categorie" class="bold">/li>
+                <li id="categorie" class="bold"><a href="index.html#teddies">Ours en peluche faits main</a></li>
                 <li class="item-name last-tab bold"></li>
             </ol>
         </nav>
@@ -57,7 +60,7 @@
                     <p id="item-price"><span class="bold">Prix unitaire : </span><span></span></p>
                     <form action="">
                         <div>
-                            <label for="item-option" class="bold"></label>
+                            <label for="item-option" class="bold">Couleurs (au choix) :</label>
                             <input type="hidden" id="item-id">
                             <select name="options" id="item-option" required="">
                                 <option value="">-- Choisissez une option --</option>
@@ -84,126 +87,95 @@
             <h1>Oups ! Une erreur s'est produite.</h1>
             <p class="center">Pas d'inquiétude, un clic <a href="index.html" alt="lien retour accueil">ici</a> et c'est reparti ! </p>
         </div>
-
-
-        <script type="text/javascript">
-            const url = window.location.search; 
-            const urlParams = new URLSearchParams(url);
-        
-            if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].length != 0 && urlParams.getAll('type')[0].length != 0){
-                    var idItem  = urlParams.get('id');
-                    var typeItem = urlParams.get('type');
-                    switch (typeItem){
-                        case 'teddies' : 
-                            document.getElementById("categorie").innerHTML = '<a href="index.html#' + typeItem + '">Ours en peluche faits main</a>';
-                            var optionName = "Couleurs";
-                            break;
-                        case 'cameras' : 
-                            document.getElementById("categorie").innerHTML = '<a href="index.html#'+ typeItem + '">Caméras vintage</a>';
-                            var optionName = "Lentilles";
-                            break;
-                        case 'furniture' : 
-                            document.getElementById("categorie").innerHTML = '<a href="index.html#'+ typeItem + '">Meubles en chêne</a>';
-                            var optionName = "Vernis";
-                            break; 
-                    }
-
-                    document.querySelector("#item").style.display = 'flex' ;
-
-                    var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
-                    var request = new XMLHttpRequest();
-
-                    request.onreadystatechange = function() {
-                        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                            var response = JSON.parse(this.responseText);
-
-                            const isOption = (element) => Array.isArray(element[1]) === true;
-                            const index = Object.entries(response).findIndex(isOption) ;
-
-
-                            document.getElementById("item").hidden = false ;
-                            document.getElementById("item-image").src = response.imageUrl ; 
-                            document.querySelectorAll(".item-name").forEach(item => {
-                                item.innerText = response.name ;
-                            }) ;
-                            document.getElementById("item-description").innerText= response.description;
-                            document.querySelector("#item-price span:last-child").innerText= response.price/100  + ' €';
-
-                            document.getElementById("item-id").value= response._id;
-                            var selectList = document.getElementById("item-option");
-
-                            document.querySelector("label[for='item-option']").innerHTML = optionName + " (au choix) :";
-                            
-                            for(let i = 0 ; i < Object.entries(response)[index][1].length ; i++){
-                                var option = document.createElement('option');
-                                option.value = Object.entries(response)[index][1][i];
-                                option.innerText = Object.entries(response)[index][1][i];
-                                selectList.append(option);
-                            }
-
-                        }else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) 
-                        {
-                            document.querySelector("#nav-product").hidden = true ;
-                            document.querySelector(".errorDialog").style.display = 'flex';
-/*                            console.log("Type not found");*/
-                        }
-                    };
-                    request.open("GET", urlAPI);
-                    request.send();                    
-            }else{
-                document.querySelector("#nav-product").hidden = true ;
-                document.querySelector(".errorDialog").style.display = 'flex';
-/*                document.querySelector("#item").style.display = 'none' ;*/
-/*                document.getElementById("categorie").hidden = true ;
-/*                console.log("No id or type");*/
-            }
-
-            document.querySelector(".btn-close").addEventListener("click", function(e){
-                e.preventDefault();
-                document.querySelector(".addDialog").style.display = 'none';
-                document.querySelector("#item h1").hidden = false;
-            })
-
-            document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
-                e.preventDefault();
-                var form = document.querySelector("form") ;
-                form.reportValidity();   
-                if(form.checkValidity() ){                    
-                    document.querySelector(".addDialog").style.display = 'flex';
-                    document.querySelector("#item h1").hidden = true;
-                    document.querySelector(".addDialog span.item-option").innerText = document.getElementById("item-option").value;
-
-
-                    var str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
-                    var pattern = 'cart-' + typeItem ;
-                    if(Object.keys(JSON.parse("{"+str+"}")).includes(pattern) ){
-
-                        var cartObj = JSON.parse("{"+str+"}")[pattern];
-                        console.log( cartObj);
-                        var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
-
-                        if( index != -1){
-                            cartObj.elements[index]['count'] = ++cartObj.elements[index]['count'] ;
-                        }else{
-                            cartObj.elements.push({id: document.getElementById("item-id").value, count:'1'});
-                        } 
-                        cartObj.total = ++cartObj.total ;
-                        var count = cartObj.total;
-                        document.cookie = "cart-"+ typeItem +"=" + JSON.stringify(cartObj)  +";secure" ;  
-                    }else{
-                        var count = 1 ;
-                        document.cookie = "cart-"+ typeItem +"=" + JSON.stringify({total : '1',  
-                        elements: [{ id : document.getElementById("item-id").value, count: '1',}]} )+";secure";
-                    }
-
-                    var str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
-                    document.getElementById("cart-counter").innerText = Object.values(JSON.parse("{"+str+"}")).reduce((t, {total}) => t + parseInt(total), 0);
-                    console.log( document.cookie);
-                }
-             })
-        </script>
-
     </main>
+
+    <script type="text/javascript">
+        const url = window.location.search; 
+        const urlParams = new URLSearchParams(url);
+    
+        if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].length != 0 && urlParams.getAll('type')[0].length != 0){
+                var idItem  = urlParams.get('id');
+                var typeItem = urlParams.get('type');
+
+                document.querySelector("#item").style.display = 'flex' ;
+
+                var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
+                var request = new XMLHttpRequest();
+
+                request.onreadystatechange = function() {
+                    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                        var response = JSON.parse(this.responseText);
+
+                        document.getElementById("item").hidden = false ;
+                        document.getElementById("item-image").src = response.imageUrl ; 
+                        document.querySelectorAll(".item-name").forEach(item => {item.innerText = response.name ;}) ;
+                        document.getElementById("item-description").innerText= response.description;
+                        document.querySelector("#item-price span:last-child").innerText= response.price/100  + ' €';
+                        document.getElementById("item-id").value= response._id;
+
+                        const isOption = (element) => Array.isArray(element[1]) === true;
+                        const index = Object.entries(response).findIndex(isOption) ;                            
+                        var selectList = document.getElementById("item-option");
+                        for(let i = 0 ; i < Object.entries(response)[index][1].length ; i++){
+                            var option = document.createElement('option');
+                            option.value = Object.entries(response)[index][1][i];
+                            option.innerText = Object.entries(response)[index][1][i];
+                            selectList.append(option);
+                        }
+
+                    }else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) 
+                    {
+                        document.querySelector("#nav-product").hidden = true ;
+                        document.querySelector(".errorDialog").style.display = 'flex';
+                    }
+                };
+                request.open("GET", urlAPI);
+                request.send();                    
+        }else{
+            document.querySelector("#nav-product").hidden = true ;
+            document.querySelector(".errorDialog").style.display = 'flex';
+        }
+
+        document.querySelector(".btn-close").addEventListener("click", function(e){
+            e.preventDefault();
+            document.querySelector(".addDialog").style.display = 'none';
+            document.querySelector("#item h1").hidden = false;
+        })
+
+        document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
+            e.preventDefault();
+            var form = document.querySelector("form") ;
+            form.reportValidity();   
+            if(form.checkValidity() ){                    
+                document.querySelector(".addDialog").style.display = 'flex';
+                document.querySelector("#item h1").hidden = true;
+                document.querySelector(".addDialog span.item-option").innerText = document.getElementById("item-option").value;
+
+                var str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
+                var pattern = 'cart-teddies' + typeItem ;
+                if(document.cookie.match(/cart-teddies=(.+);*/) ){
+
+                    var cartObj = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]);
+                    var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
+
+                    if( index != -1){
+                        cartObj.elements[index]['count'] = ++cartObj.elements[index]['count'] ;
+                    }else{
+                        cartObj.elements.push({id: document.getElementById("item-id").value, count:'1'});
+                    } 
+                    cartObj.total = ++cartObj.total ;
+                    var count = cartObj.total;
+                    document.cookie = "cart-"+ typeItem +"=" + JSON.stringify(cartObj)  +";secure" ;  
+                }else{
+                    var count = 1 ;
+                    document.cookie = "cart-"+ typeItem +"=" + JSON.stringify({total : '1',  
+                    elements: [{ id : document.getElementById("item-id").value, count: '1',}]} )+";secure";
+                }
+                document.getElementById("cart-counter").innerText = count ;
+            }
+         })
+    </script>
+
 
     <footer >
         <h2>Orinoco</h2>
