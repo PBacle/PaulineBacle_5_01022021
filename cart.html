@@ -94,7 +94,7 @@
             var nbItems = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total; 
         }
 
-        if( nbItems != 0 ){
+        if( typeof nbItems !== 'undefined' && nbItems != 0 ){
             var orderTable = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).elements.map(key => key.id);
             var total = 0 ;
             JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).elements.forEach(item => {
