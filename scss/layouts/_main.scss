@@ -61,14 +61,16 @@ section{
             }
             & label{
                 font-weight: bold;
+                white-space: nowrap;
             }
             & div + *{
-                margin-top: 20px;
+                margin-top: 30px;
             }
             & div{
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                flex-wrap: wrap;
                 & input{
                     flex-grow: 1;
                     margin-left: 10px;

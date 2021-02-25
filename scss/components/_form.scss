@@ -1,0 +1,13 @@
+
+.formatError{
+    position: relative;
+    &::after{
+        content:"Le format n'est pas correct.";
+        color:red;
+        font-size: $fontsize-sm;
+        display: block;
+        position: absolute;
+        left: calc(100% + 10px);
+        bottom:-20px;
+    }
+}
