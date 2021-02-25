@@ -7,7 +7,6 @@
     <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
-
 </head>
 
 <body>
@@ -15,10 +14,10 @@
     <header>
         <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
             <a id="cart" href="cart.html"> 
-                <span class="fa fa-shopping-basket col-12"><span id="cart-counter"></span></span>
-                <p class="col-12">Votre panier</p>
+                <span class="fa fa-shopping-basket"><span id="cart-counter"></span></span>
+                <p>Votre panier</p>
             </a>
-        <nav >
+        <nav>
             <ul>
                 <li><ul>
                     <li class="nav-tab active"><a href="index.html">OriHome</a></li>
@@ -31,90 +30,51 @@
             </ul>
         </nav>
         <script type="text/javascript">
-            if( document.cookie.match(/cart=/) ){
-                document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
-            }else{
-                document.getElementById("cart-counter").innerText = 0 ;
-            }
+            const str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
+            var arrJSON = JSON.parse("{"+str+"}") ;
+            document.getElementById("cart-counter").innerText = Object.values(arrJSON).reduce((t, {total}) => t + parseInt(total), 0);
         </script>
     </header>
 
     <main>
         <h1>Trouvez la déco qui vous correspond grâce à OriHome ! </h1>
 
-        <section >
+        <section>
             <header>
                 <h2 class="listItems-name">Ours en peluche faits main</h2>
-                <p class="right">Produits disponibles : <span id="items-nb">5</span></p>
+                <p class="right">Produits disponibles : <span class="items-nb"></span></p>
             </header>
+            <ul class="listItems-content" id="teddies"></ul>
+        </section>
 
-            <ul class="listItems-content" id="teddies">
-  
-                    <li class="item" id="5be9c8541c9d440000665243">
-                        <figure>
-                            <img src="./images/teddy_1.jpg" alt="">
-                            <figcaption>
-                                <h3 class="item-name">Norbert</h3>
-                                <button class="item-btn"></button>
-                                <p class="item-price right bold">29 €</p>
-                            </figcaption>
-                        </figure>
-                    </li>
-                    
-                    <li class="item" id="5beaa8bf1c9d440000a57d94">
-                        <figure>
-                            <img src="./images/teddy_2.jpg" alt="">
-                            <figcaption>
-                                <h3 class="item-name">Arnold</h3>
-                                <button class="item-btn"></button>
-                                <p class="item-price right bold">39 €</p>
-                            </figcaption>
-                        </figure>
-                    </li>
+        <section>
+            <header>
+                <h2 class="listItems-name">Caméras vintage</h2>
+                <p class="right">Produits disponibles : <span class="items-nb"></span></p>
+            </header>
+            <ul class="listItems-content" id="cameras"></ul>
+        </section>
 
-                    <li class="item" id="5beaaa8f1c9d440000a57d95">
-                        <figure>
-                            <img src="./images/teddy_3.jpg" alt="">
-                            <figcaption>
-                                <h3 class="item-name">Lenny and Carl</h3>
-                                <button class="item-btn"></button>
-                                <p class="item-price right bold">59 €</p>
-                            </figcaption>
-                        </figure>
-                    </li>
+        <section>
+            <header>
+                <h2 class="listItems-name">Meubles en bois de chêne</h2>
+                <p class="right">Produits disponibles : <span class="items-nb"></span></p>
+            </header>
+            <ul class="listItems-content" id="furniture"></ul>
+        </section>
 
-                    <li class="item" id="5beaabe91c9d440000a57d96">
-                        <figure>
-                            <img src="./images/teddy_4.jpg" alt="">
-                            <figcaption>
-                                <h3 class="item-name">Gustav</h3>
-                                <button class="item-btn"></button>
-                                <p class="item-price right bold">45 €</p>
-                            </figcaption>
-                        </figure>
-                    </li>
-                    
-                    <li class="item" id="5beaacd41c9d440000a57d97">
-                        <figure>
-                            <img src="./images/teddy_5.jpg" alt="">
-                            <figcaption>
-                                <h3 class="item-name">Garfunkel</h3>
-                                <button class="item-btn"></button>
-                                <p class="item-price right bold">55 €</p>
-                            </figcaption>
-                        </figure>
-                    </li>
-            </ul>
 
-            <script type="text/javascript">
-/*                function creatingLists(listID){
+            <script type="text/javascript" defer>
+                function creatingLists(listID){
                     var request = new XMLHttpRequest();
                     var ul = document.getElementById(listID);
-                    var urlAPI = "./api/" + listID;
+                    var urlAPI = "http://localhost:3000/api/" + listID;
 
                     request.onreadystatechange = function() {
                         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                             var response = JSON.parse(this.responseText);
+                            console.log(response);
+                            ul.previousElementSibling.lastElementChild.lastElementChild.innerText = response.length ;
                             for( let i=0;i < response.length;i++){
                                 var li = document.createElement('li');
                                 li.classList.add("item");
@@ -124,14 +84,14 @@
                                         response[i].price/100+' €</p></figcaption></figure>';
                                 ul.appendChild(li); 
                             }
+                        }else{
+                            ul.previousElementSibling.lastElementChild.lastElementChild.innerText = "0";
                         }
                     };
                     request.open("GET", urlAPI);
                     request.send();
                 }
-                creatingLists("teddies");
-/*                creatingLists("furniture");
-                creatingLists("cameras");*/
+                creatingLists("teddies");  creatingLists("furniture");creatingLists("cameras");
 
                 document.querySelectorAll(".listItems-content").forEach(item =>{
                     item.addEventListener("click", function(e) {
@@ -142,7 +102,6 @@
                 });
 
             </script>
-        </section>
     </main>
 
     <footer >

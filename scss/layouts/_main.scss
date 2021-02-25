@@ -92,6 +92,7 @@ article#item{
         display: flex;
         flex-direction: row;
         & figcaption {
+            flex-grow: 1;
             padding-left: calc(30px + 30px);
             display: flex;
             flex-direction: column;

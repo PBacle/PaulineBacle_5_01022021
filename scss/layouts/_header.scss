@@ -3,7 +3,8 @@ header{
     padding:20px 20px 0 20px ;
     display: flex;
     flex-wrap: wrap;
-    max-width: 100%;
+    box-sizing: border-box;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     position: relative;
@@ -15,6 +16,11 @@ header{
 
 }
 
+section header{
+    padding-left:0;
+    padding-right:0;
+    align-items: flex-start;
+}
 
 #cart{
     color:$colour-primary;

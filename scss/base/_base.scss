@@ -12,6 +12,7 @@ body{
     flex-direction:column; 
 }
 
+
 *{
     color:black;
     font-family: $font-main, Times, serif;
@@ -41,7 +42,7 @@ h1{
     font-weight: 900;
     font-style: italic;
     text-align: center;
-    padding:30px;
+    padding: 50px 100px;
 }
 
 h2,h3,h4{
@@ -79,4 +80,8 @@ select{
 
 p + p{
     margin: 30px 0;
+}
+
+section{
+    width: 100%;
 }

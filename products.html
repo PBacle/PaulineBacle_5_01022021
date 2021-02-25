@@ -14,10 +14,10 @@
     <header>
         <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
             <a id="cart" href="cart.html"> 
-                <span class="fa fa-shopping-basket col-12"><span id="cart-counter"></span></span>
-                <p class="col-12">Votre panier</p>
+                <span class="fa fa-shopping-basket"><span id="cart-counter"></span></span>
+                <p>Votre panier</p>
             </a>
-        <nav >
+        <nav>
             <ul>
                 <li><ul>
                     <li class="nav-tab active"><a href="index.html">OriHome</a></li>
@@ -30,11 +30,9 @@
             </ul>
         </nav>
         <script type="text/javascript">
-            if( document.cookie.match(/cart=/) ){
-                document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
-            }else{
-                document.getElementById("cart-counter").innerText = 0 ;
-            }
+            var str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
+            var arrJSON = JSON.parse("{"+str+"}") ;
+            document.getElementById("cart-counter").innerText = Object.values(arrJSON).reduce((t, {total}) => t + parseInt(total), 0);
         </script>
     </header>
 
@@ -44,26 +42,26 @@
             <ol>
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html">OriHome</a></li>
-                <li id="categorie" class="bold">Ours en peluche faits main</li>
-                <li class="item-name last-tab bold">Arnold</li>
+                <li id="categorie" class="bold">/li>
+                <li class="item-name last-tab bold"></li>
             </ol>
         </nav>
 
         <article id="item" style="display: none">
-            <h1>Votre sélection : <span class="item-name">Arnold</span></h1>
+            <h1>Votre sélection : <span class="item-name"></span></h1>
 
             <figure>
                 <img src="./images/teddy_2.jpg" alt="" id="item-image">
                 <figcaption id="item-infos">
-                    <p id="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <p id="item-price"><span class="bold">Prix unitaire : </span><span >39 €</span></p>
+                    <p id="item-description"></p>
+                    <p id="item-price"><span class="bold">Prix unitaire : </span><span></span></p>
                     <form action="">
                         <div>
-                            <label for="item-option" class="bold">Couleur au choix :</label>
-                            <input type="hidden" id="item-id" value="5beaa8bf1c9d440000a57d94">
+                            <label for="item-option" class="bold"></label>
+                            <input type="hidden" id="item-id">
                             <select name="options" id="item-option" required="">
-                                <option value=""><-- Choisissez une option --></option>
-                            <option value="Pale brown">Pale brown</option><option value="Dark brown">Dark brown</option><option value="White">White</option></select>
+                                <option value="">-- Choisissez une option --</option>
+                            </select>
                         </div>
                         <input type="submit" class="btn-addToCart btn" value="Ajouter au panier">
                     </form>
@@ -72,7 +70,7 @@
 
             <div class="addDialog" style="display: none">
                 <button class="btn-close"></button>
-                <span>Vous avez ajouté le produit suivant à votre panier : <span class="bold"><span class="item-name">Arnold</span> (option : <span class="item-option"></span>)</span></span>
+                <span>Vous avez ajouté le produit suivant à votre panier : <span class="bold"><span class="item-name"></span> (option : <span class="item-option"></span>)</span></span>
                 <div class="nav-btn">
                     <a href="index.html" data='&#xf060' class="left">Retour</a>
                     <a href="cart.html" data='&#xf291' class="right">Voir le panier</a>
@@ -97,54 +95,61 @@
                     var typeItem = urlParams.get('type');
                     switch (typeItem){
                         case 'teddies' : 
-                            document.getElementById("categorie").innerHTML = '<a href="index.html?type=' + typeItem + '">Ours en peluche faits main</a>';
+                            document.getElementById("categorie").innerHTML = '<a href="index.html#' + typeItem + '">Ours en peluche faits main</a>';
+                            var optionName = "Couleurs";
                             break;
                         case 'cameras' : 
-                            document.getElementById("categorie").innerHTML = '<a href="index.html?type='+ typeItem + '">Caméras vintage</a>';
+                            document.getElementById("categorie").innerHTML = '<a href="index.html#'+ typeItem + '">Caméras vintage</a>';
+                            var optionName = "Lentilles";
                             break;
                         case 'furniture' : 
-                            document.getElementById("categorie").innerHTML = '<a href="index.html?type='+ typeItem + '">Meubles en chêne</a>';
+                            document.getElementById("categorie").innerHTML = '<a href="index.html#'+ typeItem + '">Meubles en chêne</a>';
+                            var optionName = "Vernis";
                             break; 
                     }
 
-/*                    document.getElementById("product").innerText = */ 
                     document.querySelector("#item").style.display = 'flex' ;
 
-/*                    var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
+                    var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
                     var request = new XMLHttpRequest();
 
                     request.onreadystatechange = function() {
                         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                             var response = JSON.parse(this.responseText);
-                            console.log(response);
+
+                            const isOption = (element) => Array.isArray(element[1]) === true;
+                            const index = Object.entries(response).findIndex(isOption) ;
+
+
                             document.getElementById("item").hidden = false ;
                             document.getElementById("item-image").src = response.imageUrl ; 
                             document.querySelectorAll(".item-name").forEach(item => {
                                 item.innerText = response.name ;
                             }) ;
                             document.getElementById("item-description").innerText= response.description;
-                            document.getElementById("item-price").innerText= response.price/100  + ' €';
+                            document.querySelector("#item-price span:last-child").innerText= response.price/100  + ' €';
 
                             document.getElementById("item-id").value= response._id;
                             var selectList = document.getElementById("item-option");
-                            for(let i = 0 ; i < response.colors.length ; i++){
+
+                            document.querySelector("label[for='item-option']").innerHTML = optionName + " (au choix) :";
+                            
+                            for(let i = 0 ; i < Object.entries(response)[index][1].length ; i++){
                                 var option = document.createElement('option');
-                                option.value = response.colors[i];
-                                option.innerText = response.colors[i];
+                                option.value = Object.entries(response)[index][1][i];
+                                option.innerText = Object.entries(response)[index][1][i];
                                 selectList.append(option);
                             }
 
                         }else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) 
                         {
-                            document.querySelector("#nav-product .item-name").hidden = true ;
-                            document.getElementById("categorie").hidden = true ;
-                            document.querySelector("article#item").hidden = true;
+                            document.querySelector("#nav-product").hidden = true ;
+                            document.querySelector(".errorDialog").style.display = 'flex';
 /*                            console.log("Type not found");*/
-/*                        }
+                        }
                     };
                     request.open("GET", urlAPI);
-                    request.send(idItem);
-*/                    
+                    request.send();                    
             }else{
                 document.querySelector("#nav-product").hidden = true ;
                 document.querySelector(".errorDialog").style.display = 'flex';
@@ -168,12 +173,13 @@
                     document.querySelector("#item h1").hidden = true;
                     document.querySelector(".addDialog span.item-option").innerText = document.getElementById("item-option").value;
 
-                    var count = 0;
-                    console.log( document.cookie);
-                    if ( document.cookie.match(/cart=/) ){
-                        var cart = document.cookie.match(/(cart=)(.+)/)[2];
-                        var cartObj = JSON.parse(cart);
-                        console.log(cartObj);
+
+                    var str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
+                    var pattern = 'cart-' + typeItem ;
+                    if(Object.keys(JSON.parse("{"+str+"}")).includes(pattern) ){
+
+                        var cartObj = JSON.parse("{"+str+"}")[pattern];
+                        console.log( cartObj);
                         var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
 
                         if( index != -1){
@@ -182,14 +188,17 @@
                             cartObj.elements.push({id: document.getElementById("item-id").value, count:'1'});
                         } 
                         cartObj.total = ++cartObj.total ;
-                        count = cartObj.total
-                        document.cookie = "cart=" + JSON.stringify(cartObj)  +";secure" ;  
+                        var count = cartObj.total;
+                        document.cookie = "cart-"+ typeItem +"=" + JSON.stringify(cartObj)  +";secure" ;  
                     }else{
-                        count = 1 ;
-                        document.cookie = "cart=" + JSON.stringify({total : '1',  
+                        var count = 1 ;
+                        document.cookie = "cart-"+ typeItem +"=" + JSON.stringify({total : '1',  
                         elements: [{ id : document.getElementById("item-id").value, count: '1',}]} )+";secure";
                     }
-                    document.getElementById("cart-counter").innerText = count ;
+
+                    var str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
+                    document.getElementById("cart-counter").innerText = Object.values(JSON.parse("{"+str+"}")).reduce((t, {total}) => t + parseInt(total), 0);
+                    console.log( document.cookie);
                 }
              })
         </script>

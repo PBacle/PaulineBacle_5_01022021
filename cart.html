@@ -48,24 +48,10 @@
                         <th>Prix</th>
                     </tr>
 
-                    <tr>
-                        <td>Norbert</td>
-                        <td>29 €</td>
-                        <td>1</td>
-                        <td>29 €</td>
-                    </tr>
-
-                    <tr>
-                        <td>Arnold</td>
-                        <td>39 €</td>
-                        <td>2</td>
-                        <td>78 €</td>
-                    </tr>
-
-                    <tr>
+                    <tr id="table-total"  class="bold">
                         <td colspan="2"></td>
-                        <th class="bold right">TOTAL</th>
-                        <td id="table-total">107 €</td>
+                        <th class="right">TOTAL</th>
+                        <td "></td>
                     </tr>
                 </table>
             </section>
@@ -102,24 +88,48 @@
         </div>
 
         <script type="text/javascript">
-            if( document.cookie.match(/cart=/) ){
-                document.getElementById("cart-counter").innerText = +JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).total ;  
-                var orderTable = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements.map(item => item.id) ;
 
+            const str = document.cookie.replace(/(cart-[a-z]+)=/g, '"'+"$1"+'":').replace(/;/g, ',');
+            var nbItems = Object.values(JSON.parse("{"+str+"}")).reduce((t, {total}) => t + parseInt(total), 0) ;
+
+
+            if( nbItems != 0 ){
+                document.getElementById("cart-counter").innerText = nbItems;
+
+                var orderTable = [];
+                let key = 0  ;
+                let total = 0;
+                Object.entries(JSON.parse("{"+str+"}")).map( ([key, value]) => value.elements ).forEach(item => {
+                    var typeItem = Object.keys(JSON.parse("{"+str+"}"))[key].match(/cart-([a-z]+)/)[1] ;
+
+                    for(let i = 0 ; i < item.length ; i++){
+                        orderTable.push(item[i].id);
+
+                        var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + item[i].id  ;
+                        var request = new XMLHttpRequest();
+                        request.onreadystatechange = function() {
+                            if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                                var response = JSON.parse(this.responseText);
+                                var tr = document.createElement('tr');
+                                tr.innerHTML = '<td>'+response.name+'</td><td>'+response.price/100+' €</td><td>'
+                                +item[i].count+'</td><td>'+item[i].count*response.price/100+' €</td>';
+                                document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); 
+                                total += item[i].count*response.price/100 ;
+                                document.querySelector("#table-total td:last-child").innerHTML = total + " €";
+                            }
+                        };
+                        request.open("GET", urlAPI);
+                        request.send();                    
+                    }
+                    key = key+1;
+                }) ;
+                
                 document.querySelectorAll("section").forEach(item => {
                    item.style.display = "flex"; 
                 }) 
 
-/*
-                var cart = JSON.parse(document.cookie.match(/(cart=)(.+)/)[2]).elements ;
-                var table = document.getElementById("cart-table");
+
  
-                for (let i = 0 ; i < cart.length ; i++){
-                    var tr = document.createElement('tr');
-                    tr.innerHTML = '<td>'+cart[i].id+'</td><td>'+cart[i].count+'</td><td></td>';
-                    table.appendChild(tr); 
-                }
-*/
             }else{
                 document.getElementById("cart-counter").innerText = 0 ;
                 document.querySelectorAll("section").forEach(item => {
