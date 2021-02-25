@@ -43,14 +43,30 @@
 
         <section>
             <header>
-                <h2 class="listItems-name">Ours en peluche faits main</h2>
+                <h2 class="listItems-name nav-btn">Ours en peluche faits main<a href="#" data='&#xf078' class="right expandToggle showUL clickable"></a></h2>
                 <p class="right">Produits disponibles : <span class="items-nb"></span></p>
             </header>
-            <ul class="listItems-content" id="teddies"></ul>
+            <ul class="listItems-content" id="teddies" style="display:none"></ul>
         </section>
-
     </main>
+
     <script type="text/javascript" defer>
+
+        document.querySelector(".expandToggle.clickable").addEventListener("click", function(e) {
+            e.preventDefault();
+            if(this.classList.contains("showUL")){
+                this.parentNode.parentNode.parentNode.lastElementChild.style.display = "flex";
+                this.classList.remove("showUL");
+                this.classList.add("hideUL");
+                this.attributes.data.value = '\uf077';
+            }else if(this.classList.contains("hideUL")){
+                this.parentNode.parentNode.parentNode.lastElementChild.style.display = "none";
+                this.classList.remove("hideUL");
+                this.classList.add("showUL");
+                this.attributes.data.value = '\uf078';
+            }
+        })
+
         function creatingLists(listID){
             var request = new XMLHttpRequest();
             var ul = document.getElementById(listID);
