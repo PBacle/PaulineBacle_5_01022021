@@ -140,6 +140,9 @@
             e.preventDefault();
             document.querySelector(".addDialog").style.display = 'none';
             document.querySelector("#item h1").hidden = false;
+            if(document.getElementById("cart-counter").classList.contains("addOne") ){
+                document.getElementById("cart-counter").classList.remove("addOne")
+            }
         })
 
         document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
@@ -172,6 +175,7 @@
                     elements: [{ id : document.getElementById("item-id").value, count: '1',}]} )+";secure";
                 }
                 document.getElementById("cart-counter").innerText = count ;
+                document.getElementById("cart-counter").classList.add("addOne");
             }
          })
     </script>

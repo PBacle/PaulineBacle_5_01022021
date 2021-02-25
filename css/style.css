@@ -194,6 +194,28 @@ section header {
   text-align: center;
   border: solid 2pt #9258F6;
 }
+#cart span.fa span#cart-counter::before {
+  content: "+1";
+  box-sizing: border-box;
+  display: block;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 16px;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #EA8834;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  border: solid 2pt #EA8834;
+  opacity: 0;
+}
+#cart span.fa span#cart-counter.addOne::before {
+  animation: appear 1000ms ease-in-out 1 both;
+}
 #cart:hover {
   text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
@@ -202,6 +224,15 @@ section header {
   color: black;
 }
 
+@keyframes appear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
 nav {
   margin: auto;
   width: calc(100% - 300px);
