@@ -123,12 +123,15 @@
         }
 
 
-        function isValid(item,regex,check){
+        function isValid(item,regex){
             if(!item.value.match(regex)){
                 item.parentElement.firstElementChild.classList.add("formatError");
-                check = false ; 
-            }else if(item.parentElement.firstElementChild.classList.contains("formatError")){
-                item.parentElement.firstElementChild.classList.remove("formatError");    
+                return false ; 
+            }else {
+                if(item.parentElement.firstElementChild.classList.contains("formatError")){
+                    item.parentElement.firstElementChild.classList.remove("formatError"); 
+                }
+                return true;
             }
         }
 
@@ -136,13 +139,20 @@
             e.preventDefault();
             if( document.querySelector("form").reportValidity() ){
                 var isValidCheck = true ;
-                document.querySelectorAll('input[type="text"]:not(#addressUser)').forEach(item => {
-                    isValid(item,/^\s*[a-z]+\s*$/i,isValidCheck);
-                });
-                isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i,isValidCheck);
-                isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i,isValidCheck);
+                /* document.querySelectorAll('input[type="text"]:not(#addressUser)').forEach(item => {
+                    isValid = isValid(item,/^\s*[a-z]+\s*$/i);
+                }); */
+                let isFirstNameValid = isValid(document.getElementById('firstnameUser'),/^\s*[a-z]+\s*$/i);
+                let isLastNameValid = isValid(document.getElementById('nameUser'),/^\s*[a-z]+\s*$/i);
+                let isAddressValid =  isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i);
+                let isCityValid = isValid(document.getElementById('cityUser'),/^\s*[a-z]+\s*$/i);
+                let isEmailValid = isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i);
 
-                if(isValidCheck){
+
+                /* isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i,isValidCheck);
+                isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i,isValidCheck); */
+
+                if(isEmailValid && isFirstNameValid && isLastNameValid && isCityValid && isAddressValid){
                     var order = {
                         contact : {
                             firstName: document.getElementById('firstnameUser').value,
