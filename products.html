@@ -125,15 +125,18 @@
 
                     }else if (this.readyState == XMLHttpRequest.DONE && this.status == 404) 
                     {
-                        document.querySelector("#nav-product").hidden = true ;
-                        document.querySelector(".errorDialog").style.display = 'flex';
-                    }
+                        showError();                    }
                 };
                 request.open("GET", urlAPI);
                 request.send();                    
         }else{
+            showError();
+        }
+
+        function showError(){
             document.querySelector("#nav-product").hidden = true ;
             document.querySelector(".errorDialog").style.display = 'flex';
+            document.querySelector("main").classList.add("center");
         }
 
         document.querySelector(".btn-close").addEventListener("click", function(e){
@@ -154,7 +157,6 @@
                 document.querySelector("#item h1").hidden = true;
                 document.querySelector(".addDialog span.item-option").innerText = document.getElementById("item-option").value;
 
-                console.log(document.cookie);
                 var pattern = 'cart-teddies' + typeItem ;
                 if(document.cookie.match(/cart-teddies=(.+);*/) ){
 
@@ -168,14 +170,15 @@
                     } 
                     cartObj.total = ++cartObj.total ;
                     var count = cartObj.total;
-                    document.cookie = "cart-"+ typeItem +"=" + JSON.stringify(cartObj)  +";secure;Path=/;Domain=127.0.0.1" ;  
+                    document.cookie = "cart-"+ typeItem +"=" + JSON.stringify(cartObj)  +";secure;Path=/" ;  
                 }else{
                     var count = 1 ;
                     document.cookie = "cart-"+ typeItem +"=" + JSON.stringify({total : '1',  
-                    elements: [{ id : document.getElementById("item-id").value, count: '1',}]} )+";secure;Path=/;Domain=127.0.0.1";
+                    elements: [{ id : document.getElementById("item-id").value, count: '1',}]} )+";secure;Path=/";
                 }
                 document.getElementById("cart-counter").innerText = count ;
                 document.getElementById("cart-counter").classList.add("addOne");
+                console.log(document.cookie);
             }
          })
     </script>

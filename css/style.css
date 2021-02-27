@@ -2,7 +2,7 @@
 @font-face {
   font-family: "belligerent_madnessregular";
   src: url("../fonts/belligerent-webfont.eot");
-  src: url("../fonts/belligerent-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/belligerent-webfont.woff2") format("woff2"), url("../fonts/belligerent-webfont.woff") format("woff"), url("../fonts/belligerent-webfont.ttf") format("truetype"), url("../fonts/belligerent-webfont.svg#belligerent_madnessregular") format("svg");
+  src: url("../fonts/belligerent-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/belligerent-webfont.woff") format("woff"), url("../fonts/belligerent-webfont.ttf") format("truetype"), url("../fonts/belligerent-webfont.svg#belligerent_madnessregular") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -372,6 +372,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+main.center {
   justify-content: center;
 }
 
@@ -531,12 +533,67 @@ table tr:not(:last-child):not(:first-child) {
   text-align: right;
 }
 
+div.loader {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+div.loader.hidden {
+  display: none;
+}
+div.loader .spinner {
+  position: absolute;
+  width: 125px;
+  height: 125px;
+}
+div.loader .spinner:before, div.loader .spinner:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 117px;
+  height: 117px;
+  border: 4px solid #9258F6;
+  border-radius: 50%;
+}
+div.loader .spinner:before {
+  animation: scale-2 1s linear 0s infinite;
+}
+div.loader .spinner:after {
+  opacity: 0;
+  animation: scale-2 1s linear 0.5s infinite;
+}
+@keyframes scale-2 {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.7);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
 /* LIST ITEMS*/
 .listItems-content {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  position: relative;
+  height: 720px;
 }
 .listItems-content li.item {
   flex-grow: 1;
@@ -544,7 +601,7 @@ table tr:not(:last-child):not(:first-child) {
   margin-bottom: 50px;
   border-radius: 30px;
   border: 4pt solid #9258F6;
-  max-height: 300px;
+  height: 300px;
 }
 .listItems-content li.item img {
   width: 100%;

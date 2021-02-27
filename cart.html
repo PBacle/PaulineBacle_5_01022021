@@ -120,7 +120,9 @@
             document.getElementById("cart-counter").innerText = 0 ;
             document.querySelectorAll("section").forEach(item => {item.style.display = "none"; }) 
             document.querySelectorAll(".emptyMsg").forEach(item => {item.hidden = false; }) 
+            document.querySelector("main").classList.add("center");
         }
+
 
 
         function isValid(item,regex){

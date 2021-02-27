@@ -43,24 +43,55 @@
 
         <section>
             <header>
-                <h2 class="listItems-name nav-btn">Ours en peluche faits main<a href="#" data='&#xf078' class="right expandToggle showUL clickable"></a></h2>
+                <h2 class="listItems-name nav-btn">Ours en peluche faits main<a href="#" data='&#xf077' class="right expandToggle hideUL clickable"></a></h2>
                 <p class="right">Produits disponibles : <span class="items-nb"></span></p>
             </header>
-            <ul class="listItems-content" id="teddies" style="display:none"></ul>
+            <ul class="listItems-content" id="teddies" style="display:flex" class="showed">
+                <div class="loader">
+                    <div class="spinner">
+
+                    </div>
+                </div>
+            </ul>
         </section>
     </main>
 
     <script type="text/javascript" defer>
 
+
+
+window.onload =  function(){
+    setTimeout(function(){
+        fadeOutEffect("#teddies .loader");
+    }, 500);
+};
+
+function fadeOutEffect(item) {
+    var fadeTarget = document.querySelector(item);
+    var fadeEffect = setInterval(function () {
+        if (!fadeTarget.style.opacity) {
+            fadeTarget.style.opacity = 1;
+        }
+        if (fadeTarget.style.opacity > 0) {
+            fadeTarget.style.opacity -= 0.1;
+        } else {
+            clearInterval(fadeEffect);
+            fadeTarget.classList.add("hidden");
+        }
+    }, 25);
+}
+
         document.querySelector(".expandToggle.clickable").addEventListener("click", function(e) {
             e.preventDefault();
             if(this.classList.contains("showUL")){
                 this.parentNode.parentNode.parentNode.lastElementChild.style.display = "flex";
+                this.parentNode.parentNode.parentNode.lastElementChild.classList.add("showed")
                 this.classList.remove("showUL");
                 this.classList.add("hideUL");
                 this.attributes.data.value = '\uf077';
             }else if(this.classList.contains("hideUL")){
                 this.parentNode.parentNode.parentNode.lastElementChild.style.display = "none";
+                this.parentNode.parentNode.parentNode.lastElementChild.classList.add("hidden");
                 this.classList.remove("hideUL");
                 this.classList.add("showUL");
                 this.attributes.data.value = '\uf078';
