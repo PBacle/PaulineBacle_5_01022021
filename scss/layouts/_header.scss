@@ -12,6 +12,11 @@ header{
 
     & img{
         max-height: 100px;
+        transition: transform 300ms ease-in-out  ;
+        @media (max-width: 599px) {
+            transform: scale(0.9);
+        }
+    
     }
 
 }
@@ -23,6 +28,10 @@ section header{
 }
 
 #cart{
+    transition: transform 300ms ease-in-out  ;
+    @media (max-width: 599px) {
+        transform: scale(0.75);
+    }
     color:$colour-primary;
     display: flex;
     justify-content: flex-end;

@@ -155,6 +155,12 @@ header {
 }
 header img {
   max-height: 100px;
+  transition: transform 300ms ease-in-out;
+}
+@media (max-width: 599px) {
+  header img {
+    transform: scale(0.9);
+  }
 }
 
 section header {
@@ -164,6 +170,7 @@ section header {
 }
 
 #cart {
+  transition: transform 300ms ease-in-out;
   color: #9258F6;
   display: flex;
   justify-content: flex-end;
@@ -172,6 +179,11 @@ section header {
   flex-direction: column;
   align-items: center;
   font-weight: bold;
+}
+@media (max-width: 599px) {
+  #cart {
+    transform: scale(0.75);
+  }
 }
 #cart span.fa {
   font-size: 3em;
