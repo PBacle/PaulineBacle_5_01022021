@@ -1,28 +1,28 @@
 
 
 
-window.onload =  function(){
-    creatingLists("teddies"); 
-
-/*    setTimeout(function(){
-        fadeOutEffect("#teddies .loader");
-    }, 500);*/
-};
+window.onload =  function(){ creatingLists("teddies"); }
 
 document.querySelector(".expandToggle.clickable").addEventListener("click", function(e) {
     e.preventDefault();
+    var btn = this;
     if(this.classList.contains("showUL")){
-        this.parentNode.parentNode.parentNode.lastElementChild.style.display = "flex";
+        this.parentNode.parentNode.parentNode.lastElementChild.classList.remove("hidden");
         this.parentNode.parentNode.parentNode.lastElementChild.classList.add("showed")
         this.classList.remove("showUL");
         this.classList.add("hideUL");
+        this.parentNode.parentNode.parentNode.lastElementChild.style.display = "flex";
     }else if(this.classList.contains("hideUL")){
-        this.parentNode.parentNode.parentNode.lastElementChild.style.display = "none";
+        this.parentNode.parentNode.parentNode.lastElementChild.classList.remove("showed");
         this.parentNode.parentNode.parentNode.lastElementChild.classList.add("hidden");
         this.classList.remove("hideUL");
         this.classList.add("showUL");
+        setTimeout( function() {
+            btn.parentNode.parentNode.parentNode.lastElementChild.style.display = "none";
+            }, (btn.parentNode.parentNode.parentNode.lastElementChild.children.length-1)*100+500);
     }
 })
+
 
 function creatingLists(listID){
     var request = new XMLHttpRequest();
@@ -53,7 +53,10 @@ function creatingLists(listID){
                 })).then(results => {
                     if (results.every(res => res) && results.length == response.length){
                         console.log('all images loaded successfully');
-                        setTimeout(fadeOutEffect("#teddies .loader"),3000);
+/*                        fadeOutEffect("#teddies .loader");*/
+                        setTimeout(function(){
+                            fadeOutEffect("#teddies .loader");
+                            document.getElementById("teddies").classList.add("showed");},300);
                     }
                 });
 
@@ -64,8 +67,6 @@ function creatingLists(listID){
     };
     request.open("GET", urlAPI);
     request.send();
-
-
 }
 
 document.querySelectorAll(".listItems-content").forEach(item =>{

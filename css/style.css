@@ -608,6 +608,19 @@ div.loader .spinner:after {
     transform: translateY(0px);
   }
 }
+.listItems-content.hidden li {
+  animation: itemDisappearing 500ms ease-in-out forwards;
+}
+@keyframes itemDisappearing {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
 .listItems-content li.item {
   flex-grow: 1;
   max-width: 30%;
