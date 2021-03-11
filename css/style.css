@@ -281,6 +281,8 @@ nav .nav-tab.active.last-tab::after {
   right: 0;
 }
 nav#nav-product {
+  margin-top: 0;
+  margin-bottom: 30px;
   width: 100%;
 }
 nav#nav-product ol {
@@ -443,9 +445,7 @@ section {
 }
 
 article#item {
-  margin: auto;
-  margin: 30px;
-  margin-top: 60px;
+  margin: auto 30px;
   border: solid #9258F6 2pt;
   padding: calc(30px + 30px);
   border-radius: 30px;
