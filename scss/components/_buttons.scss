@@ -113,3 +113,14 @@ button{
     margin:auto;
 
 }
+
+.showUL::before,
+.showUL::after{
+    transform: rotate(180deg);
+    transition: transform 300ms ease-in-out;
+}
+
+.hideUL::after{
+    transition: transform 300ms ease-in-out;
+}
+

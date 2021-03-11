@@ -7,10 +7,13 @@
     <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
+    
+    <script src="./js/common.js" defer></script>
+    <script src="./js/index.js" defer></script>
 </head>
 
 <body>
-
     <header>
         <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
             <a id="cart" href="cart.html"> 
@@ -29,13 +32,6 @@
                 <li class="nav-tab last-tab"><a href="index.html">Envie d'autre chose ?</a></li>
             </ul>
         </nav>
-        <script type="text/javascript">
-        if( document.cookie.match(/cart-teddies=(.+);*/) ){
-            document.getElementById("cart-counter").innerText = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total;
-        }else{
-            document.getElementById("cart-counter").innerText = "0";
-        }
-        </script>
     </header>
 
     <main>
@@ -55,86 +51,6 @@
             </ul>
         </section>
     </main>
-
-    <script type="text/javascript" defer>
-
-
-
-window.onload =  function(){
-    setTimeout(function(){
-        fadeOutEffect("#teddies .loader");
-    }, 500);
-};
-
-function fadeOutEffect(item) {
-    var fadeTarget = document.querySelector(item);
-    var fadeEffect = setInterval(function () {
-        if (!fadeTarget.style.opacity) {
-            fadeTarget.style.opacity = 1;
-        }
-        if (fadeTarget.style.opacity > 0) {
-            fadeTarget.style.opacity -= 0.1;
-        } else {
-            clearInterval(fadeEffect);
-            fadeTarget.classList.add("hidden");
-        }
-    }, 25);
-}
-
-        document.querySelector(".expandToggle.clickable").addEventListener("click", function(e) {
-            e.preventDefault();
-            if(this.classList.contains("showUL")){
-                this.parentNode.parentNode.parentNode.lastElementChild.style.display = "flex";
-                this.parentNode.parentNode.parentNode.lastElementChild.classList.add("showed")
-                this.classList.remove("showUL");
-                this.classList.add("hideUL");
-                this.attributes.data.value = '\uf077';
-            }else if(this.classList.contains("hideUL")){
-                this.parentNode.parentNode.parentNode.lastElementChild.style.display = "none";
-                this.parentNode.parentNode.parentNode.lastElementChild.classList.add("hidden");
-                this.classList.remove("hideUL");
-                this.classList.add("showUL");
-                this.attributes.data.value = '\uf078';
-            }
-        })
-
-        function creatingLists(listID){
-            var request = new XMLHttpRequest();
-            var ul = document.getElementById(listID);
-            var urlAPI = "http://localhost:3000/api/" + listID;
-
-            request.onreadystatechange = function() {
-                if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                    var response = JSON.parse(this.responseText);
-                    ul.previousElementSibling.lastElementChild.lastElementChild.innerText = response.length ;
-                    for( let i=0;i < response.length;i++){
-                        var li = document.createElement('li');
-                        li.classList.add("item");
-                        li.id = response[i]._id;
-                        li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><h3 class="item-name">'+
-                                response[i].name+'</h3><button class="item-btn"></button><p class="item-price right bold">'+
-                                    response[i].price/100+' €</p></figcaption></figure>';
-                        ul.appendChild(li); 
-                    }
-                }else{
-                    ul.previousElementSibling.lastElementChild.lastElementChild.innerText = "0";
-                }
-            };
-            request.open("GET", urlAPI);
-            request.send();
-        }
-        creatingLists("teddies"); 
-
-        document.querySelectorAll(".listItems-content").forEach(item =>{
-            item.addEventListener("click", function(e) {
-                if(e.target && e.target.nodeName === "BUTTON") {
-                    location.assign("products.html?id="+e.target.parentNode.parentNode.parentNode.id+"&type="+item.id);
-                }
-            });
-        });
-
-    </script>
-
 
     <footer >
         <h2>Orinoco</h2>

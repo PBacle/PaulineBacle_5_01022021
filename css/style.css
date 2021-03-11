@@ -595,6 +595,19 @@ div.loader .spinner:after {
   position: relative;
   height: 720px;
 }
+.listItems-content.showed li {
+  animation: itemAppearing 500ms ease-in-out backwards;
+}
+@keyframes itemAppearing {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
 .listItems-content li.item {
   flex-grow: 1;
   max-width: 30%;
@@ -766,6 +779,16 @@ div.loader .spinner:after {
 
 button {
   margin: auto;
+}
+
+.showUL::before,
+.showUL::after {
+  transform: rotate(180deg);
+  transition: transform 300ms ease-in-out;
+}
+
+.hideUL::after {
+  transition: transform 300ms ease-in-out;
 }
 
 .formatError {
