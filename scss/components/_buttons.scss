@@ -1,3 +1,11 @@
+button.btn.unclickable{
+    cursor:not-allowed;
+    background-color: gray;
+    &:hover{
+        box-shadow: none;
+    }
+}
+
 .item-btn{
     background-color: transparent;
     border:none;

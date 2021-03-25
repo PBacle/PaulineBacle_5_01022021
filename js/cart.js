@@ -12,7 +12,10 @@ if( typeof nbItems !== 'undefined' && nbItems != 0 ){
         .then( data => {            
             if(!document.querySelector(".loader").classList.contains("hidden")){
                 fadeOutEffect(".loader")
-                .then(() => {document.querySelector("table#cart-table").hidden = false;})
+                .then(() => {
+                    document.querySelector("table#cart-table").hidden = false;
+                    document.querySelector('button[type="submit"]').classList.remove("unclickable");
+                })
             };
 
             var response = JSON.parse(data.responseText);
@@ -32,7 +35,7 @@ if( typeof nbItems !== 'undefined' && nbItems != 0 ){
 
 document.querySelector('button[type="submit"]').addEventListener("click", function(e){
     e.preventDefault();
-    if( document.querySelector("form").reportValidity() ){
+    if( document.querySelector("form").reportValidity() && !e.target.classList.contains("unclickable")){
         /*var isValidCheck = true ;
          document.querySelectorAll('input[type="text"]:not(#addressUser)').forEach(item => {
             isValid = isValid(item,/^\s*[a-z]+\s*$/i);
@@ -67,7 +70,6 @@ document.querySelector('button[type="submit"]').addEventListener("click", functi
                 form.innerHTML =  '<input type="text" name="ref" value="' + JSON.parse(data.responseText).orderId + '" /><input type="text" name="tot" value="' 
                 + document.querySelector("#table-total td:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] + '" />' ;
                 document.body.append(form);
-                document.cookie = "cart-teddies=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ";
                 form.submit();
             } )
             .catch( data => {

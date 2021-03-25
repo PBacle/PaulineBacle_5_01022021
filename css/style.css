@@ -723,6 +723,14 @@ div.loader .spinner:after {
   opacity: 0.75;
 }
 
+button.btn.unclickable {
+  cursor: not-allowed;
+  background-color: gray;
+}
+button.btn.unclickable:hover {
+  box-shadow: none;
+}
+
 .item-btn {
   background-color: transparent;
   border: none;
