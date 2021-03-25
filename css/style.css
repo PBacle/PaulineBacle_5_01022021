@@ -435,6 +435,7 @@ main.center {
 section {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .container {
@@ -554,6 +555,7 @@ article#item h1 {
 }
 
 table {
+  position: relative;
   border-collapse: collapse;
   margin: auto;
 }
@@ -579,6 +581,7 @@ table tr:not(:last-child):not(:first-child) {
 }
 
 div.loader {
+  box-sizing: border-box;
   background-color: white;
   position: absolute;
   top: 0;

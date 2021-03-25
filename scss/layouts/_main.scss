@@ -28,6 +28,7 @@ main{
 section{
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .container{
@@ -146,6 +147,7 @@ article#item{
 }
 
 table{
+    position: relative;
     border-collapse: collapse;
     margin:auto;
 
@@ -183,6 +185,7 @@ $small-spinner-dimensions: $main-spinner-dimensions * 0.7; //width and height of
 
 
 div.loader{
+    box-sizing: border-box;
     background-color:white;
     position: absolute;
     top:0;bottom:0;left:0;right:0;

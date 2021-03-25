@@ -15,10 +15,7 @@ function requestList(listID){
     })
 }
 
-function creatingList(data, listID){
-    var response = JSON.parse(data.responseText) ;  
-    var ul = document.getElementById(listID);
-    ul.previousElementSibling.lastElementChild.lastElementChild.innerText = response.length ;    
+function creatingList(response, ul){
     for( let i=0;i < response.length;i++){
         var li = document.createElement('li');
         li.classList.add("item");
@@ -38,9 +35,7 @@ function creatingList(data, listID){
         })).then(results => {
             if (results.every(res => res) && results.length == response.length){
                 console.log('all images loaded successfully');
-                setTimeout(function(){
-                    fadeOutEffect("#teddies .loader");
-                    document.getElementById("teddies").classList.add("showed");},300);
+                document.querySelector(".expandToggle.clickable").click();
             }
         });
     }
@@ -53,7 +48,15 @@ window.onload =  function(){
         .catch( ()  => { 
             window.setTimeout(function(){window.location.replace("error.html")},1000); 
         }) 
-        .then( data => { creatingList(data, listID); })
+        .then( data => { 
+            var ul = document.getElementById(listID);
+            var response = JSON.parse(data.responseText) ;  
+            ul.previousElementSibling.lastElementChild.lastElementChild.innerText = response.length ;                    
+            fadeOutEffect(".loader")
+            .then( () => {
+                if(response.length > 0) creatingList(response, ul);
+            })
+         })
         .catch( () => {console.log('Error : no ul created for this category')})
     }
 }

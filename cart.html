@@ -7,6 +7,9 @@
     <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
+
+    <script src="./js/common.js" defer></script>
+    <script src="./js/cart.js" defer></script>
 </head>
 
 <body>
@@ -30,9 +33,7 @@
         </nav>
     </header>
 
-
-    <main>
-        
+    <main>        
         <h1>Votre panier<span class="emptyMsg" hidden> est vide !</span></h1>
 
         <p class="emptyMsg center font-lg" hidden>Et si vous alliez vous promener par <a href="index.html">ici</a> pour trouver votre bonheur ?</p>
@@ -40,7 +41,11 @@
         <div class="container">
             <section hidden>
                 <h2>Vérifiez le contenu de votre panier</h2>
-                <table id="cart-table">
+
+                <div class="loader" style="background-color:transparent"><div class="spinner"></div></div>
+                
+                <table id="cart-table" hidden>
+                    
                     <tr>
                         <th>Produit</th>
                         <th>Prix unitaire</th>
@@ -88,107 +93,6 @@
         </div>
 
     </main>
-
-    <script type="text/javascript">
-        if( document.cookie.match(/cart-teddies=(.+);*/) ){
-            var nbItems = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total; 
-        }
-
-        if( typeof nbItems !== 'undefined' && nbItems != 0 ){
-            var orderTable = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).elements.map(key => key.id);
-            var total = 0 ;
-            JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).elements.forEach(item => {
-                var urlAPI = "http://localhost:3000/api/teddies/" + item.id  ;
-                var request = new XMLHttpRequest();
-                request.onreadystatechange = function() {
-                    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                        var response = JSON.parse(this.responseText);
-                        var tr = document.createElement('tr');
-                        tr.innerHTML = '<td>'+response.name+'</td><td>'+response.price/100+' €</td><td>'
-                            +item.count+'</td><td>'+item.count*response.price/100+' €</td>';
-                        document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); 
-                        total += item.count*response.price/100 ;
-                        document.querySelector("#table-total td:last-child").innerHTML = total + " €";
-                    }
-                };
-                request.open("GET", urlAPI);
-                request.send();                    
-            }) ;
-            document.getElementById("cart-counter").innerText = nbItems;
-            document.querySelectorAll("section").forEach(item => {item.style.display = "flex"; }) 
-        }else{
-            document.getElementById("cart-counter").innerText = 0 ;
-            document.querySelectorAll("section").forEach(item => {item.style.display = "none"; }) 
-            document.querySelectorAll(".emptyMsg").forEach(item => {item.hidden = false; }) 
-            document.querySelector("main").classList.add("center");
-        }
-
-
-
-        function isValid(item,regex){
-            if(!item.value.match(regex)){
-                item.parentElement.firstElementChild.classList.add("formatError");
-                return false ; 
-            }else {
-                if(item.parentElement.firstElementChild.classList.contains("formatError")){
-                    item.parentElement.firstElementChild.classList.remove("formatError"); 
-                }
-                return true;
-            }
-        }
-
-        document.querySelector('button[type="submit"]').addEventListener("click", function(e){
-            e.preventDefault();
-            if( document.querySelector("form").reportValidity() ){
-                var isValidCheck = true ;
-                /* document.querySelectorAll('input[type="text"]:not(#addressUser)').forEach(item => {
-                    isValid = isValid(item,/^\s*[a-z]+\s*$/i);
-                }); */
-                let isFirstNameValid = isValid(document.getElementById('firstnameUser'),/^\s*[a-z]+\s*$/i);
-                let isLastNameValid = isValid(document.getElementById('nameUser'),/^\s*[a-z]+\s*$/i);
-                let isAddressValid =  isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i);
-                let isCityValid = isValid(document.getElementById('cityUser'),/^\s*[a-z]+\s*$/i);
-                let isEmailValid = isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i);
-
-
-                /* isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i,isValidCheck);
-                isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i,isValidCheck); */
-
-                if(isEmailValid && isFirstNameValid && isLastNameValid && isCityValid && isAddressValid){
-                    var order = {
-                        contact : {
-                            firstName: document.getElementById('firstnameUser').value,
-                            lastName: document.getElementById('nameUser').value,
-                            address:document.getElementById('addressUser').value,
-                            city: document.getElementById('cityUser').value,
-                            email: document.getElementById('emailUser').value        
-                        },
-                        products : orderTable
-                    }
-                    
-                    var urlAPI = "http://localhost:3000/api/teddies/order" ;
-                    var request = new XMLHttpRequest(); 
-                    request.open("POST", urlAPI);
-                    request.setRequestHeader("Content-Type","application/json");
-                    request.send(JSON.stringify(order),'./confirmation.html');
-                    
-                    request.onreadystatechange = function() {
-                        if (this.readyState == XMLHttpRequest.DONE && this.status == 201) {
-                            var form = document.createElement('form') ;
-                            form.action = "confirmation.html" ; 
-                            form.method = "get" ; 
-                            form.style.display = "none";
-                            form.innerHTML =  '<input type="text" name="ref" value="' + JSON.parse(this.responseText).orderId + '" /><input type="text" name="tot" value="' 
-                            + document.querySelector("#table-total td:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] + '" />' ;
-                            document.body.append(form);
-                            document.cookie = "cart-teddies=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ";
-                            form.submit();
-                        }
-                    };
-                };
-            }   
-        })
-    </script>
 
     <footer >
         <h2>Orinoco</h2>
