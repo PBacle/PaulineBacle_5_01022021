@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OriHome by Orinoco</title>
+    <title>Serveur injoignable - OriHome by Orinoco</title>
     <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
-    
-    <script src="./js/common.js" defer></script>
-    <script src="./js/index.js" defer></script>
 </head>
 
 <body>
+
     <header>
         <a href="index.html"><img src="./images/logo.png" alt="Lien Page d'accueil Orinoco"></a>
             <a id="cart" href="cart.html"> 
@@ -32,24 +29,21 @@
                 <li class="nav-tab last-tab"><a href="index.html">Envie d'autre chose ?</a></li>
             </ul>
         </nav>
+        <script type="text/javascript">
+            if( document.cookie.match(/cart-teddies=(.+);*/) ){
+                document.getElementById("cart-counter").innerText = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total;
+            }else{
+                document.getElementById("cart-counter").innerText = "0";
+            }
+        </script>
     </header>
 
     <main>
-        <h1>Trouvez la déco qui vous correspond grâce à OriHome ! </h1>
-
-        <section class="listItems">
-            <header>
-                <h2 class="listItems-name nav-btn">Ours en peluche faits main<a href="#" data='&#xf077' class="right expandToggle hideUL clickable"></a></h2>
-                <p class="right">Produits disponibles : <span class="items-nb"></span></p>
-            </header>
-            <ul class="listItems-content" id="teddies" style="display:flex" class="showed">
-                <div class="loader">
-                    <div class="spinner">
-
-                    </div>
-                </div>
-            </ul>
-        </section>
+        <div class="errorDialog">
+            <h1>Oups ! Une erreur s'est produite.</h1>
+            <p class="center">Toutes nos excuses, il semblerait que le serveur soit hors de portée. <br>
+                Essayez de recharger la page d'<a href="index.html" alt="lien retour accueil">Accueil</a> dans un instant et n'hésitez pas à <a href="#" alt="lien formulaire contact">nous contacter</a> si le problème persiste. </p>
+        </div>
     </main>
 
     <footer >
@@ -91,5 +85,6 @@
     </footer>
     
 </body>
+
 
 </html>

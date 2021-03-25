@@ -308,13 +308,26 @@ nav#nav-product ol li:not(.last-tab)::after {
 }
 
 footer {
+  flex-wrap: wrap;
   width: calc(100% - 40px);
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   justify-content: space-between;
   padding: 20px;
+}
+@media (max-width: 400px) {
+  footer {
+    flex-direction: column;
+  }
+}
+@media (max-width: 1099px) {
+  footer {
+    justify-content: space-evenly;
+  }
+}
+footer * {
+  white-space: nowrap;
 }
 footer h2, footer h3 {
   width: 100%;
@@ -331,6 +344,21 @@ footer section {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+}
+@media (max-width: 400px) {
+  footer section.left {
+    text-align: center;
+  }
+}
+@media (max-width: 399px) {
+  footer section.right {
+    text-align: center;
+  }
+}
+@media (max-width: 1099px) {
+  footer section {
+    max-width: 50%;
+  }
 }
 footer section > ul > li + li {
   margin-top: 10px;
@@ -370,6 +398,11 @@ footer section li.socials ul + span {
   display: flex;
   align-items: center;
   margin-left: 10px;
+}
+@media (max-width: 1300px) {
+  footer section li.socials ul + span {
+    display: none;
+  }
 }
 
 main {

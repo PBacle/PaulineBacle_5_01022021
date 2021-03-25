@@ -1,11 +1,22 @@
 footer{
+    @media (max-width: 400px) {
+        flex-direction: column;        
+    }
+    flex-wrap: wrap;
     width: calc(100% - 40px);
     flex-shrink: 0;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: row;        
     justify-content: space-between;
     padding:20px ;
+    @media (max-width: 1099px) {
+        justify-content: space-evenly;
+    }
+
+
+    & *{
+        white-space: nowrap;
+    }
     & h2,h3{
         width:100%; margin:20px 0 20px 0;
     }    
@@ -17,6 +28,19 @@ footer{
     }
     & section{
         max-width: 30%;
+        &.left{
+            @media (max-width: 400px) {
+                text-align: center;        
+            }        
+        }
+        &.right{
+            @media (max-width: 399px) {
+                text-align: center;        
+            }        
+        }
+        @media (max-width: 1099px) {
+            max-width: 50%;
+        }
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -56,6 +80,9 @@ footer{
                 & + span{
                     display: flex;align-items: center;
                     margin-left:10px;
+                    @media (max-width: 1300px) {
+                        display: none;
+                    }                        
                 }
             }
         }  
