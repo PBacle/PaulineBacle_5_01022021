@@ -42,12 +42,11 @@ h1{
     font-weight: 900;
     font-style: italic;
     text-align: center;
-    padding: 50px 100px;
+    margin: $margin-lg auto;
 }
 
 h2,h3,h4{
     font-weight:bold;
-    padding-bottom:20px;
 }
 
 h1{
@@ -79,7 +78,7 @@ select{
 }
 
 p + p{
-    margin: 30px 0;
+    margin: $margin-std 0;
 }
 
 section{

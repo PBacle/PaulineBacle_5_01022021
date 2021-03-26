@@ -3,12 +3,12 @@ footer{
         flex-direction: column;        
     }
     flex-wrap: wrap;
-    width: calc(100% - 40px);
+    width: calc(100% - #{$padding-std} - #{$padding-std});
     flex-shrink: 0;
     display: flex;
     flex-direction: row;        
     justify-content: space-between;
-    padding:20px ;
+    padding:$padding-std ;
     @media (max-width: 1099px) {
         justify-content: space-evenly;
     }
@@ -18,7 +18,7 @@ footer{
         white-space: nowrap;
     }
     & h2,h3{
-        width:100%; margin:20px 0 20px 0;
+        width:100%; padding: $padding-std 0;
     }    
     & h2{
         font-size: $fontsize-xlg;
@@ -27,6 +27,7 @@ footer{
         margin-bottom: 0;
     }
     & section{
+        margin-top: 0;
         max-width: 30%;
         &.left{
             @media (max-width: 400px) {
@@ -45,7 +46,7 @@ footer{
         flex-direction: column;
         flex-wrap: wrap;
         & >ul>li + li{
-            margin-top: 10px;
+            padding-top: $padding-sm;
             }
         &.center{
                 & ul{
@@ -75,11 +76,11 @@ footer{
                 & li{
                     flex-grow: 1;
                     font-size: $fontsize-icon-sm;
-                    & + li{margin-left:10px;}
+                    & + li{padding-left:$padding-sm;}
                 }
                 & + span{
                     display: flex;align-items: center;
-                    margin-left:10px;
+                    padding-left:$padding-sm;
                     @media (max-width: 1300px) {
                         display: none;
                     }                        

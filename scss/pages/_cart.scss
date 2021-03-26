@@ -1,0 +1,52 @@
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    & section{
+        box-sizing: border-box;
+        width:calc(50% - #{$padding-std});
+        border:$border-width-md $colour-primary solid;
+        border-radius: $padding-std;
+        padding:$padding-std;
+        & h2{
+            text-align: center;
+        }
+        & form{
+            padding:$padding-std;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            & fieldset{
+                border:none;
+                padding-bottom:$padding-std ;
+                & legend{ 
+                    font-weight: bold;
+                    padding-bottom:$padding-std ;
+                } 
+                & div{
+                    padding-left: calc(#{$padding-std} + #{$padding-std});
+                }
+            }
+            & label{
+                font-weight: bold;
+                white-space: nowrap;
+            }
+            & div + *{
+                margin-top: $margin-std;
+            }
+            & div{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: wrap;
+                & input{
+                    flex-grow: 1;
+                    margin-left: $margin-sm;                    ;
+                }
+            }
+        }
+    }
+}
+

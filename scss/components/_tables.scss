@@ -1,0 +1,17 @@
+table{
+    position: relative;
+    border-collapse: collapse;
+    margin:auto;
+
+    & tr > th {
+        background-color: $colour-primary--bkg;        
+        border : solid $border-width-md $colour-primary--bkg;
+    }
+    & td, th {
+        padding:$padding-std;
+        text-align: center;
+    }
+    & tr:not(:last-child):not(:first-child) > td{
+        border : solid $border-width-md $colour-primary--bkg;
+    }
+}

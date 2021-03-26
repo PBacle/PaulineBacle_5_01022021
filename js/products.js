@@ -46,7 +46,7 @@ if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].len
 
 document.querySelector(".btn-close").addEventListener("click", function(e){
     e.preventDefault();
-    document.querySelector(".addDialog").style.display = 'none';
+    document.querySelector(".recapDialog").style.display = 'none';
     document.querySelector("#item h1").hidden = false;
     if(document.getElementById("cart-counter").classList.contains("addOne") ){
         document.getElementById("cart-counter").classList.remove("addOne")
@@ -58,9 +58,9 @@ document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
     var form = document.querySelector("form") ;
     form.reportValidity();   
     if(form.checkValidity() ){                    
-        document.querySelector(".addDialog").style.display = 'flex';
+        document.querySelector(".recapDialog").style.display = 'flex';
         document.querySelector("#item h1").hidden = true;
-        document.querySelector(".addDialog span.item-option").innerText = document.getElementById("item-option").value;
+        document.querySelector(".recapDialog span.item-option").innerText = document.getElementById("item-option").value;
 
         if(document.cookie.match(/cart-teddies=(.+);*/) ){
 

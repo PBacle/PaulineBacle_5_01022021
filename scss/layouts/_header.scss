@@ -1,6 +1,5 @@
 header{
-    
-    padding:20px 20px 0 20px ;
+    padding:$padding-std $padding-std 0 $padding-std ;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
@@ -8,82 +7,131 @@ header{
     justify-content: space-between;
     align-items: center;
     position: relative;
-
-
-    & img{
-        max-height: 100px;
-        transition: transform 300ms ease-in-out  ;
-        @media (max-width: 599px) {
-            transform: scale(0.9);
+    max-height: $height-header;
+    & a{
+        position: relative;
+        height: calc(#{$height-header} - #{$padding-std} - #{$height-tabs});
+        & img{
+            max-height: 100%;
         }
-    
+        transition: transform $std-duration ease-in-out  ;
+        @media (max-width: 599px) {
+            transform: scale(0.7);
+        }    
+    }
+}
+
+nav{
+    margin:auto;
+    width: calc(#{$calcMainWidth} + #{$padding-std} + #{$padding-std});
+
+    &> ul{
+        width:100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        & li>ul{
+            display: flex;
+            flex-direction: row;
+        }
+    }
+    & .nav-tab{
+        font-weight: bold;
+        background-color:$colour-primary--lighter;
+        border-radius:$padding-sm $padding-sm 0 0;
+        height: $padding-std;
+        padding:$padding-sm;
+        position: relative;
+        @include boxshadow;
+        white-space: nowrap;
+        & + .nav-tab{
+            margin-left: $padding-std;
+        }
+        &:not(.active) a:hover{
+            color:$colour--unavail;
+        }    
+        &.active{
+            z-index: 1;
+            background-color: $colour-bkg-section;
+            &::after{
+                content:'';
+                background-color: $colour-bkg-section;
+                position: absolute;
+                bottom:-$padding-std;left:0;right: -$padding-std;
+                height: $padding-std;
+            }
+            &.last-tab::after{
+                right: 0;
+            }
+      }
     }
 
+    &#nav-product{
+        margin-top: 0;
+        margin-bottom: $margin-lg;
+        width: 100%;
+        & ol{
+            display: flex;
+            list-style: none;;
+            & li:not(.last-tab)::after{
+                content: '>';
+                padding: 0 $padding-sm ;
+            }
+        }
+    }
 }
+
 
 section header{
-    padding-left:0;
-    padding-right:0;
-    align-items: flex-start;
+    padding:0;
 }
 
+
+
+
 #cart{
-    transition: transform 300ms ease-in-out  ;
+    transition: transform $std-duration ease-in-out  ;
     @media (max-width: 599px) {
         transform: scale(0.75);
     }
     color:$colour-primary;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: center;
+    width: calc(#{$margin-xxlg} - #{$padding-std});
     display: flex;
     flex-direction: column;
     align-items: center;
     font-weight: bold;
         & span.fa{
-        font-size: $fontsize-icon-lg;
-        padding:20px;
+        font-size: $cart-dimensions;
+        padding:$padding-std;
         position: relative;
         color:$colour-primary;
+        height: $cart-dimensions;
+        width: $cart-dimensions;
         & span#cart-counter{
-            display: block;
-            width:35px;height:35px;
-            line-height: 35px;
-            font-size: 16px;
-            font-weight: bold;
-            position: absolute;
-            left:0;bottom:0;
-            background-color: white;
-            border-radius: 50%;
-            text-align: center;
-            border: solid 2pt $colour-primary;
+            @include cartCounter;
+            background-color: $colour-bkg-section;
+            border: solid $border-width-md $colour-primary;
             &::before{
                 content:'+1';
                 box-sizing: border-box;
-                display: block;
-                width:35px;height:35px;
-                line-height: 35px;
-                font-size: 16px;
-                font-weight: bold;
-                position: absolute;
-                left:0;bottom:0;
+                @include cartCounter;
+                color:$colour-bkg-section;
                 background-color: $colour-secondary;
-                border-radius: 50%;
-                text-align: center;
-                color:white;
-                border: solid 2pt $colour-secondary;
+                border: solid $border-width-md $colour-secondary;
                 opacity: 0;
             }
             &.addOne::before{
-                animation: appear 1000ms ease-in-out  1 both ;
+                animation: appear $xlong-duration ease-in-out 1 both ;
             }
         }
         
     }
     &:hover{
-        text-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
+        text-shadow: $shadow ;
         & span#cart-counter{
-            box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
+            @include boxshadow ;
             color:black
         }
     }
@@ -100,63 +148,4 @@ section header{
     }
   }
 
-nav{
-    margin:auto;
-    width: calc(100% - 300px);
-    margin-top: 20px;
 
-    &> ul{
-        width:100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        & li>ul{
-            display: flex;
-            flex-direction: row;
-        }
-    }
-    & .nav-tab{
-        font-weight: bold;
-        background-color:$colour-primary--lighter;
-        border-radius:15px 15px 0 0;
-        line-height: 20px;
-        padding:15px;
-        position: relative;
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-        white-space: nowrap;
-        & + .nav-tab{
-            margin-left: 10px;
-        }
-        &:not(.active) a:hover{
-            color:white;
-        }    
-        &.active{
-            z-index: 100000;
-            background-color: white;
-            &::after{
-                content:'';
-                background-color: white;
-                position: absolute;
-                bottom:-15px;left:0;right: -15px;
-                height: 15px;
-            }
-            &.last-tab::after{
-                right: 0;
-            }
-      }
-    }
-    &#nav-product{
-        margin-top: 0;
-        margin-bottom: 30px;
-        width: 100%;
-        & ol{
-            display: flex;
-            list-style: none;;
-            & li:not(.last-tab)::after{
-                content: '>';
-                padding-left: 10px ;
-                padding-right: 10px;
-            }
-        }
-    }
-}

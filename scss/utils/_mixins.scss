@@ -1,0 +1,38 @@
+@mixin boxshadow{
+    box-shadow: $shadow ;
+}
+
+
+@mixin dimIcon{
+    display: block;
+    width:$height-icon;
+    height:$height-icon;
+    line-height: $height-icon;
+    font-weight: bold;
+    border-radius: 50%;
+    text-align: center;
+}
+
+
+
+@mixin cartCounter{
+    @include dimIcon;
+    font-size: 35%;
+    position: absolute;
+    left:0;bottom:0;
+}
+
+@mixin fontAwesomeContent {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content:attr(data);
+}
+
+@mixin iconNav{
+    @include dimIcon;
+    @include fontAwesomeContent;
+    box-sizing: border-box;
+    background-color: $colour-primary;
+    color:white;
+
+}

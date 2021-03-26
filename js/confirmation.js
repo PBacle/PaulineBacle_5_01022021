@@ -1,4 +1,3 @@
-console.log(document.cookie);
 const url = window.location.search; 
 const urlParams = new URLSearchParams(url);
 if(urlParams.has('ref') && urlParams.has('tot') 
@@ -8,7 +7,6 @@ if(urlParams.has('ref') && urlParams.has('tot')
     document.getElementById("referenceCommande").innerText = urlParams.get('ref');
     document.getElementById("totalCommande").innerText  = urlParams.get('tot') + ' €';
     document.cookie="cart-teddies='';secure;Path=/;expires="+ new Date(0).toGMTString();
-    
 }else{
     document.querySelector("#infosCommande table").hidden = true ;
     var p = document.createElement("p");

@@ -1,11 +1,11 @@
 $colour-bkg-main:#F4E8F0;
-
+$colour-bkg-section:white;
 $colour-primary:#9258F6;
 $colour-primary--lighter:#BD97FF;
 $colour-primary--bkg:#F1EAFD;
-
 $colour-secondary:#EA8834;
-
+$colour-bkg--unavail:grey;
+$colour--unavail:white;
 
 $font-logo:belligerent_madnessregular;
 $font-main: Raleway;
@@ -23,6 +23,41 @@ $fontsize-icon-lg:3em;
 $fontsize-icon-md:2.5em;
 $fontsize-icon-sm:2em;
 
-$margin-lg:100px;
+$margin-lg:50px;
 $margin-std:30px;
+$margin-sm:10px;
+$margin-xlg:$margin-lg * 2;
+$margin-xxlg:$margin-lg * 3;
 
+$padding-lg:50px;
+$padding-dialog:30px;
+$padding-std:20px;
+$padding-sm:10px;
+$padding-xsm:5px;
+
+$border-width-lg: 4pt; 
+$border-width-xlg : $border-width-lg * 2 ;
+$border-width-md: 2pt; 
+$border-width-sm: 1pt; 
+
+
+$height-header:200px;
+$height-item: 300px;
+$height-tabs:calc(#{$padding-sm} + #{$padding-sm} + #{$padding-std});
+
+$height-icon:$padding-std*2 ;
+$cart-dimensions:$padding-std*3;
+
+
+/*SPINNER VARIABLES*/
+$spinner-dimensions-std:$margin-lg*2 ; //width and height of spinner
+$spinner-dimensions-lg: $spinner-dimensions-std - $border-width-lg * 2; //width and height of bigger circle
+
+/*ANIMATION VARIABLES*/
+$xlong-duration:1000ms;
+$long-duration:500ms;
+$std-duration:300ms;
+$sm-duration:150ms;
+
+$calcMainWidth : calc(100% - #{$margin-xxlg} - #{$margin-xxlg}) ;
+$shadow: $border-width-lg $border-width-lg $border-width-xlg rgba(0,0,0, 0.3) ; 

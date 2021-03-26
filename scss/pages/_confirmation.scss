@@ -1,0 +1,14 @@
+main > h1 + p{
+    margin-top: $margin-lg;
+}
+
+#infosCommande{
+    padding:$padding-dialog;
+    border: $border-width-md $colour-primary solid;
+    & figcaption{
+        margin-bottom: $padding-dialog;
+    }
+    & th{
+        text-align: right;
+    } 
+}

@@ -1,9 +1,5 @@
-button.btn.unclickable{
-    cursor:not-allowed;
-    background-color: gray;
-    &:hover{
-        box-shadow: none;
-    }
+button{
+    margin:auto;
 }
 
 .item-btn{
@@ -11,64 +7,61 @@ button.btn.unclickable{
     border:none;
     &::before{
         content: '+';
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-        font-size: 40px;font-weight: bold;
-        padding:5px;
-        display: inline-block;
-        border-radius: 50%;
-        background-color:white;
+        @include dimIcon;
+        font-size: $height-icon;
         color: $colour-primary;
+        border : solid $border-width-md $colour-bkg-section;
+        background-color:$colour-bkg-section;
         cursor: pointer;
     }
     &:hover::before{
+        @include boxshadow;
         color: $colour-secondary;
-        box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
     }
 }
 
 .btn{
     background-color:$colour-primary--lighter;
     font-weight: bold;
-    color:black;
-    padding:10px 20px; 
+    padding:$padding-sm $padding-std; 
     border:none;
-    border-radius: 20px;
+    border-radius: $padding-std;
     cursor:pointer;
     &:hover{
         background-color: $colour-secondary;
-        box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
+        @include boxshadow;
     }
 
     &.btn-addToCart{
         max-width: auto;
     }
+    &.unclickable{
+        cursor:not-allowed;
+        color: $colour--unavail;
+        background-color: $colour-bkg--unavail;
+        &:hover{
+            box-shadow: none;
+        }
+    }    
 }
+
 
 .btn-close{
     position: absolute;
-    top:30px;right:30px;
+    top:$padding-dialog;right:$padding-dialog;
     box-sizing: border-box;
     background-color: transparent;
     border:none;
     display: block;
     cursor: pointer;
     &::before{
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content:"\f00d";
-        display: block;
-        width: 40px;height: 40px;
-        line-height: 40px;
-        border-radius: 50%;
-        background-color: $colour-primary;
-        color:white
+/*        content:"\f00d";*/
+        @include iconNav;
     }
     &:hover{
         &::before{
+            @include boxshadow;
             background-color: $colour-secondary;
-            box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;
         }
     }
 }
@@ -76,59 +69,39 @@ button.btn.unclickable{
 .nav-btn{
     display: flex;
     justify-content: space-around;
-    & *{
-        line-height: 40px;
+    & a{
+        max-height: $height-icon;
+        line-height: $height-icon;
         position: relative;
     }
+    & a:focus{
+        outline: none;
+    }
+    
     & .right::after{
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content:attr(data);
-        display: block;
-        width: 40px;height: 40px;
-        line-height: 40px;
-        border-radius: 50%;
-        background-color: $colour-primary;
-        color:white;
+        @include iconNav;
         position: absolute;
-        right: calc(-40px - 10px);top:0;
-        text-align: center;
+        right: calc(-#{$height-icon} - #{$padding-sm});top:0;
     }
     & .left::before{
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content:attr(data);
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content:attr(data);
-        display: block;
-        width: 40px;height: 40px;
-        line-height: 40px;
-        border-radius: 50%;
-        background-color: $colour-primary;
-        color:white;
+        @include iconNav;
         position: absolute;
-        left: calc(-40px - 10px);top:0;
-        text-align: center;
+        left: calc(-#{$height-icon} - #{$padding-sm});top:0;
     }
     & .left:hover::before, .right:hover::after{
         background-color: $colour-secondary;
-        box-shadow: 4px 4px 10px rgba(0,0,0, 0.3) ;        
+        @include boxshadow;
     }
 }
 
-button{
-    margin:auto;
-
-}
 
 .showUL::before,
 .showUL::after{
     transform: rotate(180deg);
-    transition: transform 300ms ease-in-out;
+    transition: transform $std-duration ease-in-out;
 }
 
 .hideUL::after{
-    transition: transform 300ms ease-in-out;
+    transition: transform $std-duration ease-in-out;
 }
 

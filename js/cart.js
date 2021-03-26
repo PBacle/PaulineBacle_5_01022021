@@ -24,7 +24,7 @@ if( typeof nbItems !== 'undefined' && nbItems != 0 ){
                 +item.count+'</td><td>'+item.count*response.price/100+' €</td>';
             document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); 
             total += item.count*response.price/100 ;
-            document.querySelector("#table-total td:last-child").innerHTML = total + " €";
+            document.querySelector("#table-total :last-child").innerHTML = total + " €";
         } )               
     }) ;
 }else{
@@ -68,7 +68,7 @@ document.querySelector('button[type="submit"]').addEventListener("click", functi
                 form.method = "get" ; 
                 form.style.display = "none";
                 form.innerHTML =  '<input type="text" name="ref" value="' + JSON.parse(data.responseText).orderId + '" /><input type="text" name="tot" value="' 
-                + document.querySelector("#table-total td:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] + '" />' ;
+                + document.querySelector("#table-total th:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] + '" />' ;
                 document.body.append(form);
                 form.submit();
             } )

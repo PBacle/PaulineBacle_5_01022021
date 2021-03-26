@@ -6,12 +6,11 @@
 @import "./layouts/header";
 @import "./layouts/footer";
 @import "./layouts/main";
+@import "./components/loader";
 @import "./components/lists";
 @import "./components/buttons";
-@import "./components/form";
-
-/* @import "./components/loader";
-@import "./components/lists/restaurants";
-@import "./components/lists/menu";
-@import "./pages/index";
-@import "./pages/restaurants";*/
+@import "./components/dialog";
+@import "./components/tables";
+@import "./pages/products";
+@import "./pages/cart";
+@import "./pages/confirmation";
