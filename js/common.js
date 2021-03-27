@@ -1,3 +1,11 @@
+var delayItemAppearing = 100; 
+var durationAnimation = 500;
+var durationAnimationLong = 1000;
+
+var categories = {
+    teddies: 'Ours en peluche faits main',
+    cameras: 'Caméras vintages',
+    furniture: 'Meubles en chêne'};
 
 /* CART COUNTER  */
 if( document.cookie.match(/cart-teddies=(.+);*/) ){
