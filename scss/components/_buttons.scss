@@ -47,54 +47,41 @@ button{
 
 
 .btn-close{
-    position: absolute;
-    top:$padding-dialog;right:$padding-dialog;
-    box-sizing: border-box;
-    background-color: transparent;
-    border:none;
-    display: block;
+    border:none;width: 0px;
     cursor: pointer;
-    &::before{
-/*        content:"\f00d";*/
-        @include iconNav;
-    }
-    &:hover{
-        &::before{
-            @include boxshadow;
-            background-color: $colour-secondary;
-        }
-    }
+    margin: 0;
+}
+
+.nav-btn-headband{
+    display: flex;
+    justify-content: space-between;   
 }
 
 .nav-btn{
-    margin-right: calc(#{$height-icon} + #{$padding-sm} + #{$padding-sm});
-    display: flex;
-    justify-content: space-between;
-    @media (max-width: 799px) {
-        width: calc(100% - #{$height-icon} - #{$padding-sm});
-    }
-
-
-    & a{
-        max-height: $height-icon;
-        line-height: $height-icon;
-        position: relative;
-    }
-    & a:focus{
+    position: relative;
+    white-space: nowrap;
+    max-height: $height-icon;
+    line-height: $height-icon;
+    &:focus{
         outline: none;
     }
-    
-    & .right::after{
-        @include iconNav;
-        position: absolute;
-        right: calc(-#{$height-icon} - #{$padding-sm});top:0;
+    &.right{
+        margin-right: calc(#{$height-icon} + #{$padding-sm} + #{$padding-sm});
+        &::after{
+            @include iconNav;
+            position: absolute;
+            right: calc(-#{$height-icon} - #{$padding-sm});top:0;
+        }
     }
-    & .left::before{
-        @include iconNav;
-        position: absolute;
-        left: calc(-#{$height-icon} - #{$padding-sm});top:0;
+    &.left{
+        margin-left: calc(#{$height-icon} + #{$padding-sm} + #{$padding-sm});
+        &::before{
+            @include iconNav;
+            position: absolute;
+            left: calc(-#{$height-icon} - #{$padding-sm});top:0;
+        }
     }
-    & .left:hover::before, .right:hover::after{
+    &.left:hover::before, .right:hover::after{
         background-color: $colour-secondary;
         @include boxshadow;
     }

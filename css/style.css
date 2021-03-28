@@ -182,6 +182,9 @@ nav {
   margin: auto;
   min-width: calc(calc(100% - 150px - 150px) + 20px + 20px);
 }
+nav * {
+  white-space: nowrap;
+}
 @media (max-width: 1299px) {
   nav {
     min-width: calc(calc(100% - 100px - 100px) + 20px + 20px);
@@ -257,17 +260,27 @@ nav .nav-tab.active.last-tab a::after {
   right: 0;
 }
 nav#nav-product {
-  margin-top: 0;
-  margin-bottom: 50px;
-  width: 100%;
+  margin: 0 0 50px 0;
+  min-width: 100%;
+  max-width: 100%;
 }
 nav#nav-product ol {
   display: flex;
   list-style: none;
+  position: relative;
 }
-nav#nav-product ol li:not(.last-tab)::after {
+@media (max-width: 1099px) {
+  nav#nav-product ol {
+    flex-direction: column;
+  }
+}
+nav#nav-product ol li {
+  padding-right: 10px;
+}
+nav#nav-product ol li + li::before {
   content: ">";
-  padding: 0 10px;
+  font-weight: bold;
+  padding: 0 10px 0 0;
 }
 
 section header {
@@ -719,55 +732,30 @@ button {
 }
 
 .btn-close {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  box-sizing: border-box;
-  background-color: transparent;
   border: none;
-  display: block;
+  width: 0px;
   cursor: pointer;
-}
-.btn-close::before {
-  /*        content:"\f00d";*/
-  display: block;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  font-weight: bold;
-  border-radius: 50%;
-  text-align: center;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: attr(data);
-  box-sizing: border-box;
-  background-color: #9258F6;
-  color: white;
-}
-.btn-close:hover::before {
-  box-shadow: 4pt 4pt 8pt rgba(0, 0, 0, 0.3);
-  background-color: #EA8834;
+  margin: 0;
 }
 
-.nav-btn {
-  margin-right: calc(40px + 10px + 10px);
+.nav-btn-headband {
   display: flex;
   justify-content: space-between;
 }
-@media (max-width: 799px) {
-  .nav-btn {
-    width: calc(100% - 40px - 10px);
-  }
-}
-.nav-btn a {
+
+.nav-btn {
+  position: relative;
+  white-space: nowrap;
   max-height: 40px;
   line-height: 40px;
-  position: relative;
 }
-.nav-btn a:focus {
+.nav-btn:focus {
   outline: none;
 }
-.nav-btn .right::after {
+.nav-btn.right {
+  margin-right: calc(40px + 10px + 10px);
+}
+.nav-btn.right::after {
   display: block;
   width: 40px;
   height: 40px;
@@ -785,7 +773,10 @@ button {
   right: calc(-40px - 10px);
   top: 0;
 }
-.nav-btn .left::before {
+.nav-btn.left {
+  margin-left: calc(40px + 10px + 10px);
+}
+.nav-btn.left::before {
   display: block;
   width: 40px;
   height: 40px;
@@ -803,7 +794,7 @@ button {
   left: calc(-40px - 10px);
   top: 0;
 }
-.nav-btn .left:hover::before, .nav-btn .right:hover::after {
+.nav-btn.left:hover::before, .nav-btn .right:hover::after {
   background-color: #EA8834;
   box-shadow: 4pt 4pt 8pt rgba(0, 0, 0, 0.3);
 }
@@ -833,6 +824,7 @@ button {
   padding: 30px;
 }
 .recapDialog > span {
+  text-align: center;
   margin: auto;
 }
 
@@ -840,10 +832,19 @@ button {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  flex-grow: 1;
+  justify-content: center;
 }
 .errorDialog p {
   font-size: 1.375em;
+  display: flex;
+  flex-direction: column;
+  margin: 0 50px 50px;
+}
+@media (max-width: 599px) {
+  .errorDialog p {
+    margin-top: 30px;
+  }
 }
 
 .formatError {
@@ -891,11 +892,21 @@ article#item figure {
   display: flex;
   flex-direction: row;
 }
+@media (max-width: 1099px) {
+  article#item figure {
+    flex-direction: column;
+  }
+}
 article#item figure figcaption {
   flex-grow: 1;
   padding-left: calc(20px + 20px);
   display: flex;
   flex-direction: column;
+}
+@media (max-width: 1099px) {
+  article#item figure figcaption {
+    padding-left: 0;
+  }
 }
 article#item figure figcaption p + * {
   margin: 0;
@@ -911,9 +922,20 @@ article#item figure figcaption form {
 article#item figure figcaption form div {
   width: 100%;
 }
+article#item figure figcaption form select {
+  margin-bottom: 20px;
+}
 article#item img {
   width: 50%;
+  min-width: 300px;
   border-radius: 30px;
+  object-fit: cover;
+}
+@media (max-width: 1099px) {
+  article#item img {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 }
 article#item h1 {
   margin: 0;

@@ -11,10 +11,16 @@ article#item{
     & figure{
         display: flex;
         flex-direction: row;
+        @media (max-width: 1099px) {
+            flex-direction: column;
+        }        
         & figcaption {
             flex-grow: 1;
             padding-left: calc(#{$padding-std} + #{$padding-std});
-            display: flex;
+            @media (max-width: 1099px) {
+                padding-left: 0;
+            }        
+                display: flex;
             flex-direction: column;
             & p + * {
                 margin:0;
@@ -29,13 +35,22 @@ article#item{
                     width: 100%;
                 }
                 align-items: flex-end;
+                & select{
+                    margin-bottom: $padding-std;
+                }
 
             }
         }
     }
     & img{
         width: 50%;
+        min-width: $height-item;
+        @media (max-width: 1099px) {
+            width: 100%;
+            margin-bottom: $padding-std;
+        }        
         border-radius: 30px;
+        object-fit: cover;
     }
     & h1{
         margin:0;

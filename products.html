@@ -47,11 +47,12 @@
         <div class="loader"><div class="spinner"></div></div>
 
         <article id="item" style="display: none;" >            
-            <h1 id="item-name">Votre sélection : <span class="item-name"></span></h1>
+            <h1>Votre sélection</h1>
 
             <figure>
                 <img alt="" id="item-image">
                 <figcaption id="item-infos">
+                    <h2 class="item-name"></h2>
                     <p id="item-description"></p>
                     <p id="item-price"><span class="bold">Prix unitaire : </span><span></span></p>
                     <form action="">
@@ -68,12 +69,13 @@
             </figure>
 
             <div class="recapDialog" style="display: none">
-                <button class="btn-close" data='&#xf00d'></button>
-                <span>Vous avez ajouté le produit suivant à votre panier : <span class="bold"><span class="item-name"></span> (option : <span class="item-option"></span>)</span></span>
-                <div class="nav-btn">
-                    <a href="index.html" data='&#xf060' class="left">Retour</a>
-                    <a href="cart.html" data='&#xf291' class="right">Voir le panier</a>
+                <div class="nav-btn-headband">
+                    <a href="index.html" data='&#xf060' class="left nav-btn">Retour</a>
+                    <button class="btn-close  nav-btn right" data='&#xf00d'></button>
                 </div>
+
+                <span>Vous avez ajouté le produit suivant à votre panier : <span class="bold"><span class="item-name"></span> (option : <span class="item-option"></span>)</span></span>
+                <a href="cart.html" data='&#xf291' class="right nav-btn">Voir le panier</a>
             </div>
     
         </article>    

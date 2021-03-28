@@ -9,6 +9,7 @@
     justify-content: flex-end;
     padding:$padding-dialog;
     & > span {
+        text-align: center;
         margin:auto;
     }
 }
@@ -17,9 +18,19 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    flex-grow: 1;
+    justify-content: center;
     & p{
         font-size: $fontsize-lg;
+        display: flex;
+        flex-direction: column;
+        margin:  0 $margin-lg  $margin-lg;
+        @media (max-width: 599px) {
+            margin-top: $margin-std;
+        }    
+    
+
+
     }
 }
 

@@ -84,3 +84,4 @@ document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
         document.getElementById("cart-counter").classList.add("addOne");
     }
  })
+

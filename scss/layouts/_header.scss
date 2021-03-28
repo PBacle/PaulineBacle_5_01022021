@@ -25,6 +25,9 @@ header{
 }
 
 nav{
+    & *{
+        white-space: nowrap;
+    }
     margin:auto;
     min-width: calc(#{map-get($calcMainWidth, xxlg)} + #{$padding-std} + #{$padding-std});
     @media (max-width: 1299px) {
@@ -102,15 +105,22 @@ nav{
     }
 
     &#nav-product{
-        margin-top: 0;
-        margin-bottom: $margin-lg;
-        width: 100%;
+        margin: 0 0 $margin-lg 0;
+        min-width: 100%;max-width: 100%;
         & ol{
             display: flex;
-            list-style: none;;
-            & li:not(.last-tab)::after{
+            list-style: none;
+            position: relative;
+            @media (max-width: 1099px) {
+                flex-direction: column
+            }
+            & li{
+                padding-right: $padding-sm;
+            }
+            & li + li::before{
                 content: '>';
-                padding: 0 $padding-sm ;
+                font-weight: bold;
+                padding: 0 $padding-sm 0 0 ;
             }
         }
     }
