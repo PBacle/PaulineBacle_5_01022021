@@ -30,7 +30,8 @@ $margin-xlg:$margin-lg * 2;
 $margin-xxlg:$margin-lg * 3;
 
 $padding-lg:50px;
-$padding-dialog:30px;
+$padding-md:30px;
+$padding-dialog:$padding-md;
 $padding-std:20px;
 $padding-sm:10px;
 $padding-xsm:5px;
@@ -42,6 +43,7 @@ $border-width-sm: 1pt;
 
 
 $height-header:200px;
+$height-footersection:150px;
 $height-item: 300px;
 $height-tabs:calc(#{$padding-sm} + #{$padding-sm} + #{$padding-std});
 
@@ -59,5 +61,13 @@ $long-duration:500ms;
 $std-duration:300ms;
 $sm-duration:150ms;
 
-$calcMainWidth : calc(100% - #{$margin-xxlg} - #{$margin-xxlg}) ;
+
+$calcMainWidth :
+(
+  xxlg:  calc(100% - #{$margin-xxlg} - #{$margin-xxlg}),
+  xlg:  calc(100% - #{$margin-xlg} - #{$margin-xlg}),
+  lg:  calc(100% - #{$margin-lg} - #{$margin-lg}),
+  sm: calc(100%)
+);
+
 $shadow: $border-width-lg $border-width-lg $border-width-xlg rgba(0,0,0, 0.3) ; 

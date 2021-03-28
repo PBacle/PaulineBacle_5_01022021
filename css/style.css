@@ -46,7 +46,7 @@
 /*@import "../node_modules/bootstrap/scss/bootstrap.scss";*/
 html, body {
   max-width: 100%;
-  height: 100%;
+  min-height: 100%;
   user-select: none;
 }
 
@@ -102,6 +102,11 @@ h1 {
   text-align: center;
   margin: 50px auto;
 }
+@media (max-width: 599px) {
+  h1 {
+    margin: 0 auto;
+  }
+}
 
 h2, h3, h4 {
   font-weight: bold;
@@ -154,23 +159,44 @@ header {
   position: relative;
   max-height: 200px;
 }
+@media (max-width: 599px) {
+  header {
+    padding: 0 20px;
+  }
+}
 header a {
   position: relative;
   height: calc(200px - 20px - calc(10px + 10px + 20px));
-  transition: transform 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+@media (max-width: 599px) {
+  header a {
+    height: calc(200px - 20px - calc(10px + 10px + 20px) - 30px);
+  }
 }
 header a img {
   max-height: 100%;
 }
-@media (max-width: 599px) {
-  header a {
-    transform: scale(0.7);
-  }
-}
 
 nav {
   margin: auto;
-  width: calc(calc(100% - 150px - 150px) + 20px + 20px);
+  min-width: calc(calc(100% - 150px - 150px) + 20px + 20px);
+}
+@media (max-width: 1299px) {
+  nav {
+    min-width: calc(calc(100% - 100px - 100px) + 20px + 20px);
+  }
+}
+@media (max-width: 1099px) {
+  nav {
+    min-width: calc(calc(100% - 50px - 50px) + 20px + 20px);
+  }
+}
+@media (max-width: 799px) {
+  nav {
+    min-width: calc(calc(100%) + 20px + 20px);
+    margin-left: -20px;
+  }
 }
 nav > ul {
   width: 100%;
@@ -182,27 +208,43 @@ nav > ul li > ul {
   display: flex;
   flex-direction: row;
 }
-nav .nav-tab {
+nav .nav-tab:not(.last-tab) {
+  padding-right: 20px;
+}
+nav .nav-tab a {
   font-weight: bold;
   background-color: #BD97FF;
   border-radius: 10px 10px 0 0;
-  height: 20px;
   padding: 10px;
   position: relative;
+  display: inline-block;
+  height: 20px;
   box-shadow: 4pt 4pt 8pt rgba(0, 0, 0, 0.3);
   white-space: nowrap;
 }
-nav .nav-tab + .nav-tab {
-  margin-left: 20px;
+@media (max-width: 799px) {
+  nav .nav-tab:first-child a {
+    border-radius: 0 10px 0 0;
+  }
+}
+nav .nav-tab.hidden:not(.active) {
+  opacity: 0;
+  position: absolute;
+  left: -100000px;
 }
 nav .nav-tab:not(.active) a:hover {
   color: white;
 }
-nav .nav-tab.active {
+@media (max-width: 799px) {
+  nav .nav-tab.last-tab a {
+    border-radius: 10px 0 0 0;
+  }
+}
+nav .nav-tab.active a {
   z-index: 1;
   background-color: white;
 }
-nav .nav-tab.active::after {
+nav .nav-tab.active a::after {
   content: "";
   background-color: white;
   position: absolute;
@@ -211,7 +253,7 @@ nav .nav-tab.active::after {
   right: -20px;
   height: 20px;
 }
-nav .nav-tab.active.last-tab::after {
+nav .nav-tab.active.last-tab a::after {
   right: 0;
 }
 nav#nav-product {
@@ -246,6 +288,7 @@ section header {
 @media (max-width: 599px) {
   #cart {
     transform: scale(0.75);
+    transform-origin: right center;
   }
 }
 #cart span.fa {
@@ -318,8 +361,9 @@ footer {
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
+  position: relative;
 }
-@media (max-width: 400px) {
+@media (max-width: 599px) {
   footer {
     flex-direction: column;
   }
@@ -349,23 +393,37 @@ footer section {
   flex-direction: column;
   flex-wrap: wrap;
 }
-@media (max-width: 400px) {
-  footer section.left {
-    text-align: center;
-  }
-}
-@media (max-width: 399px) {
-  footer section.right {
-    text-align: center;
-  }
-}
 @media (max-width: 1099px) {
   footer section {
     max-width: 50%;
   }
 }
+@media (max-width: 599px) {
+  footer section {
+    max-width: 100%;
+  }
+}
 footer section > ul > li + li {
   padding-top: 10px;
+}
+@media (max-width: 599px) {
+  footer section.right {
+    text-align: left;
+  }
+}
+@media (max-width: 1099px) {
+  footer section.center {
+    max-width: calc(100% - 20px - 20px);
+    position: absolute;
+    top: calc(100% - 20px);
+    left: 0;
+    padding: 0 20px 20px 20px;
+  }
+}
+@media (max-width: 599px) {
+  footer section.center h3 {
+    text-align: left;
+  }
 }
 footer section.center ul {
   display: flex;
@@ -423,6 +481,31 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+@media (max-width: 1299px) {
+  main {
+    width: calc(100% - 100px - 100px);
+  }
+}
+@media (max-width: 1099px) {
+  main {
+    width: calc(100% - 50px - 50px);
+  }
+}
+@media (max-width: 799px) {
+  main {
+    width: calc(100%);
+  }
+}
+@media (max-width: 799px) {
+  main {
+    border-radius: 0px;
+  }
+}
+@media (max-width: 599px) {
+  main {
+    padding: 30px;
+  }
 }
 main.center {
   justify-content: center;
@@ -532,6 +615,10 @@ div.loader .spinner:after {
   border-radius: 20px;
   border: 4pt solid #9258F6;
   height: 300px;
+  min-width: 300px;
+}
+.listItems-content li.item.sameRow {
+  margin-right: 20px;
 }
 .listItems-content li.item figure {
   height: 100%;
@@ -663,8 +750,14 @@ button {
 }
 
 .nav-btn {
+  margin-right: calc(40px + 10px + 10px);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+@media (max-width: 799px) {
+  .nav-btn {
+    width: calc(100% - 40px - 10px);
+  }
 }
 .nav-btn a {
   max-height: 40px;
@@ -784,6 +877,7 @@ table tr:not(:last-child):not(:first-child) > td {
 }
 
 article#item {
+  margin: auto;
   border: solid #9258F6 2pt;
   padding: calc(20px + 20px);
   padding-top: 50px;

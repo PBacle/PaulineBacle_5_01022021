@@ -49,6 +49,10 @@
         border-radius: $padding-std;
         border:$border-width-lg solid $colour-primary;
         height: $height-item;
+        min-width: $height-item;
+        &.sameRow{
+            margin-right: $padding-std;
+        }
         & figure{
             height: 100%;
             position: relative;

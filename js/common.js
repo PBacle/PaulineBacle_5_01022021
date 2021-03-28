@@ -4,8 +4,9 @@ var durationAnimationLong = 1000;
 
 var categories = {
     teddies: 'Ours en peluche faits main',
-    cameras: 'Caméras vintages',
-    furniture: 'Meubles en chêne'};
+/*    cameras: 'Caméras vintages',
+    furniture: 'Meubles en chêne'*/
+};
 
 /* CART COUNTER  */
 if( document.cookie.match(/cart-teddies=(.+);*/) ){
@@ -63,3 +64,29 @@ function isValid(item,regex){
         return true;
     }
 }
+
+
+function hideTags() {
+    var widthNav = document.querySelector("body > header > nav").offsetWidth ;
+    var Tags = document.querySelectorAll("body > header > nav ul > li:not(.last-tab)  li  ") ; 
+    limVis=0;
+    sum = document.querySelector("body > header >  nav ul > li.last-tab  ").scrollWidth +  Tags[limVis].scrollWidth;
+
+/*    console.log("window:"+window.innerWidth+"x"+window.innerHeight);
+    console.log(limVis+"/"+Tags.length, Tags[limVis].scrollWidth, sum, sum < widthNav, limVis < Tags.length);*/
+
+    while( sum < widthNav  && limVis < Tags.length -1){ limVis++ ; sum +=  Tags[limVis].scrollWidth; }
+    
+    if(limVis == Tags.length-1 && sum < widthNav ){
+        document.querySelectorAll("body > header > nav ul > li:not(.last-tab)  li").forEach( item => {
+            if(item.classList.contains("hidden")) item.classList.remove("hidden") ;
+        })      
+    }else{
+        for( let i = 0; i < limVis ; i++){ if(Tags[i].classList.contains("hidden")) Tags[i].classList.remove("hidden") ; }
+        for( let i = limVis; i < Tags.length ; i++){ if(!Tags[i].classList.contains("hidden")) Tags[i].classList.add("hidden"); }
+    }
+}
+
+window.onload =  function(){ hideTags(); }
+window.addEventListener('resize', hideTags);
+

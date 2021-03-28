@@ -2,13 +2,28 @@ main{
 
     flex: 1 0 auto;
     margin:auto;
-    width: $calcMainWidth;
+    width: map-get($calcMainWidth, xxlg);
+    @media (max-width: 1299px) {
+        width: map-get($calcMainWidth, xlg);
+    }    
+    @media (max-width: 1099px) {
+        width: map-get($calcMainWidth, lg);
+    }    
+    @media (max-width: 799px) {
+        width: map-get($calcMainWidth, sm);
+    }    
     min-height: calc(100vh - #{$height-header} - #{$margin-std});
     padding:$padding-lg;
     box-sizing: border-box;
     background-color: $colour-bkg-section;
     @include boxshadow;
     border-radius: 0px 0px $padding-std $padding-std;
+    @media (max-width: 799px) {
+        border-radius: 0px ;
+    }    
+    @media (max-width: 599px) {
+        padding:$padding-md;
+    }    
     position: relative;
     display: flex;
     flex-direction: column;

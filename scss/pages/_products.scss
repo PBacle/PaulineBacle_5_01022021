@@ -1,4 +1,5 @@
 article#item{
+    margin:auto;
     border:solid $colour-primary 2pt ;
     padding: calc(#{$padding-std} + #{$padding-std});
     padding-top: $margin-lg ;

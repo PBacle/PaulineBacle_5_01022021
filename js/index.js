@@ -21,12 +21,33 @@ function creatingListContent(response, ul){
             var li = document.createElement('li');
             li.classList.add("item");
             li.id = response[i]._id;
-            li.innerHTML = '<figure><img src="'+response[i].imageUrl+'"alt=""><figcaption><h3 class="item-name">'+
-                        response[i].name+'</h3><button class="item-btn"></button><p class="item-price right bold">'+
-                            response[i].price/delayItemAppearing+' €</p></figcaption></figure>';
             li.style.animationDelay = delayItemAppearing*i+ 'ms';
             ul.appendChild(li); 
-            
+
+            var fig = document.createElement('figure');
+            li.append(fig);
+            var imgFig = document.createElement('img');
+            imgFig.src = response[i].imageUrl;
+            imgFig.alt = "";
+            fig.append(imgFig);
+            var figCap = document.createElement('figcaption');
+            fig.append(figCap);
+            var h3figCap = document.createElement('h3');
+            h3figCap.classList.add("item-name");
+            h3figCap.innerText = response[i].name;
+            figCap.append(h3figCap);
+            var btnItem = document.createElement('button');
+            btnItem.classList.add("item-btn");
+            btnItem.addEventListener("click", function(e) {
+                e.preventDefault();
+                location.assign("products.html?id="+li.id+"&type="+li.parentNode.id);
+            });
+            figCap.append(btnItem);
+            var pfigCap = document.createElement('p');
+            pfigCap.classList.add("item-price","right","bold");
+            pfigCap.innerText = response[i].price/delayItemAppearing + ' €';
+            figCap.append(pfigCap);
+
             Promise.all(Array.from(Array.from(document.querySelectorAll('#'+ul.id+' img'))).map(img => {
                 if (img.complete) return Promise.resolve(img.naturalHeight !== 0);
                 return new Promise(resolve => {
@@ -35,7 +56,9 @@ function creatingListContent(response, ul){
                 });
             })).then(results => {
                 if (results.every(res => res) && results.length == response.length){
-                    console.log('all images loaded successfully');
+                    console.log('all images loaded successfully');        
+        
+
                     resolve(true);
                 }
             });
@@ -77,6 +100,7 @@ function createList(arr){
                     this.classList.remove("showUL");
                     this.classList.add("hideUL");
                     this.parentNode.parentNode.parentNode.lastElementChild.style.display = "flex";
+                    sameRow();
                 }else if(this.classList.contains("hideUL")){
                     this.parentNode.parentNode.parentNode.lastElementChild.classList.remove("showed");
                     this.parentNode.parentNode.parentNode.lastElementChild.classList.add("hidden");
@@ -116,29 +140,26 @@ function createList(arr){
     })
 }
 
-
 const doNextList = (d,obj) => {  
     createList(Object.entries(obj)[d])
     .then(() => {
-        console.log(Object.entries(obj)[d]);
-        console.log("One done ("+d+"/"+Object.entries(obj).length+")!")
         d++;
         if (d < Object.entries(obj).length){
-            /*console.log("One more to do ("+d+"/"+Object.entries(obj).length+")in 3...2...1... ")
-            setTimeout(()=>{console.log('NOW');*/
-            doNextList(d,obj); /*},durationAnimationLong);*/
-        }else{
-            console.log(`Done completely.`);                
+            setTimeout(()=>{doNextList(d,obj);} ,durationAnimation);
         }
     })
 }
 
-window.onload =  function(){ doNextList(0,categories); }
 
-document.querySelectorAll(".listItems-content").forEach(item =>{
-    item.addEventListener("click", function(e) {
-        if(e.target && e.target.nodeName === "BUTTON") {
-            location.assign("products.html?id="+e.target.parentNode.parentNode.parentNode.id+"&type="+item.id);
+
+function sameRow() {
+    var liItems = document.querySelectorAll("li.item") ; 
+    for( let i=0 ; i < liItems.length -1 ; i++ ){
+        if(liItems[i].offsetTop == liItems[i+1].offsetTop){
+            liItems[i].classList.add("sameRow");
         }
-    });
-});
+    }
+}
+
+window.onload =  function(){ hideTags();doNextList(0,categories);}
+window.addEventListener('resize', function(){ hideTags(); sameRow();} );

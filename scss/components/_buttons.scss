@@ -67,8 +67,14 @@ button{
 }
 
 .nav-btn{
+    margin-right: calc(#{$height-icon} + #{$padding-sm} + #{$padding-sm});
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    @media (max-width: 799px) {
+        width: calc(100% - #{$height-icon} - #{$padding-sm});
+    }
+
+
     & a{
         max-height: $height-icon;
         line-height: $height-icon;
@@ -92,6 +98,7 @@ button{
         background-color: $colour-secondary;
         @include boxshadow;
     }
+
 }
 
 

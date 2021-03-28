@@ -1,5 +1,8 @@
 header{
     padding:$padding-std $padding-std 0 $padding-std ;
+    @media (max-width: 599px) {
+        padding:0 $padding-std  ;
+    }    
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
@@ -11,19 +14,29 @@ header{
     & a{
         position: relative;
         height: calc(#{$height-header} - #{$padding-std} - #{$height-tabs});
-        & img{
+        transition: all  $std-duration ease-in-out  ;
+        @media (max-width: 599px) {
+            height: calc(#{$height-header} - #{$padding-std} - #{$height-tabs} - 30px);
+        }
+            & img{
             max-height: 100%;
         }
-        transition: transform $std-duration ease-in-out  ;
-        @media (max-width: 599px) {
-            transform: scale(0.7);
-        }    
     }
 }
 
 nav{
     margin:auto;
-    width: calc(#{$calcMainWidth} + #{$padding-std} + #{$padding-std});
+    min-width: calc(#{map-get($calcMainWidth, xxlg)} + #{$padding-std} + #{$padding-std});
+    @media (max-width: 1299px) {
+        min-width: calc(#{map-get($calcMainWidth, xlg)}  + #{$padding-std} + #{$padding-std});
+    }    
+    @media (max-width: 1099px) {
+        min-width: calc(#{map-get($calcMainWidth, lg)}  + #{$padding-std} + #{$padding-std});
+    }    
+    @media (max-width: 799px) {
+        min-width: calc(#{map-get($calcMainWidth, sm)}  + #{$padding-std} + #{$padding-std});
+        margin-left: -$padding-std;
+    }    
 
     &> ul{
         width:100%;
@@ -36,31 +49,53 @@ nav{
         }
     }
     & .nav-tab{
-        font-weight: bold;
-        background-color:$colour-primary--lighter;
-        border-radius:$padding-sm $padding-sm 0 0;
-        height: $padding-std;
-        padding:$padding-sm;
-        position: relative;
-        @include boxshadow;
-        white-space: nowrap;
-        & + .nav-tab{
-            margin-left: $padding-std;
+        &:not(.last-tab){
+            padding-right: $padding-std;
         }
+        & a {
+            font-weight: bold;
+            background-color:$colour-primary--lighter;
+            border-radius:$padding-sm $padding-sm 0 0;
+            padding:$padding-sm;
+            position: relative;
+            display: inline-block;
+            height: $padding-std;
+            @include boxshadow;
+            white-space: nowrap;
+        }
+
+        &:first-child a{
+            @media (max-width: 799px) {
+                border-radius:0 $padding-sm  0 0;
+            }
+        }
+
+        &.hidden:not(.active){
+            opacity:0;
+            position:absolute;left:-100000px;
+        }
+
         &:not(.active) a:hover{
             color:$colour--unavail;
         }    
+        &.last-tab a {
+            @media (max-width: 799px) {
+                border-radius:$padding-sm 0 0 0;
+            }
+        }    
         &.active{
+            & a {
             z-index: 1;
             background-color: $colour-bkg-section;
-            &::after{
+            }
+            & a::after{
                 content:'';
                 background-color: $colour-bkg-section;
                 position: absolute;
                 bottom:-$padding-std;left:0;right: -$padding-std;
                 height: $padding-std;
             }
-            &.last-tab::after{
+            &.last-tab a::after{
                 right: 0;
             }
       }
@@ -93,7 +128,9 @@ section header{
     transition: transform $std-duration ease-in-out  ;
     @media (max-width: 599px) {
         transform: scale(0.75);
+        transform-origin: right center;
     }
+    
     color:$colour-primary;
     display: flex;
     justify-content: center;
