@@ -269,7 +269,7 @@ nav#nav-product ol {
   list-style: none;
   position: relative;
 }
-@media (max-width: 1099px) {
+@media (max-width: 999px) {
   nav#nav-product ol {
     flex-direction: column;
   }
@@ -859,11 +859,17 @@ button {
   left: calc(100% + 10px);
   bottom: -20px;
 }
+@media (max-width: 699px) {
+  .formatError::after {
+    left: 0;
+    bottom: calc(-100% - 0.75em - 20px);
+  }
+}
 
 table {
   position: relative;
   border-collapse: collapse;
-  margin: auto;
+  margin: 20px auto;
 }
 table tr > th {
   background-color: #F1EAFD;
@@ -872,6 +878,9 @@ table tr > th {
 table td, table th {
   padding: 20px;
   text-align: center;
+}
+table .nowrap {
+  white-space: nowrap;
 }
 table tr:not(:last-child):not(:first-child) > td {
   border: solid 2pt #F1EAFD;
@@ -955,11 +964,20 @@ article#item h1 {
   justify-content: space-between;
 }
 .container section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   box-sizing: border-box;
+  min-height: 300px;
   width: calc(50% - 20px);
   border: 2pt #9258F6 solid;
   border-radius: 20px;
   padding: 20px;
+}
+@media (max-width: 1499px) {
+  .container section {
+    width: calc(100%);
+  }
 }
 .container section h2 {
   text-align: center;
@@ -970,9 +988,14 @@ article#item h1 {
   flex-direction: column;
   justify-content: center;
 }
+@media (max-width: 599px) {
+  .container section form {
+    padding: 10px;
+  }
+}
 .container section form fieldset {
   border: none;
-  padding-bottom: 20px;
+  padding-bottom: calc(20px + 20px );
 }
 .container section form fieldset legend {
   font-weight: bold;
@@ -980,6 +1003,11 @@ article#item h1 {
 }
 .container section form fieldset div {
   padding-left: calc(20px + 20px);
+}
+@media (max-width: 599px) {
+  .container section form fieldset div {
+    padding-left: calc(10px + 10px);
+  }
 }
 .container section form label {
   font-weight: bold;
@@ -998,6 +1026,24 @@ article#item h1 {
   flex-grow: 1;
   margin-left: 10px;
 }
+@media (max-width: 699px) {
+  .container section form div input {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+.container table {
+  transition: transform 300ms ease-in-out;
+}
+@media (max-width: 699px) {
+  .container table {
+    position: absolute;
+    left: 50%;
+    translate: -50%;
+    transform: scale(0.7);
+    transform-origin: bottom;
+  }
+}
 
 main > h1 + p {
   margin-top: 50px;
@@ -1007,11 +1053,22 @@ main > h1 + p {
   padding: 30px;
   border: 2pt #9258F6 solid;
 }
+@media (max-width: 699px) {
+  #infosCommande {
+    padding: 10px;
+  }
+}
 #infosCommande figcaption {
   margin-bottom: 30px;
 }
 #infosCommande th {
   text-align: right;
+  white-space: nowrap;
+}
+@media (max-width: 699px) {
+  #infosCommande table {
+    font-size: 0.75em;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

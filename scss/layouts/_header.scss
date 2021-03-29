@@ -111,7 +111,7 @@ nav{
             display: flex;
             list-style: none;
             position: relative;
-            @media (max-width: 1099px) {
+            @media (max-width: 999px) {
                 flex-direction: column
             }
             & li{

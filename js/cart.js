@@ -20,8 +20,8 @@ if( typeof nbItems !== 'undefined' && nbItems != 0 ){
 
             var response = JSON.parse(data.responseText);
             var tr = document.createElement('tr');
-            tr.innerHTML = '<td>'+response.name+'</td><td>'+response.price/100+' €</td><td>'
-                +item.count+'</td><td>'+item.count*response.price/100+' €</td>';
+            tr.innerHTML = '<td>'+response.name+'</td><td class="nowrap">'+response.price/100+' €</td><td>'
+                +item.count+'</td><td class="nowrap">'+item.count*response.price/100+' €</td>';
             document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); 
             total += item.count*response.price/100 ;
             document.querySelector("#table-total :last-child").innerHTML = total + " €";

@@ -44,5 +44,10 @@
         position: absolute;
         left: calc(100% + #{$padding-sm});
         bottom:-$padding-std;
+        @media (max-width: 699px) {
+            left:0;
+            bottom:calc(-100% - #{$fontsize-sm} - #{$padding-std});
+        }    
+
     }
 }

@@ -1,7 +1,8 @@
 table{
     position: relative;
     border-collapse: collapse;
-    margin:auto;
+    margin: $padding-std auto;
+
 
     & tr > th {
         background-color: $colour-primary--bkg;        
@@ -10,6 +11,9 @@ table{
     & td, th {
         padding:$padding-std;
         text-align: center;
+    }
+    & .nowrap{
+        white-space: nowrap;
     }
     & tr:not(:last-child):not(:first-child) > td{
         border : solid $border-width-md $colour-primary--bkg;
