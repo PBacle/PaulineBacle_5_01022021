@@ -89,7 +89,7 @@ function createList(arr){
             secItems.append(headerSec);
             var h2Item = document.createElement('h2');
             h2Item.classList.add("listItems-name","nav-btn-headband");
-            h2Item.innerHTML = title +'<a href="#" data="&#xf077" class="nav-btn right expandToggle showUL clickable"></a>'
+            h2Item.innerHTML = title +'<a href="#" data-content="&#xf077;" class="nav-btn right expandToggle showUL clickable"></a>'
             headerSec.append(h2Item);
             h2Item.children[0].addEventListener("click", function(e) {
                 e.preventDefault();

@@ -6,7 +6,7 @@ table{
 
     & tr > th {
         background-color: $colour-primary--bkg;        
-        border : solid $border-width-md $colour-primary--bkg;
+        border : solid $border-width-md darken($colour-primary--bkg, 1) ;
     }
     & td, th {
         padding:$padding-std;
@@ -16,6 +16,17 @@ table{
         white-space: nowrap;
     }
     & tr:not(:last-child):not(:first-child) > td{
-        border : solid $border-width-md $colour-primary--bkg;
+        border : solid $border-width-md darken($colour-primary--bkg, 1);
     }
+}
+
+figure.table{
+    & table{
+        display: block;
+        transition: transform $std-duration ease-in-out;
+        @media (max-width: 699px) {
+            transform: scale(0.7) ;
+            transform-origin: center center;
+        }        
+    }        
 }

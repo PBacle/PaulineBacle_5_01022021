@@ -11,6 +11,7 @@ $font-logo:belligerent_madnessregular;
 $font-main: Raleway;
 
 $fontsize-h1:2.25em;
+$fontsize-h1-sm:2em;
 $fontsize-h2:1.5em;
 $fontsize-h3:1.25em;
 
@@ -45,7 +46,7 @@ $border-width-sm: 1pt;
 $height-header:200px;
 $height-footersection:150px;
 $height-item: 300px;
-$height-tabs:calc(#{$padding-sm} + #{$padding-sm} + #{$padding-std});
+$height-tabs:calc(#{$padding-sm} + #{$padding-sm} + #{$padding-std} + #{$padding-std});
 
 $height-icon:$padding-std*2 ;
 $cart-dimensions:$padding-std*3;

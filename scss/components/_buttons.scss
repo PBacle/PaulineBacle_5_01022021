@@ -10,7 +10,7 @@ button{
         @include dimIcon;
         font-size: $height-icon;
         color: $colour-primary;
-        border : solid $border-width-md $colour-bkg-section;
+        border : solid $border-width-md transparent;
         background-color:$colour-bkg-section;
         cursor: pointer;
     }
@@ -32,9 +32,6 @@ button{
         @include boxshadow;
     }
 
-    &.btn-addToCart{
-        max-width: auto;
-    }
     &.unclickable{
         cursor:not-allowed;
         color: $colour--unavail;

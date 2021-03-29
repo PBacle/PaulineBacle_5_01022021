@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
 
+    <script src="./js/common.js" defer></script>
     <script src="./js/confirmation.js" defer></script>
 </head>
 
@@ -36,19 +37,21 @@
 
         <p class="font-lg"> Votre commande a bien été prise en compte et sera traitée par notre équipe dans les meilleurs délais. </p>
         <p class="font-lg">Merci pour votre confiance et à bientôt sur <span class="logo font-lg">Orinoco</span> ! </p>
-            <figure id="infosCommande">
-                <figcaption class="bold font-lg center">Récapitulatif de la commande</figcaption>
-                <table>
-                    <tr>
-                        <th>Montant total :</th>
-                        <td id="totalCommande"></td>    
-                    </tr>
-                    <tr>
-                        <th>Référence de la commande :</th>
-                        <td id="referenceCommande"></td>    
-                    </tr>
-                </table>
-            </figure>
+            <div id="infosCommande">
+                <h2 >Récapitulatif de la commande</h2>
+                <figure class="table">
+                    <table>
+                        <tr>
+                            <th>Montant total :</th>
+                            <td id="totalCommande"></td>    
+                        </tr>
+                        <tr>
+                            <th>Référence :</th>
+                            <td id="referenceCommande"></td>    
+                        </tr>
+                    </table>    
+                </figure>
+            </div>
 
     </main>
 

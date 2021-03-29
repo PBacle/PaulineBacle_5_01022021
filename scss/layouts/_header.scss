@@ -29,6 +29,7 @@ nav{
         white-space: nowrap;
     }
     margin:auto;
+    margin-top: $padding-std;
     min-width: calc(#{map-get($calcMainWidth, xxlg)} + #{$padding-std} + #{$padding-std});
     @media (max-width: 1299px) {
         min-width: calc(#{map-get($calcMainWidth, xlg)}  + #{$padding-std} + #{$padding-std});
@@ -166,7 +167,7 @@ section header{
                 @include cartCounter;
                 color:$colour-bkg-section;
                 background-color: $colour-secondary;
-                border: solid $border-width-md $colour-secondary;
+                border: solid $border-width-md transparent;
                 opacity: 0;
             }
             &.addOne::before{

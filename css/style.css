@@ -101,19 +101,17 @@ h1 {
   font-style: italic;
   text-align: center;
   margin: 50px auto;
+  font-size: 2.25em;
 }
 @media (max-width: 599px) {
   h1 {
     margin: 0 auto;
+    font-size: 2em;
   }
 }
 
 h2, h3, h4 {
   font-weight: bold;
-}
-
-h1 {
-  font-size: 2.25em;
 }
 
 h2 {
@@ -166,12 +164,12 @@ header {
 }
 header a {
   position: relative;
-  height: calc(200px - 20px - calc(10px + 10px + 20px));
+  height: calc(200px - 20px - calc(10px + 10px + 20px + 20px));
   transition: all 300ms ease-in-out;
 }
 @media (max-width: 599px) {
   header a {
-    height: calc(200px - 20px - calc(10px + 10px + 20px) - 30px);
+    height: calc(200px - 20px - calc(10px + 10px + 20px + 20px) - 30px);
   }
 }
 header a img {
@@ -180,6 +178,7 @@ header a img {
 
 nav {
   margin: auto;
+  margin-top: 20px;
   min-width: calc(calc(100% - 150px - 150px) + 20px + 20px);
 }
 nav * {
@@ -343,7 +342,7 @@ section header {
   bottom: 0;
   color: white;
   background-color: #EA8834;
-  border: solid 2pt #EA8834;
+  border: solid 2pt transparent;
   opacity: 0;
 }
 #cart span.fa span#cart-counter.addOne::before {
@@ -698,7 +697,7 @@ button {
   text-align: center;
   font-size: 40px;
   color: #9258F6;
-  border: solid 2pt white;
+  border: solid 2pt transparent;
   background-color: white;
   cursor: pointer;
 }
@@ -718,9 +717,6 @@ button {
 .btn:hover {
   background-color: #EA8834;
   box-shadow: 4pt 4pt 8pt rgba(0, 0, 0, 0.3);
-}
-.btn.btn-addToCart {
-  max-width: auto;
 }
 .btn.unclickable {
   cursor: not-allowed;
@@ -765,7 +761,7 @@ button {
   text-align: center;
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
-  content: attr(data);
+  content: attr(data-content);
   box-sizing: border-box;
   background-color: #9258F6;
   color: white;
@@ -786,7 +782,7 @@ button {
   text-align: center;
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
-  content: attr(data);
+  content: attr(data-content);
   box-sizing: border-box;
   background-color: #9258F6;
   color: white;
@@ -873,7 +869,7 @@ table {
 }
 table tr > th {
   background-color: #F1EAFD;
-  border: solid 2pt #F1EAFD;
+  border: solid 2pt #eee5fd;
 }
 table td, table th {
   padding: 20px;
@@ -883,7 +879,18 @@ table .nowrap {
   white-space: nowrap;
 }
 table tr:not(:last-child):not(:first-child) > td {
-  border: solid 2pt #F1EAFD;
+  border: solid 2pt #eee5fd;
+}
+
+figure.table table {
+  display: block;
+  transition: transform 300ms ease-in-out;
+}
+@media (max-width: 699px) {
+  figure.table table {
+    transform: scale(0.7);
+    transform-origin: center center;
+  }
 }
 
 article#item {
@@ -1032,18 +1039,6 @@ article#item h1 {
     margin-left: 0;
   }
 }
-.container table {
-  transition: transform 300ms ease-in-out;
-}
-@media (max-width: 699px) {
-  .container table {
-    position: absolute;
-    left: 50%;
-    translate: -50%;
-    transform: scale(0.7);
-    transform-origin: bottom;
-  }
-}
 
 main > h1 + p {
   margin-top: 50px;
@@ -1051,6 +1046,7 @@ main > h1 + p {
 
 #infosCommande {
   padding: 30px;
+  max-width: 100%;
   border: 2pt #9258F6 solid;
 }
 @media (max-width: 699px) {
@@ -1064,11 +1060,6 @@ main > h1 + p {
 #infosCommande th {
   text-align: right;
   white-space: nowrap;
-}
-@media (max-width: 699px) {
-  #infosCommande table {
-    font-size: 0.75em;
-  }
 }
 
 /*# sourceMappingURL=style.css.map */

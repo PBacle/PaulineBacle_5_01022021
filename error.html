@@ -7,7 +7,9 @@
     <script src="https://kit.fontawesome.com/ead44a5493.js" crossorigin="anonymous"></script> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
+    <script src="./js/common.js" defer></script>
 </head>
+
 
 <body>
 
@@ -29,20 +31,13 @@
                 <li class="nav-tab last-tab"><a href="index.html">Envie d'autre chose ?</a></li>
             </ul>
         </nav>
-        <script type="text/javascript">
-            if( document.cookie.match(/cart-teddies=(.+);*/) ){
-                document.getElementById("cart-counter").innerText = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total;
-            }else{
-                document.getElementById("cart-counter").innerText = "0";
-            }
-        </script>
     </header>
 
     <main>
         <div class="errorDialog">
             <h1>Oups ! Une erreur s'est produite.</h1>
             <p class="center"><span>Toutes nos excuses, il semblerait que le serveur soit hors de portée. <br>
-                Essayez de recharger la page d'<a href="index.html" alt="lien retour accueil">Accueil</a> dans un instant et n'hésitez pas à <a href="#" alt="lien formulaire contact">nous contacter</a> si le problème persiste. </span></p>
+                Essayez de recharger la page d'<a href="index.html">Accueil</a> dans un instant et n'hésitez pas à <a href="#">nous contacter</a> si le problème persiste. </span></p>
         </div>
     </main>
 

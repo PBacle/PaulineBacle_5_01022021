@@ -65,13 +65,5 @@
             }
         }
     }
-    & table{
-        transition: transform $std-duration ease-in-out;
-        @media (max-width: 699px) {
-            position: absolute;left: 50%; translate : -50%;
-            transform: scale(0.7);
-            transform-origin: bottom;
-        }        
-    }
 }
 
