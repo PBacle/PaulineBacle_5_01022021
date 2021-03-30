@@ -9,11 +9,17 @@ var categories = {
 };
 
 /* CART COUNTER  */
-if( document.cookie.match(/cart-teddies=(.+);*/) ){
-    document.getElementById("cart-counter").innerText = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total;
+
+if(localStorage.length != 0){
+    var count = 0 ; 
+    for(let i = 0 ; i < localStorage.length ; i++){
+        count = +JSON.parse(localStorage[localStorage.key(i)]).total;
+    }
+    document.getElementById("cart-counter").innerText = count ;
 }else{
     document.getElementById("cart-counter").innerText = "0";
 }
+
 
 /* */
 function fadeOutEffect(item) {

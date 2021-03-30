@@ -40,7 +40,8 @@ function creatingListContent(response, ul){
             btnItem.classList.add("item-btn");
             btnItem.addEventListener("click", function(e) {
                 e.preventDefault();
-                location.assign("products.html?id="+li.id+"&type="+li.parentNode.id);
+                var item = e.target.parentNode.parentNode.parentNode ;
+                 location.assign("products.html?id="+item.id+"&type="+item.parentNode.id);
             });
             figCap.append(btnItem);
             var pfigCap = document.createElement('p');

@@ -61,25 +61,25 @@ document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
         document.querySelector(".recapDialog").style.display = 'flex';
         document.querySelector("#item h1").hidden = true;
         document.querySelector(".recapDialog span.item-option").innerText = document.getElementById("item-option").value;
-
-        if(document.cookie.match(/cart-teddies=(.+);*/) ){
-
-            var cartObj = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]);
+        
+        if(localStorage.getItem("cart-"+ typeItem)){
+            var cartObj = JSON.parse(localStorage.getItem("cart-"+ typeItem));
             var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
 
             if( index != -1){
-                cartObj.elements[index]['count'] = ++cartObj.elements[index]['count'] ;
+                cartObj.elements[index]['count'] = +cartObj.elements[index]['count'] ;
             }else{
                 cartObj.elements.push({id: document.getElementById("item-id").value, count:'1'});
             } 
             cartObj.total = ++cartObj.total ;
             var count = cartObj.total;
-            document.cookie = "cart-"+ typeItem +"=" + JSON.stringify(cartObj)  +";secure;Path=/;expires=0" ;  
+            localStorage.setItem("cart-"+ typeItem, JSON.stringify(cartObj));  
         }else{
             var count = 1 ;
-            document.cookie = "cart-"+ typeItem +"=" + JSON.stringify({total : '1',  
-            elements: [{ id : document.getElementById("item-id").value, count: '1',}]} )+";secure;Path=/;expires=0";
+            localStorage.setItem("cart-"+ typeItem, JSON.stringify({total : '1',  
+            elements: [{ id : document.getElementById("item-id").value, count: '1',}]} ) );
         }
+
         document.getElementById("cart-counter").innerText = count ;
         document.getElementById("cart-counter").classList.add("addOne");
     }
