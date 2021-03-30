@@ -4,20 +4,23 @@ var durationAnimationLong = 1000;
 
 var categories = {
     teddies: 'Ours en peluche faits main',
-/*    cameras: 'Caméras vintages',
-    furniture: 'Meubles en chêne'*/
+    cameras: 'Caméras vintages',
+    furniture: 'Meubles en chêne'
 };
 
 /* CART COUNTER  */
-
-if(localStorage.length != 0){
-    var count = 0 ; 
-    for(let i = 0 ; i < localStorage.length ; i++){
-        count = +JSON.parse(localStorage[localStorage.key(i)]).total;
-    }
-    document.getElementById("cart-counter").innerText = count ;
-}else{
-    document.getElementById("cart-counter").innerText = "0";
+function updateCartCounter(){
+        if(localStorage.length != 0){
+            var count = 0 ; 
+            for(let i = 0 ; i < localStorage.length ; i++){
+                if(/cart-/.test(localStorage.key(i)) ) count = parseInt(count) + parseInt(JSON.parse(localStorage[localStorage.key(i)]).total);
+            }
+            document.getElementById("cart-counter").innerText = count;
+            return count;    
+        }else{
+            document.getElementById("cart-counter").innerText = "0";
+            return "0";    
+        }    
 }
 
 
@@ -93,6 +96,6 @@ function hideTags() {
     }
 }
 
-window.onload =  function(){ hideTags(); }
+window.onload =  function(){ hideTags();updateCartCounter(); }
 window.addEventListener('resize', hideTags);
 

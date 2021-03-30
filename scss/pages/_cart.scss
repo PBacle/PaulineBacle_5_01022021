@@ -22,12 +22,14 @@
         }
         & form{
             padding:$padding-std;
+            margin: auto;
+            margin-top: $padding-std;
             @media (max-width: 599px) {
                 padding: $padding-sm;
             }
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-evenly;
             & fieldset{
                 border:none;
                 padding-bottom:calc(#{$padding-std} + #{$padding-std} ) ;

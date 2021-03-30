@@ -340,6 +340,7 @@ section header {
   position: absolute;
   left: 0;
   bottom: 0;
+  font-size: 100%;
   color: white;
   background-color: #EA8834;
   border: solid 2pt transparent;
@@ -790,7 +791,11 @@ button {
   left: calc(-40px - 10px);
   top: 0;
 }
-.nav-btn.left:hover::before, .nav-btn .right:hover::after {
+.nav-btn.left:hover::before {
+  background-color: #EA8834;
+  box-shadow: 4pt 4pt 8pt rgba(0, 0, 0, 0.3);
+}
+.nav-btn.right:hover::after {
   background-color: #EA8834;
   box-shadow: 4pt 4pt 8pt rgba(0, 0, 0, 0.3);
 }
@@ -865,7 +870,7 @@ button {
 table {
   position: relative;
   border-collapse: collapse;
-  margin: 20px auto;
+  margin: auto;
 }
 table tr > th {
   background-color: #F1EAFD;
@@ -878,17 +883,25 @@ table td, table th {
 table .nowrap {
   white-space: nowrap;
 }
-table tr:not(:last-child):not(:first-child) > td {
+table tbody td {
   border: solid 2pt #eee5fd;
 }
 
+figure.table {
+  margin: auto 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  max-width: 100%;
+}
 figure.table table {
-  display: block;
-  transition: transform 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
 }
 @media (max-width: 699px) {
   figure.table table {
     transform: scale(0.7);
+    overflow: hidden;
     transform-origin: center center;
   }
 }
@@ -915,6 +928,7 @@ article#item figure {
 }
 article#item figure figcaption {
   flex-grow: 1;
+  margin: auto;
   padding-left: calc(20px + 20px);
   display: flex;
   flex-direction: column;
@@ -929,7 +943,6 @@ article#item figure figcaption p + * {
   margin-top: 20px;
 }
 article#item figure figcaption form {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -991,9 +1004,11 @@ article#item h1 {
 }
 .container section form {
   padding: 20px;
+  margin: auto;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 @media (max-width: 599px) {
   .container section form {
@@ -1060,6 +1075,9 @@ main > h1 + p {
 #infosCommande th {
   text-align: right;
   white-space: nowrap;
+}
+#infosCommande td {
+  border: solid 2pt #eee5fd;
 }
 
 /*# sourceMappingURL=style.css.map */

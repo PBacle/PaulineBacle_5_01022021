@@ -165,6 +165,7 @@ section header{
                 content:'+1';
                 box-sizing: border-box;
                 @include cartCounter;
+                font-size: 100%;
                 color:$colour-bkg-section;
                 background-color: $colour-secondary;
                 border: solid $border-width-md transparent;

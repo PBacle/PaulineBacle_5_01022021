@@ -78,7 +78,11 @@ button{
             left: calc(-#{$height-icon} - #{$padding-sm});top:0;
         }
     }
-    &.left:hover::before, .right:hover::after{
+    &.left:hover::before{
+        background-color: $colour-secondary;
+        @include boxshadow;
+    }
+    &.right:hover::after{
         background-color: $colour-secondary;
         @include boxshadow;
     }

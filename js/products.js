@@ -1,4 +1,3 @@
-
 function loadImage(img, urlImg) {
     return new  Promise(resolve => {
         img.addEventListener('load', () => resolve(true));
@@ -67,21 +66,18 @@ document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
             var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
 
             if( index != -1){
-                cartObj.elements[index]['count'] = +cartObj.elements[index]['count'] ;
+                cartObj.elements[index]['count']++ ;
             }else{
                 cartObj.elements.push({id: document.getElementById("item-id").value, count:'1'});
             } 
             cartObj.total = ++cartObj.total ;
-            var count = cartObj.total;
             localStorage.setItem("cart-"+ typeItem, JSON.stringify(cartObj));  
         }else{
-            var count = 1 ;
             localStorage.setItem("cart-"+ typeItem, JSON.stringify({total : '1',  
             elements: [{ id : document.getElementById("item-id").value, count: '1',}]} ) );
         }
 
-        document.getElementById("cart-counter").innerText = count ;
         document.getElementById("cart-counter").classList.add("addOne");
+        updateCartCounter();
     }
  })
-

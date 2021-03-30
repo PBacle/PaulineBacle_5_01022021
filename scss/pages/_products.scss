@@ -16,6 +16,7 @@ article#item{
         }        
         & figcaption {
             flex-grow: 1;
+            margin: auto;
             padding-left: calc(#{$padding-std} + #{$padding-std});
             @media (max-width: 1099px) {
                 padding-left: 0;
@@ -27,7 +28,6 @@ article#item{
                 margin-top : $padding-std;
             }
             & form {
-                flex-grow: 1;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;

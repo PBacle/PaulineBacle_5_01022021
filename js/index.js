@@ -57,9 +57,7 @@ function creatingListContent(response, ul){
                 });
             })).then(results => {
                 if (results.every(res => res) && results.length == response.length){
-                    console.log('all images loaded successfully');        
-        
-
+/*                    console.log('all images loaded successfully');        */
                     resolve(true);
                 }
             });
@@ -162,5 +160,5 @@ function sameRow() {
     }
 }
 
-window.onload =  function(){ hideTags();doNextList(0,categories);}
+window.onload =  function(){ updateCartCounter();hideTags();doNextList(0,categories);}
 window.addEventListener('resize', function(){ hideTags(); sameRow();} );

@@ -1,9 +1,7 @@
 table{
     position: relative;
     border-collapse: collapse;
-    margin: $padding-std auto;
-
-
+    margin: auto;
     & tr > th {
         background-color: $colour-primary--bkg;        
         border : solid $border-width-md darken($colour-primary--bkg, 1) ;
@@ -15,17 +13,24 @@ table{
     & .nowrap{
         white-space: nowrap;
     }
-    & tr:not(:last-child):not(:first-child) > td{
+    & tbody td{
         border : solid $border-width-md darken($colour-primary--bkg, 1);
     }
 }
 
 figure.table{
+    margin: auto 0;
+    padding: $padding-std ;
+    display: flex;
+    justify-content: center;
+    position:relative;
+    max-width: 100%;
+
     & table{
-        display: block;
-        transition: transform $std-duration ease-in-out;
+        transition: all $std-duration ease-in-out;
         @media (max-width: 699px) {
             transform: scale(0.7) ;
+            overflow:hidden;
             transform-origin: center center;
         }        
     }        

@@ -16,5 +16,8 @@ main > h1 + p{
         text-align: right;
         white-space: nowrap;
     } 
+    & td{
+        border : solid $border-width-md darken($colour-primary--bkg, 1);
+    }
  
 }

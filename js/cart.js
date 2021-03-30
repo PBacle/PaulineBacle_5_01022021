@@ -1,37 +1,44 @@
-if( document.cookie.match(/cart-teddies=(.+);*/) ){
-    var nbItems = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).total; 
-}
-
-if( typeof nbItems !== 'undefined' && nbItems != 0 ){
-    var orderTable = JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).elements.map(key => key.id);
-    var total = 0 ;
+var nbItems = updateCartCounter();
+if( nbItems != 0 ){
     document.querySelectorAll("section").forEach(item => {item.style.display = "flex"; }) 
-    JSON.parse(document.cookie.match(/cart-teddies=(.+);*/)[1]).elements.forEach(item => {
-
-        requestItem("teddies", item.id)
-        .then( data => {            
-            if(!document.querySelector(".loader").classList.contains("hidden")){
-                fadeOutEffect(".loader")
-                .then(() => {
-                    document.querySelector("table#cart-table").hidden = false;
-                    document.querySelector('button[type="submit"]').classList.remove("unclickable");
-                })
-            };
-
-            var response = JSON.parse(data.responseText);
-            var tr = document.createElement('tr');
-            tr.innerHTML = '<td>'+response.name+'</td><td class="nowrap">'+response.price/100+' €</td><td>'
-                +item.count+'</td><td class="nowrap">'+item.count*response.price/100+' €</td>';
-            document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); 
-            total += item.count*response.price/100 ;
-            document.querySelector("#table-total :last-child").innerHTML = total + " €";
-        } )               
-    }) ;
+    var total = 0 ;
+    var orderTable = [];
+    for(let i = 0 ; i < localStorage.length ; i++){
+        if(/cart-/.test(localStorage.key(i)) ){
+            var typeItem = localStorage.key(i).match(/cart-([a-z]+)/i)[1];
+/*        console.log("mapping:",JSON.parse(localStorage[localStorage.key(i)]).elements.map(key => key.id));*/
+            JSON.parse(localStorage[localStorage.key(i)]).elements.forEach( item => {
+                orderTable.push(item.id);
+                requestItem(typeItem, item.id)
+                .then( data => {            
+                    if(!document.querySelector(".loader").classList.contains("hidden")){
+                        fadeOutEffect(".loader")
+                        .then(() => {
+                            document.querySelector("table#cart-table").hidden = false;
+                            document.querySelector('button[type="submit"]').classList.remove("unclickable");
+                        })
+                    };
+    
+                    var response = JSON.parse(data.responseText);
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td>'+response.name+'</td><td class="nowrap">'+response.price/100+' €</td><td>'
+                        +item.count+'</td><td class="nowrap">'+item.count*response.price/100+' €</td>';
+                    document.querySelector("#cart-table tbody").append(tr);
+/*                    document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); */
+                    total += item.count*response.price/100 ;
+                    document.querySelector("#table-total :last-child").innerHTML = total + " €";
+                } )               
+            })           
+            count = +JSON.parse(localStorage[localStorage.key(i)]).total;
+        }
+    }    
 }else{
     document.querySelectorAll("section").forEach(item => {item.style.display = "none"; }) 
     document.querySelectorAll(".emptyMsg").forEach(item => {item.hidden = false; }) 
     document.querySelector("main").classList.add("center");
 }
+
+
 
 document.querySelector('button[type="submit"]').addEventListener("click", function(e){
     e.preventDefault();
