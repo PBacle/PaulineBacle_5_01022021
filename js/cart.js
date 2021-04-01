@@ -6,7 +6,6 @@ if( nbItems != 0 ){
     for(let i = 0 ; i < localStorage.length ; i++){
         if(/cart-/.test(localStorage.key(i)) ){
             var typeItem = localStorage.key(i).match(/cart-([a-z]+)/i)[1];
-/*        console.log("mapping:",JSON.parse(localStorage[localStorage.key(i)]).elements.map(key => key.id));*/
             JSON.parse(localStorage[localStorage.key(i)]).elements.forEach( item => {
                 orderTable.push(item.id);
                 requestItem(typeItem, item.id)
@@ -24,7 +23,6 @@ if( nbItems != 0 ){
                     tr.innerHTML = '<td>'+response.name+'</td><td class="nowrap">'+response.price/100+' €</td><td>'
                         +item.count+'</td><td class="nowrap">'+item.count*response.price/100+' €</td>';
                     document.querySelector("#cart-table tbody").append(tr);
-/*                    document.querySelector("#table-total").parentNode.insertBefore(tr, document.querySelector("#table-total")); */
                     total += item.count*response.price/100 ;
                     document.querySelector("#table-total :last-child").innerHTML = total + " €";
                 } )               
@@ -38,23 +36,14 @@ if( nbItems != 0 ){
     document.querySelector("main").classList.add("center");
 }
 
-
-
 document.querySelector('button[type="submit"]').addEventListener("click", function(e){
     e.preventDefault();
     if( document.querySelector("form").reportValidity() && !e.target.classList.contains("unclickable")){
-        /*var isValidCheck = true ;
-         document.querySelectorAll('input[type="text"]:not(#addressUser)').forEach(item => {
-            isValid = isValid(item,/^\s*[a-z]+\s*$/i);
-        }); */
         let isFirstNameValid = isValid(document.getElementById('firstnameUser'),/^\s*[a-z]+\s*$/i);
         let isLastNameValid = isValid(document.getElementById('nameUser'),/^\s*[a-z]+\s*$/i);
         let isAddressValid =  isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i);
         let isCityValid = isValid(document.getElementById('cityUser'),/^\s*[a-z]+\s*$/i);
         let isEmailValid = isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i);
-
-        /* isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i,isValidCheck);
-        isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i,isValidCheck); */
 
         if(isEmailValid && isFirstNameValid && isLastNameValid && isCityValid && isAddressValid){
             var order = {
@@ -70,16 +59,9 @@ document.querySelector('button[type="submit"]').addEventListener("click", functi
             
             sendOrder("teddies", order)
             .then( data => {
-/*                var form = document.createElement('form') ;
-                form.action = "confirmation.html" ; 
-                form.method = "get" ; 
-                form.style.display = "none";
-                form.innerHTML =  '<input type="text" name="ref" value="' + JSON.parse(data.responseText).orderId + '" /><input type="text" name="tot" value="' 
-                + document.querySelector("#table-total th:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] + '" />' ;
-                document.body.append(form);
-                form.submit();*/
                 localStorage.setItem("orderId",JSON.parse(data.responseText).orderId );
                 localStorage.setItem("orderTotal",document.querySelector("#table-total th:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] );
+                window.location.replace("confirmation.html"); 
 
             } )
             .catch( data => {
