@@ -16,7 +16,7 @@ header{
         height: calc(#{$height-header} - #{$padding-std} - #{$height-tabs});
         transition: all  $std-duration ease-in-out  ;
         @media (max-width: 599px) {
-            height: calc(#{$height-header} - #{$padding-std} - #{$height-tabs} - 30px);
+            height: calc(#{$height-header} - #{$padding-std} - #{$height-tabs} - #{$margin-lg});
         }
             & img{
             max-height: 100%;

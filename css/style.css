@@ -169,7 +169,7 @@ header a {
 }
 @media (max-width: 599px) {
   header a {
-    height: calc(200px - 20px - calc(10px + 10px + 20px + 20px) - 30px);
+    height: calc(200px - 20px - calc(10px + 10px + 20px + 20px) - 50px);
   }
 }
 header a img {
@@ -810,7 +810,7 @@ button {
   transition: transform 300ms ease-in-out;
 }
 
-.recapDialog {
+.Dialog {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -824,7 +824,7 @@ button {
   justify-content: flex-end;
   padding: 30px;
 }
-.recapDialog > span {
+.Dialog > span {
   text-align: center;
   margin: auto;
 }
@@ -1061,6 +1061,7 @@ main > h1 + p {
 
 #infosCommande {
   padding: 30px;
+  margin-top: 50px;
   max-width: 100%;
   border: 2pt #9258F6 solid;
 }

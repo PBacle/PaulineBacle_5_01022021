@@ -6,11 +6,11 @@ if(urlParams.has('ref') && urlParams.has('tot')
 ){    
     document.getElementById("referenceCommande").innerText = urlParams.get('ref');
     document.getElementById("totalCommande").innerText  = urlParams.get('tot') + ' €';
-    localStorage.clear();
+/*    localStorage.clear();*/
+    Object.keys(localStorage).forEach( x => { if(/cart-/.test(x)){ localStorage.removeItem(x); } });
 }else{
-    document.querySelector("#infosCommande table").hidden = true ;
-    var p = document.createElement("p");
-    p.classList.add("center");
-    p.innerHTML = "Il semblerait qu'une erreur se soit produite.<br> <a href='#' alt='lien vers le formulaire de contact'>Contactez-nous</a> pour obtenir les informations de commande."
-    document.querySelector("#infosCommande").appendChild(p);
+
+    document.querySelector("#infosCommande").hidden = true ;
+    document.querySelector("main h1").innerHTML = "Une erreur s'est produite."
+    document.querySelector("main p").innerHTML = "<a href='#' alt='lien vers le formulaire de contact'>Contactez-nous</a> si le problème persiste."
 }        
