@@ -1055,10 +1055,6 @@ article#item h1 {
   }
 }
 
-main > h1 + p {
-  margin-top: 50px;
-}
-
 #infosCommande {
   padding: 30px;
   margin-top: 50px;

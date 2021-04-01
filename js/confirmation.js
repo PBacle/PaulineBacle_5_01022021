@@ -1,13 +1,12 @@
-const url = window.location.search; 
-const urlParams = new URLSearchParams(url);
-if(urlParams.has('ref') && urlParams.has('tot') 
-&& urlParams.getAll('ref')[0].length != 0 && urlParams.getAll('tot')[0].length != 0
-&& urlParams.get('ref').match(/^[a-z0-9-]+$/)  && urlParams.get('tot').match(/^[0-9]+$/)
+if(Object.keys(localStorage).includes("orderId") && Object.keys(localStorage).includes("orderTotal")
+&& localStorage.getItem("orderId").length != 0  
+&& localStorage.getItem("orderTotal").length != 0 
 ){    
-    document.getElementById("referenceCommande").innerText = urlParams.get('ref');
-    document.getElementById("totalCommande").innerText  = urlParams.get('tot') + ' €';
-/*    localStorage.clear();*/
+    document.getElementById("referenceCommande").innerText = localStorage.getItem("orderId") ;
+    document.getElementById("totalCommande").innerText  = localStorage.getItem("orderTotal") + ' €';
     Object.keys(localStorage).forEach( x => { if(/cart-/.test(x)){ localStorage.removeItem(x); } });
+    localStorage.removeItem("orderId");
+    localStorage.removeItem("orderTotal");
 }else{
 
     document.querySelector("#infosCommande").hidden = true ;

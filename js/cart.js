@@ -70,14 +70,17 @@ document.querySelector('button[type="submit"]').addEventListener("click", functi
             
             sendOrder("teddies", order)
             .then( data => {
-                var form = document.createElement('form') ;
+/*                var form = document.createElement('form') ;
                 form.action = "confirmation.html" ; 
                 form.method = "get" ; 
                 form.style.display = "none";
                 form.innerHTML =  '<input type="text" name="ref" value="' + JSON.parse(data.responseText).orderId + '" /><input type="text" name="tot" value="' 
                 + document.querySelector("#table-total th:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] + '" />' ;
                 document.body.append(form);
-                form.submit();
+                form.submit();*/
+                localStorage.setItem("orderId",JSON.parse(data.responseText).orderId );
+                localStorage.setItem("orderTotal",document.querySelector("#table-total th:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] );
+
             } )
             .catch( data => {
                 window.setTimeout(function(){window.location.replace("error.html")},250); 
