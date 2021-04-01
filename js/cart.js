@@ -57,7 +57,9 @@ document.querySelector('button[type="submit"]').addEventListener("click", functi
                 products : orderTable
             }
             
-            sendOrder("teddies", order)
+            var typeItem = Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x) )].match(/cart-([a-z]+)/)[1];
+
+            sendOrder(typeItem, order)
             .then( data => {
                 localStorage.setItem("orderId",JSON.parse(data.responseText).orderId );
                 localStorage.setItem("orderTotal",document.querySelector("#table-total th:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] );
