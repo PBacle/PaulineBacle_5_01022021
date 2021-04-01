@@ -18,6 +18,8 @@ if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].len
         .then( () => {
             fadeOutEffect(".loader");
             document.querySelectorAll(".item-name").forEach(item => {item.innerText = response.name ;}) ;
+            document.querySelector("#categorie a").innerText = Object.values(categories)[Object.keys(categories).findIndex( x => x === typeItem)];
+            document.querySelector("#categorie a").href = "index.html#"+typeItem;
             document.getElementById("item-description").innerText= response.description;
             document.querySelector("#item-price span:last-child").innerText= response.price/100  + ' €';
             document.getElementById("item-id").value= response._id;
@@ -43,41 +45,81 @@ if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].len
     document.querySelector("main").classList.add("center");
 }
 
-document.querySelector(".btn-close").addEventListener("click", function(e){
+/*localStorage.clear();*/
+
+function checkCart() {
+    console.log(localStorage);
+    return new Promise( (resolve,reject) => {
+        if(localStorage.getItem("cart-"+ typeItem)){
+            resolve(true);
+/*            console.log("already right cart");*/
+        }else if(Object.keys(localStorage).map( x => /cart-/.test(x)).includes(true) ){
+            var oldType = Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x))].match(/cart-([a-z]+)/)[1] ;
+            reject(oldType);
+/*            console.log("already another cart");*/
+        }else{
+            resolve(false);
+/*            console.log("no cart");*/
+
+        }
+    })
+}
+
+document.querySelector(".btn-deleteCart").addEventListener("click", function(e) {
     e.preventDefault();
-    document.querySelector(".recap.Dialog").style.display = 'none';
-    document.querySelector("#item h1").hidden = false;
-    if(document.getElementById("cart-counter").classList.contains("addOne") ){
-        document.getElementById("cart-counter").classList.remove("addOne")
-    }
+    localStorage.removeItem("cart-"+Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x))].match(/cart-([a-z]+)/)[1]
+    );
+    document.querySelector(".Dialog.existingCart").style.display = "none";
+    document.querySelector(".btn-addToCart").click();    
 })
 
 document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
     e.preventDefault();
     var form = document.querySelector("form") ;
     form.reportValidity();   
-    if(form.checkValidity() ){                    
-        document.querySelector(".recap.Dialog").style.display = 'flex';
-        document.querySelector("#item h1").hidden = true;
-        document.querySelector(".recap.Dialog span.item-option").innerText = document.getElementById("item-option").value;
-        
-        if(localStorage.getItem("cart-"+ typeItem)){
-            var cartObj = JSON.parse(localStorage.getItem("cart-"+ typeItem));
-            var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
+    if(form.checkValidity() ){
 
-            if( index != -1){
-                cartObj.elements[index]['count']++ ;
+        checkCart()
+        .then( (data) => {
+
+            document.querySelector("#item h1").hidden = true;
+            document.querySelector(".recap.Dialog").style.display = 'flex';
+            document.querySelector(".recap.Dialog span.item-option").innerText = document.getElementById("item-option").value;
+            
+            if(data){
+                var cartObj = JSON.parse(localStorage.getItem("cart-"+ typeItem));
+                var index = cartObj.elements.findIndex( x => x.id === document.getElementById("item-id").value) ;
+    
+                if( index != -1){
+                    cartObj.elements[index]['count']++ ;
+                }else{
+                    cartObj.elements.push({id: document.getElementById("item-id").value, count:'1'});
+                } 
+                cartObj.total = ++cartObj.total ;
+                localStorage.setItem("cart-"+ typeItem, JSON.stringify(cartObj));  
             }else{
-                cartObj.elements.push({id: document.getElementById("item-id").value, count:'1'});
-            } 
-            cartObj.total = ++cartObj.total ;
-            localStorage.setItem("cart-"+ typeItem, JSON.stringify(cartObj));  
-        }else{
-            localStorage.setItem("cart-"+ typeItem, JSON.stringify({total : '1',  
-            elements: [{ id : document.getElementById("item-id").value, count: '1',}]} ) );
-        }
-
-        document.getElementById("cart-counter").classList.add("addOne");
-        updateCartCounter();
+                localStorage.setItem("cart-"+ typeItem, JSON.stringify({total : '1',  
+                elements: [{ id : document.getElementById("item-id").value, count: '1',}]} ) );
+            }
+    
+            document.getElementById("cart-counter").classList.add("addOne");    
+            updateCartCounter();
+        })
+        .catch( (oldType) => {
+            document.querySelector("#item h1").hidden = true;
+            document.querySelector(".item-type--old").innerText = Object.values(categories)[Object.keys(categories).findIndex( x => x === oldType)].toLowerCase() ;
+            document.querySelector(".existingCart.Dialog").style.display = 'flex';
+        })
     }
+ })
+
+ document.querySelectorAll(".btn-close").forEach(item => {
+    item.addEventListener("click", function(e){
+        e.preventDefault();
+        e.target.parentNode.parentNode.style.display = 'none';
+        document.querySelector("#item h1").hidden = false;
+        if(document.getElementById("cart-counter").classList.contains("addOne") ){
+            document.getElementById("cart-counter").classList.remove("addOne")
+        }
+    })
  })

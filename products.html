@@ -47,7 +47,7 @@
             <ol>
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html">OriHome</a></li>
-                <li id="categorie" class="bold"><a href="index.html#teddies">Ours en peluche faits main</a></li>
+                <li id="categorie" class="bold"><a href="index.html"></a></li>
                 <li class="item-name last-tab "></li>
             </ol>
         </nav>
@@ -86,16 +86,21 @@
                 <a href="cart.html" data-content="&#xf291;" class="right nav-btn">Voir le panier</a>
             </div>
 
-            <div class="Dialog recap" style="display: none">
+            <div class="Dialog existingCart" style="display: none">
                 <div class="nav-btn-headband">
                     <a href="index.html" data-content='&#xf060;' class="left nav-btn">Retour</a>
                     <button class="btn-close  nav-btn right" data-content="&#xf00d;"></button>
                 </div>
 
-                <span>Vous avez déjà un panier contenant des <span class="bold item-type--old"></span>. 
-                Voulez-vous le supprimer et créer un nouveau panier de <span class="bold item-type--old"></span> ?
-                </span>
-                <a href="cart.html" data-content="&#xf291;" class="right nav-btn">Voir le panier</a>
+                <p>
+                    <span>Vous avez déjà un panier contenant des <span class="bold item-type--old"></span>.<br> 
+                    Que voulez-vous faire ?</span>
+                <span> <a href="#" data-content="&#xf12d;" class="right nav-btn btn-deleteCart">Créer un nouveau panier</a> </span>
+                <span> <a href="cart.html" data-content="&#xf291;" class="right nav-btn">Voir le panier actuel</a> </span>
+    
+                </p>
+
+
             </div>
 
         </article>    

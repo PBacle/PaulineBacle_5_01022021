@@ -828,6 +828,15 @@ button {
   text-align: center;
   margin: auto;
 }
+.Dialog > p {
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.Dialog > p span + span {
+  padding-top: 20px;
+}
 
 .errorDialog {
   height: 100%;

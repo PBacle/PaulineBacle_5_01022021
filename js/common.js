@@ -99,3 +99,5 @@ function hideTags() {
 window.onload =  function(){ hideTags();updateCartCounter(); }
 window.addEventListener('resize', hideTags);
 
+
+

@@ -9,8 +9,15 @@
     justify-content: flex-end;
     padding:$padding-dialog;
     & > span {
-        text-align: center;
-        margin:auto;
+        text-align: center;margin:auto;
+    }
+    & > p {
+        text-align: center;margin:auto;
+        display: flex;
+        flex-direction: column;
+        & span + span{
+            padding-top: $padding-std;
+        }
     }
 }
 
