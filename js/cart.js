@@ -1,3 +1,16 @@
+function isValid(item,regex){
+    if(!item.value.match(regex)){
+        item.parentElement.firstElementChild.classList.add("formatError");
+        return false ; 
+    }else {
+        if(item.parentElement.firstElementChild.classList.contains("formatError")){
+            item.parentElement.firstElementChild.classList.remove("formatError"); 
+        }
+        return true;
+    }
+}
+
+
 var nbItems = updateCartCounter();
 if( nbItems != 0 ){
     document.querySelectorAll("section").forEach(item => {item.style.display = "flex"; }) 

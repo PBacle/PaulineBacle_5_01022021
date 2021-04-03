@@ -212,6 +212,16 @@ nav > ul li > ul {
   display: flex;
   flex-direction: row;
 }
+nav .nav-tab {
+  /*
+          &:first-child a{
+              @media (max-width: 799px) { border-radius:0 $padding-sm  0 0;}
+          }
+          &.last-tab a {
+              @media (max-width: 799px) { border-radius:$padding-sm 0 0 0;}
+          }    
+  */
+}
 nav .nav-tab:not(.last-tab) {
   padding-right: 20px;
 }
@@ -226,23 +236,13 @@ nav .nav-tab a {
   box-shadow: 4pt 4pt 8pt rgba(0, 0, 0, 0.3);
   white-space: nowrap;
 }
-@media (max-width: 799px) {
-  nav .nav-tab:first-child a {
-    border-radius: 0 10px 0 0;
-  }
-}
-nav .nav-tab.hidden:not(.active) {
+nav .nav-tab.hidden {
   opacity: 0;
   position: absolute;
   left: -100000px;
 }
 nav .nav-tab:not(.active) a:hover {
   color: white;
-}
-@media (max-width: 799px) {
-  nav .nav-tab.last-tab a {
-    border-radius: 10px 0 0 0;
-  }
 }
 nav .nav-tab.active a {
   z-index: 1;

@@ -1,4 +1,4 @@
-/* VARIABLES */
+/******* VARIABLES *******/
 var delayItemAppearing = 100; 
 var durationAnimation = 500;
 var durationAnimationLong = 1000;
@@ -10,32 +10,61 @@ var categories = {
 };
 
 var currencies = {
-    eur: {
-        rate:1,
-        symbol:"€"},
-    usd: {
-        rate:1.18,
-        symbol:"$"},
-    gpb: {
-        rate:0.85,
-        symbol:"£"},
+    eur: { rate:1, symbol:"€"},
+    usd: { rate:1.18, symbol:"$"},
+    gpb: { rate:0.85, symbol:"£"},
 }
+/**************************/
 
+/****** CART COUNTER ******/
+function updateCartCounter(){
+    if(localStorage.length != 0){
+        var count = 0 ; 
+        for(let i = 0 ; i < localStorage.length ; i++){
+            if(/cart-/.test(localStorage.key(i)) ) count = parseInt(count) + parseInt(JSON.parse(localStorage[localStorage.key(i)]).total);
+        }
+        document.getElementById("cart-counter").innerText = count;
+        return count;    
+    }else{
+        document.getElementById("cart-counter").innerText = "0";
+        return "0";    
+    }    
+}
+/**************************/
 
-function createCurrencies(){
+/****** REQUESTS API ******/
+function requestItem(typeItem, idItem){ /* typeItem should be a key from the array categories, idItem is the id of an item from this category  */
+    return new Promise((resolve,reject) => {
+        var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
+        let request = new XMLHttpRequest();
+        request.open("GET", urlAPI);
+        request.onload = () => {
+            if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
+                resolve(request);
+            }else{
+                reject();
+           }
+        }
+        request.onerror = () => reject();
+        request.send();    
+    })
+}
+/**************************/
+
+/******* CURRENCIES *******/
+function createCurrencies(){ /* Creates a list of options for different currencies available in above array */
     if(Object.entries(currencies).length != 0){
         for(let i=0 ; i < Object.entries(currencies).length; i++){
             var option = document.createElement('option');
             option.value = Object.keys(currencies)[i];
             option.innerText = Object.keys(currencies)[i].toUpperCase() + " (" + Object.values(currencies)[i].symbol + ")";
-/*            option.id = Object.keys(currencies)[i] + '-' + Object.values(currencies)[i].rate ;*/
             if(!Object.keys(localStorage).includes("currency")){
-                if( Object.values(currencies)[i].rate == 1 ) {
+                if( Object.values(currencies)[i].rate == 1 ) { /* euro is the default currency if none is already saved in localStorage */
                     option.selected = "selected" ; option.id = "selected";
                      localStorage.setItem("currency",Object.keys(currencies)[i]);
                     }; 
             }else if(Object.keys(currencies)[i] == localStorage.getItem("currency")){
-                option.selected = "selected" ; option.id = "selected";
+                option.selected = "selected" ; option.id = "selected"; 
             }
             document.querySelector("select#devise-option").append(option);
         }
@@ -44,7 +73,7 @@ function createCurrencies(){
     }
 }
 
-function updatePrice(price){
+function updatePrice(price){ /* Calculates the price with the rate (compared to eur) of the currency saved in localStorage (current) */
     var currency = localStorage.getItem("currency");
     var rate = Object.values(currencies)[Object.keys(currencies).findIndex( x => x == currency)].rate ; 
     var symbol = Object.values(currencies)[Object.keys(currencies).findIndex( x => x == currency)].symbol;
@@ -59,24 +88,36 @@ document.querySelector("#devise-option").addEventListener('change', function(e){
         item.innerText = updatePrice(item.id.match(/[0-9]+/)[0]);
     })
 })
+/**************************/
 
-/* CART COUNTER  */
-function updateCartCounter(){
-    if(localStorage.length != 0){
-        var count = 0 ; 
-        for(let i = 0 ; i < localStorage.length ; i++){
-            if(/cart-/.test(localStorage.key(i)) ) count = parseInt(count) + parseInt(JSON.parse(localStorage[localStorage.key(i)]).total);
+/**** GRAPHICAL ASPECTS ***/
+function hideTags() { /* Makes the unused navigation tabs appear and disappear based on the width of the screen*/
+    var widthNav = document.querySelector("body > header > nav").offsetWidth ;
+    var Tags = document.querySelectorAll("body > header > nav ul > li:not(.last-tab)  li  ") ; 
+    var limVis=-1;
+    /* The active tab is always visible + the tab at the right end ("More")*/
+    sum = document.querySelector("body > header >  nav ul > li.last-tab  ").scrollWidth 
+    +  document.querySelector("body > header >  nav ul > li:not(.last-tab)  li.active    ").scrollWidth;  
+
+    var indexOfActive =-1;
+    while( sum < widthNav  && limVis < Tags.length -1){ 
+        limVis++ ;
+        if(!Tags[limVis].classList.contains("active") ){ /* Already counted above */
+            sum +=  Tags[limVis].scrollWidth;  /* limVis is the index of the first tab that wont fit in the width */
         }
-        document.getElementById("cart-counter").innerText = count;
-        return count;    
-    }else{
-        document.getElementById("cart-counter").innerText = "0";
-        return "0";    
-    }    
+    }
+
+    if(limVis == Tags.length-1 && sum < widthNav ){ /* Case 1 : all tags are visible */
+        document.querySelectorAll("body > header > nav ul > li:not(.last-tab)  li").forEach( item => {
+            if(item.classList.contains("hidden")) item.classList.remove("hidden") ;
+        })      
+    }else{ /* Case 2 : tags are visible from 0 to limVis-1*/
+        for( let i = 0; i < limVis ; i++){ if(Tags[i].classList.contains("hidden")) Tags[i].classList.remove("hidden") ; }
+        for( let i = limVis; i < Tags.length ; i++){ if(!Tags[i].classList.contains("hidden") && !Tags[i].classList.contains("active")) Tags[i].classList.add("hidden"); }
+    }
 }
 
-/* */
-function fadeOutEffect(item) {
+function fadeOutEffect(item) { /* Makes item fade out (usud mainly for the loading spinners) */
     return new Promise((resolve) => {
         var fadeTarget = document.querySelector(item);
         var fadeEffect = setInterval(function () {
@@ -93,53 +134,7 @@ function fadeOutEffect(item) {
         }, 25);
     })
 }
-
-function requestItem(typeItem, idItem){
-    return new Promise((resolve,reject) => {
-        var urlAPI = "http://localhost:3000/api/" + typeItem + "/" + idItem  ;
-        let request = new XMLHttpRequest();
-        request.open("GET", urlAPI);
-        request.onload = () => {
-            if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-                resolve(request);
-            }else{
-                reject();
-           }
-        }
-        request.onerror = () => reject();
-        request.send();    
-    })
-}
-
-function isValid(item,regex){
-    if(!item.value.match(regex)){
-        item.parentElement.firstElementChild.classList.add("formatError");
-        return false ; 
-    }else {
-        if(item.parentElement.firstElementChild.classList.contains("formatError")){
-            item.parentElement.firstElementChild.classList.remove("formatError"); 
-        }
-        return true;
-    }
-}
-
-function hideTags() {
-    var widthNav = document.querySelector("body > header > nav").offsetWidth ;
-    var Tags = document.querySelectorAll("body > header > nav ul > li:not(.last-tab)  li  ") ; 
-    limVis=0;
-    sum = document.querySelector("body > header >  nav ul > li.last-tab  ").scrollWidth +  Tags[limVis].scrollWidth;
-
-    while( sum < widthNav  && limVis < Tags.length -1){ limVis++ ; sum +=  Tags[limVis].scrollWidth; }
-    
-    if(limVis == Tags.length-1 && sum < widthNav ){
-        document.querySelectorAll("body > header > nav ul > li:not(.last-tab)  li").forEach( item => {
-            if(item.classList.contains("hidden")) item.classList.remove("hidden") ;
-        })      
-    }else{
-        for( let i = 0; i < limVis ; i++){ if(Tags[i].classList.contains("hidden")) Tags[i].classList.remove("hidden") ; }
-        for( let i = limVis; i < Tags.length ; i++){ if(!Tags[i].classList.contains("hidden")) Tags[i].classList.add("hidden"); }
-    }
-}
+/**************************/
 
 window.onload =  function(){ hideTags();updateCartCounter();createCurrencies() }
 window.addEventListener('resize', hideTags);
