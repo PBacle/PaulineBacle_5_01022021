@@ -1,6 +1,6 @@
-function requestList(listID){
+function requestList(type){
     return new Promise((resolve,reject) => {
-        var urlAPI = "http://localhost:3000/api/" + listID;
+        var urlAPI = "http://localhost:3000/api/" + type;
         let request = new XMLHttpRequest();
         request.open("GET", urlAPI);
         request.onload = () => {
@@ -46,7 +46,8 @@ function creatingListContent(response, ul){
             figCap.append(btnItem);
             var pfigCap = document.createElement('p');
             pfigCap.classList.add("item-price","right","bold");
-            pfigCap.innerText = response[i].price/delayItemAppearing + ' €';
+            pfigCap.innerText = updatePrice(response[i].price) ;
+            pfigCap.id = "price-" + response[i].price;
             figCap.append(pfigCap);
 
             Promise.all(Array.from(Array.from(document.querySelectorAll('#'+ul.id+' img'))).map(img => {
@@ -57,7 +58,6 @@ function creatingListContent(response, ul){
                 });
             })).then(results => {
                 if (results.every(res => res) && results.length == response.length){
-/*                    console.log('all images loaded successfully');        */
                     resolve(true);
                 }
             });
@@ -160,5 +160,5 @@ function sameRow() {
     }
 }
 
-window.onload =  function(){ updateCartCounter();hideTags();doNextList(0,categories);}
+window.onload =  function(){ updateCartCounter();hideTags();doNextList(0,categories);createCurrencies()}
 window.addEventListener('resize', function(){ hideTags(); sameRow();} );

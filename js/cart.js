@@ -20,11 +20,16 @@ if( nbItems != 0 ){
     
                     var response = JSON.parse(data.responseText);
                     var tr = document.createElement('tr');
-                    tr.innerHTML = '<td>'+response.name+'</td><td class="nowrap">'+response.price/100+' €</td><td>'
-                        +item.count+'</td><td class="nowrap">'+item.count*response.price/100+' €</td>';
+
+                    document.querySelector(".item-price").innerText= updatePrice(response.price);
+                    document.querySelector(".item-price").id = "price-" + response.price;
+        
+                    tr.innerHTML = '<td>'+response.name+'</td><td class="nowrap item-price" id="price-'+ response.price +'">'+ updatePrice(response.price)+'</td><td>'
+                        +item.count+'</td><td class="nowrap item-price" id="price-'+item.count*response.price+'">'+updatePrice(item.count*response.price)+'</td>';
                     document.querySelector("#cart-table tbody").append(tr);
-                    total += item.count*response.price/100 ;
-                    document.querySelector("#table-total :last-child").innerHTML = total + " €";
+                    total += item.count*response.price ;
+                    document.querySelector("#table-total :last-child").id = "price-" + total ;
+                    document.querySelector("#table-total :last-child").innerHTML = updatePrice(total);
                 } )               
             })           
             count = +JSON.parse(localStorage[localStorage.key(i)]).total;
@@ -62,7 +67,7 @@ document.querySelector('button[type="submit"]').addEventListener("click", functi
             sendOrder(typeItem, order)
             .then( data => {
                 localStorage.setItem("orderId",JSON.parse(data.responseText).orderId );
-                localStorage.setItem("orderTotal",document.querySelector("#table-total th:last-child").innerHTML.match(/([0-9]+)\s*€/)[1] );
+                localStorage.setItem("orderTotal",document.querySelector("#table-total th:last-child").id.match(/[0-9]+/));
                 window.location.replace("confirmation.html"); 
 
             } )

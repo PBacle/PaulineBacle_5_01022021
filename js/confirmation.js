@@ -1,9 +1,10 @@
-if(Object.keys(localStorage).includes("orderId") && Object.keys(localStorage).includes("orderTotal")
+if(Object.keys(localStorage).includes("orderId") && Object.keys(localStorage).includes("orderTotal") 
 && localStorage.getItem("orderId").length != 0  
 && localStorage.getItem("orderTotal").length != 0 
 ){    
     document.getElementById("referenceCommande").innerText = localStorage.getItem("orderId") ;
-    document.getElementById("totalCommande").innerText  = localStorage.getItem("orderTotal") + ' €';
+    document.getElementById("totalCommande").innerText  = updatePrice(localStorage.getItem("orderTotal")) ;
+    document.getElementById("totalCommande").id = "price-" + localStorage.getItem("orderTotal");
     Object.keys(localStorage).forEach( x => { if(/cart-/.test(x)){ localStorage.removeItem(x); } });
     localStorage.removeItem("orderId");
     localStorage.removeItem("orderTotal");

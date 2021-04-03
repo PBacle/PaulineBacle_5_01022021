@@ -21,7 +21,8 @@ if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].len
             document.querySelector("#categorie a").innerText = Object.values(categories)[Object.keys(categories).findIndex( x => x === typeItem)];
             document.querySelector("#categorie a").href = "index.html#"+typeItem;
             document.getElementById("item-description").innerText= response.description;
-            document.querySelector("#item-price span:last-child").innerText= response.price/100  + ' €';
+            document.querySelector(".item-price").innerText= updatePrice(response.price);
+            document.querySelector(".item-price").id = "price-" + response.price;
             document.getElementById("item-id").value= response._id;
             const isOption = (element) => Array.isArray(element[1]) === true;
             const index = Object.entries(response).findIndex(isOption) ;                            
@@ -45,22 +46,16 @@ if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].len
     document.querySelector("main").classList.add("center");
 }
 
-/*localStorage.clear();*/
-
 function checkCart() {
     console.log(localStorage);
     return new Promise( (resolve,reject) => {
         if(localStorage.getItem("cart-"+ typeItem)){
             resolve(true);
-/*            console.log("already right cart");*/
         }else if(Object.keys(localStorage).map( x => /cart-/.test(x)).includes(true) ){
             var oldType = Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x))].match(/cart-([a-z]+)/)[1] ;
             reject(oldType);
-/*            console.log("already another cart");*/
         }else{
             resolve(false);
-/*            console.log("no cart");*/
-
         }
     })
 }
@@ -81,7 +76,7 @@ document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
 
         checkCart()
         .then( (data) => {
-
+ 
             document.querySelector("#item h1").hidden = true;
             document.querySelector(".recap.Dialog").style.display = 'flex';
             document.querySelector(".recap.Dialog span.item-option").innerText = document.getElementById("item-option").value;
