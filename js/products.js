@@ -1,11 +1,19 @@
-function loadImage(img, urlImg) {
-    return new  Promise(resolve => {
-        img.addEventListener('load', () => resolve(true));
-        img.addEventListener('error', () => resolve(false));
-        img.src = urlImg; 
-    });
+/******** TOOLS ********/
+function checkCart() {
+    return new Promise( (resolve,reject) => {
+        if(localStorage.getItem("cart-"+ typeItem)){
+            resolve(true);
+        }else if(Object.keys(localStorage).map( x => /cart-/.test(x)).includes(true) ){
+            var oldType = Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x))].match(/cart-([a-z]+)/)[1] ;
+            reject(oldType);
+        }else{
+            resolve(false);
+        }
+    })
 }
+/**************************/
 
+/**** PAGE COMPOSITION ****/
 const url = window.location.search; 
 const urlParams = new URLSearchParams(url);
 const typeItem = urlParams.get('type');
@@ -14,7 +22,8 @@ if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].len
     .then( data => {
         var response = JSON.parse(data.responseText);
                   
-        loadImage(document.getElementById("item-image"), response.imageUrl)
+        document.getElementById("item-image").src = response.imageUrl;
+        loadImage(document.getElementById("item-image"))
         .then( () => {
             fadeOutEffect(".loader");
             document.querySelectorAll(".item-name").forEach(item => {item.innerText = response.name ;}) ;
@@ -45,21 +54,9 @@ if(urlParams.has('id') && urlParams.has('type') && urlParams.getAll('id')[0].len
     document.querySelector(".errorDialog").style.display = 'flex';
     document.querySelector("main").classList.add("center");
 }
+/**************************/
 
-function checkCart() {
-    console.log(localStorage);
-    return new Promise( (resolve,reject) => {
-        if(localStorage.getItem("cart-"+ typeItem)){
-            resolve(true);
-        }else if(Object.keys(localStorage).map( x => /cart-/.test(x)).includes(true) ){
-            var oldType = Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x))].match(/cart-([a-z]+)/)[1] ;
-            reject(oldType);
-        }else{
-            resolve(false);
-        }
-    })
-}
-
+/******** BUTTONS  ********/
 document.querySelector(".btn-deleteCart").addEventListener("click", function(e) {
     e.preventDefault();
     localStorage.removeItem("cart-"+Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x))].match(/cart-([a-z]+)/)[1]
@@ -118,3 +115,4 @@ document.querySelector(".btn-addToCart").addEventListener("click", function(e) {
         }
     })
  })
+/**************************/

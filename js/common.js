@@ -1,7 +1,5 @@
 /******* VARIABLES *******/
-var delayItemAppearing = 100; 
-var durationAnimation = 500;
-var durationAnimationLong = 1000;
+var delayItemAppearing = 100; var durationAnimation = 500; var durationAnimationLong = 1000;
 
 var categories = {
     teddies: 'Ours en peluche faits main',
@@ -17,11 +15,12 @@ var currencies = {
 /**************************/
 
 /****** CART COUNTER ******/
-function updateCartCounter(){
+function updateCartCounter(){ /* Calculates nb of items in cart from localStorage and updates the cart counter */
     if(localStorage.length != 0){
         var count = 0 ; 
-        for(let i = 0 ; i < localStorage.length ; i++){
-            if(/cart-/.test(localStorage.key(i)) ) count = parseInt(count) + parseInt(JSON.parse(localStorage[localStorage.key(i)]).total);
+        for(let i = 0 ; i < localStorage.length ; i++){ /* searching in all localStorage */
+            if(/cart-/.test(localStorage.key(i)) ) /* makes sure to only count the [key, value] pair related to cart in localStorage */
+            count = parseInt(count) + parseInt(JSON.parse(localStorage[localStorage.key(i)]).total);
         }
         document.getElementById("cart-counter").innerText = count;
         return count;    
@@ -60,16 +59,16 @@ function createCurrencies(){ /* Creates a list of options for different currenci
             option.innerText = Object.keys(currencies)[i].toUpperCase() + " (" + Object.values(currencies)[i].symbol + ")";
             if(!Object.keys(localStorage).includes("currency")){
                 if( Object.values(currencies)[i].rate == 1 ) { /* euro is the default currency if none is already saved in localStorage */
-                    option.selected = "selected" ; option.id = "selected";
+                    option.selected = "selected" ; 
                      localStorage.setItem("currency",Object.keys(currencies)[i]);
                     }; 
             }else if(Object.keys(currencies)[i] == localStorage.getItem("currency")){
-                option.selected = "selected" ; option.id = "selected"; 
+                option.selected = "selected" ; 
             }
             document.querySelector("select#devise-option").append(option);
         }
     }else{
-        console.log("error");
+        console.log("error"); /* What to do if no currency is defined in the array ?*/
     }
 }
 
@@ -77,15 +76,13 @@ function updatePrice(price){ /* Calculates the price with the rate (compared to 
     var currency = localStorage.getItem("currency");
     var rate = Object.values(currencies)[Object.keys(currencies).findIndex( x => x == currency)].rate ; 
     var symbol = Object.values(currencies)[Object.keys(currencies).findIndex( x => x == currency)].symbol;
-    return price/100*rate + " " + symbol ;
+    return price/100*rate + " " + symbol ; /* TO FIX => SHOULD LIMIT THE NB OF DECIMALS */
 }
 
-document.querySelector("#devise-option").addEventListener('change', function(e){
-    document.querySelector('#devise-option option#selected').removeAttribute("id");
-    e.target.children[e.target.selectedIndex].id = "selected";
+document.querySelector("#devise-option").addEventListener('change', function(e){ /* Event that register any change of current currency*/
     localStorage.setItem("currency",e.target.children[e.target.selectedIndex].value);
-    document.querySelectorAll(".item-price").forEach(item => {
-        item.innerText = updatePrice(item.id.match(/[0-9]+/)[0]);
+    document.querySelectorAll(".item-price").forEach(item => { /* Change all prices displayed with updated rate of current currency*/
+        item.innerText = updatePrice(item.id.match(/[0-9]+/)[0]); /* The id of each price element should contains the price given by the API*/
     })
 })
 /**************************/
@@ -99,7 +96,6 @@ function hideTags() { /* Makes the unused navigation tabs appear and disappear b
     sum = document.querySelector("body > header >  nav ul > li.last-tab  ").scrollWidth 
     +  document.querySelector("body > header >  nav ul > li:not(.last-tab)  li.active    ").scrollWidth;  
 
-    var indexOfActive =-1;
     while( sum < widthNav  && limVis < Tags.length -1){ 
         limVis++ ;
         if(!Tags[limVis].classList.contains("active") ){ /* Already counted above */
@@ -133,6 +129,13 @@ function fadeOutEffect(item) { /* Makes item fade out (usud mainly for the loadi
             }
         }, 25);
     })
+}
+
+function loadImage(img) { /* will be used to make sure images are loaded before anything is shown on the screen */
+    return new  Promise(resolve => {
+        img.addEventListener('load', () => resolve(true));
+        img.addEventListener('error', () => resolve(false));
+    });
 }
 /**************************/
 

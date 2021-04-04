@@ -1,3 +1,4 @@
+/********* TOOLS **********/
 function isValid(item,regex){
     if(!item.value.match(regex)){
         item.parentElement.firstElementChild.classList.add("formatError");
@@ -9,8 +10,66 @@ function isValid(item,regex){
         return true;
     }
 }
+/**************************/
 
+/****** REQUESTS API ******/
+function sendOrder(typeItem, order){
+    return new Promise((resolve,reject) => {
+        var urlAPI = "http://localhost:3000/api/" + typeItem + "/order"   ;
+        let request = new XMLHttpRequest();
+        request.open("POST", urlAPI);
+        request.setRequestHeader("Content-Type","application/json");
+        request.send(JSON.stringify(order),'./confirmation.html');
+        request.onload = () => {
+            if (request.readyState == XMLHttpRequest.DONE && request.status == 201) {
+                resolve(request);
+            }else{
+                reject();
+           }
+        }
+        request.onerror = () => reject();
+    })
+}
 
+document.querySelector('button[type="submit"]').addEventListener("click", function(e){
+    e.preventDefault();
+    if( document.querySelector("form").reportValidity() && !e.target.classList.contains("unclickable")){
+        let isFirstNameValid = isValid(document.getElementById('firstnameUser'),/^\s*[a-z]+\s*$/i);
+        let isLastNameValid = isValid(document.getElementById('nameUser'),/^\s*[a-z]+\s*$/i);
+        let isAddressValid =  isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i);
+        let isCityValid = isValid(document.getElementById('cityUser'),/^\s*[a-z]+\s*$/i);
+        let isEmailValid = isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i);
+
+        if(isEmailValid && isFirstNameValid && isLastNameValid && isCityValid && isAddressValid){
+            var order = {
+                contact : {
+                    firstName: document.getElementById('firstnameUser').value,
+                    lastName: document.getElementById('nameUser').value,
+                    address:document.getElementById('addressUser').value,
+                    city: document.getElementById('cityUser').value,
+                    email: document.getElementById('emailUser').value        
+                },
+                products : orderTable
+            }
+            
+            var typeItem = Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x) )].match(/cart-([a-z]+)/)[1];
+
+            sendOrder(typeItem, order)
+            .then( data => {
+                localStorage.setItem("orderId",JSON.parse(data.responseText).orderId );
+                localStorage.setItem("orderTotal",document.querySelector("#table-total th:last-child").id.match(/[0-9]+/));
+                window.location.replace("confirmation.html"); 
+
+            } )
+            .catch( data => {
+                window.setTimeout(function(){window.location.replace("error.html")},250); 
+            })            
+        };
+    }   
+})
+/**************************/
+
+/**** PAGE COMPOSITION ****/
 var nbItems = updateCartCounter();
 if( nbItems != 0 ){
     document.querySelectorAll("section").forEach(item => {item.style.display = "flex"; }) 
@@ -53,59 +112,4 @@ if( nbItems != 0 ){
     document.querySelectorAll(".emptyMsg").forEach(item => {item.hidden = false; }) 
     document.querySelector("main").classList.add("center");
 }
-
-document.querySelector('button[type="submit"]').addEventListener("click", function(e){
-    e.preventDefault();
-    if( document.querySelector("form").reportValidity() && !e.target.classList.contains("unclickable")){
-        let isFirstNameValid = isValid(document.getElementById('firstnameUser'),/^\s*[a-z]+\s*$/i);
-        let isLastNameValid = isValid(document.getElementById('nameUser'),/^\s*[a-z]+\s*$/i);
-        let isAddressValid =  isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i);
-        let isCityValid = isValid(document.getElementById('cityUser'),/^\s*[a-z]+\s*$/i);
-        let isEmailValid = isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i);
-
-        if(isEmailValid && isFirstNameValid && isLastNameValid && isCityValid && isAddressValid){
-            var order = {
-                contact : {
-                    firstName: document.getElementById('firstnameUser').value,
-                    lastName: document.getElementById('nameUser').value,
-                    address:document.getElementById('addressUser').value,
-                    city: document.getElementById('cityUser').value,
-                    email: document.getElementById('emailUser').value        
-                },
-                products : orderTable
-            }
-            
-            var typeItem = Object.keys(localStorage)[Object.keys(localStorage).findIndex( x => /cart-/.test(x) )].match(/cart-([a-z]+)/)[1];
-
-            sendOrder(typeItem, order)
-            .then( data => {
-                localStorage.setItem("orderId",JSON.parse(data.responseText).orderId );
-                localStorage.setItem("orderTotal",document.querySelector("#table-total th:last-child").id.match(/[0-9]+/));
-                window.location.replace("confirmation.html"); 
-
-            } )
-            .catch( data => {
-                window.setTimeout(function(){window.location.replace("error.html")},250); 
-            })            
-        };
-    }   
-})
-
-function sendOrder(typeItem, order){
-    return new Promise((resolve,reject) => {
-        var urlAPI = "http://localhost:3000/api/" + typeItem + "/order"   ;
-        let request = new XMLHttpRequest();
-        request.open("POST", urlAPI);
-        request.setRequestHeader("Content-Type","application/json");
-        request.send(JSON.stringify(order),'./confirmation.html');
-        request.onload = () => {
-            if (request.readyState == XMLHttpRequest.DONE && request.status == 201) {
-                resolve(request);
-            }else{
-                reject();
-           }
-        }
-        request.onerror = () => reject();
-    })
-}
-
+/**************************/
