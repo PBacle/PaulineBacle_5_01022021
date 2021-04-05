@@ -25,7 +25,7 @@ if( nbItems != 0 ){ /* CASE 1 : cart is not empty */
                 orderTable.push(item.id);
                 requestItem(typeItem, item.id)
                 .then( data => {            
-                        var response = JSON.parse(data.responseText);
+                    var response = JSON.parse(data.responseText);
                     var tr = document.createElement('tr');
 
                     document.querySelector(".item-price").innerText= updatePrice(response.price);
@@ -39,7 +39,7 @@ if( nbItems != 0 ){ /* CASE 1 : cart is not empty */
                     document.querySelector("#table-total :last-child").innerHTML = updatePrice(total);
                     /* Dont forget about id of all price related elements, needed for updating when selecting another currency */
     
-                    if(i == localStorage.length - 1){ /* When infos of the last item of the cart has been added tothe table*/
+                    if(i == JSON.parse(localStorage[localStorage.key(i)]).elements.length - 1){ /* When infos of the last item of the cart has been added tothe table*/
                         fadeOutEffect(".loader") /* the loader should disappear */
                         .then(() => {
                             document.querySelector("table#cart-table").hidden = false; /* Table should be made visible */
@@ -48,7 +48,7 @@ if( nbItems != 0 ){ /* CASE 1 : cart is not empty */
                     };
 
 
-                } )               
+                }    )               
             })           
         }
     }    
@@ -62,11 +62,12 @@ if( nbItems != 0 ){ /* CASE 1 : cart is not empty */
 /****** REQUESTS API ******/
 document.querySelector('button[type="submit"]').addEventListener("click", function(e){ /* Event to send order */
     e.preventDefault();
-    if( document.querySelector("form").reportValidity() && !e.target.classList.contains("unclickable")){ /* first checking if all required inputs are filled and submit button is avalaible  */
+    /* btn should not have class "unclickable" */
+    if( !e.target.classList.contains("unclickable") &&   document.querySelector("form").reportValidity() && !e.target.classList.contains("unclickable")){ /* first checking if all required inputs are filled and submit button is avalaible  */
         /* Checking all inputs */
         let isFirstNameValid = isValid(document.getElementById('firstnameUser'),/^\s*[a-z]+\s*$/i);
         let isLastNameValid = isValid(document.getElementById('nameUser'),/^\s*[a-z]+\s*$/i);
-        let isAddressValid =  isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s]+\s*$/i);
+        let isAddressValid =  isValid(document.getElementById('addressUser'),/^\s*[a-z0-9\s']+\s*$/i);
         let isCityValid = isValid(document.getElementById('cityUser'),/^\s*[a-z]+\s*$/i);
         let isEmailValid = isValid(document.getElementById('emailUser'),/^\s*[a-z0-9._-]+@[a-z0-9._-]+.[a-z]{2,}\s*$/i);
 

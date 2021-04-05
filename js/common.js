@@ -10,7 +10,7 @@ var categories = {
 var currencies = {
     eur: { rate:1, symbol:"€"},
     usd: { rate:1.18, symbol:"$"},
-    gpb: { rate:0.85, symbol:"£"},
+    gpb: { rate:0.85, symbol:"£"}
 }
 /**************************/
 
