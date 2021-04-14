@@ -19,6 +19,8 @@ if( nbItems != 0 ){ /* CASE 1 : cart is not empty */
     var total = 0 ;
     var orderTable = []; /* this array will contain all id of items in cart  */
     for(let i = 0 ; i < localStorage.length ; i++){
+        console.log(i, localStorage.key(i), nbItems);
+
         if(/cart-/.test(localStorage.key(i)) ){ /* only reading entries in localStorage that relates to the cart  */
             var typeItem = localStorage.key(i).match(/cart-([a-z]+)/i)[1];
             JSON.parse(localStorage[localStorage.key(i)]).elements.forEach( item => {
@@ -50,6 +52,12 @@ if( nbItems != 0 ){ /* CASE 1 : cart is not empty */
 
                 }    )               
             })           
+        }else if(i == localStorage.length - 1){ /* When infos of the last item of the cart has been added tothe table*/
+            fadeOutEffect(".loader") /* the loader should disappear */
+            .then(() => {
+                document.querySelector("table#cart-table").hidden = false; /* Table should be made visible */
+                document.querySelector('button[type="submit"]').classList.remove("unclickable"); /* submit button should be made clickable*/
+            })
         }
     }    
 }else{ /* CASE 2 : cart empty, error message displayed */
