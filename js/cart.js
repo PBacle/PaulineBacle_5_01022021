@@ -29,10 +29,6 @@ if( nbItems != 0 ){ /* CASE 1 : cart is not empty */
                 .then( data => {            
                     var response = JSON.parse(data.responseText);
                     var tr = document.createElement('tr');
-
-                    document.querySelector(".item-price").innerText= updatePrice(response.price);
-                    document.querySelector(".item-price").id = "price-" + response.price;
-        
                     tr.innerHTML = '<td>'+response.name+'</td><td class="nowrap item-price" id="price-'+ response.price +'">'+ updatePrice(response.price)+'</td><td>'
                         +item.count+'</td><td class="nowrap item-price" id="price-'+item.count*response.price+'">'+updatePrice(item.count*response.price)+'</td>';
                     document.querySelector("#cart-table tbody").append(tr);
