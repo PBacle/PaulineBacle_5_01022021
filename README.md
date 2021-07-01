@@ -5,5 +5,4 @@ _`Début du projet le 01/02/2021`_
 
 ## Contenu de ce repository
 
-* Ce repository contient les deux dossiers `frontend` et `backend`.
 * Le dossier "files" contient le plan de test.
