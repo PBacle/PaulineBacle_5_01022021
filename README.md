@@ -29,4 +29,3 @@ _`Début du projet le 01/02/2021`_
 * La page d'accueil présente les différents produits disponibles : les détails de chacun sont accessibles en cliquant sur le produit en question. 
 * Le panier est accessible en cliquant sur l'icône en haut à droite : l'utilisateur peut alors poursuivre sa commande. 
 
-
